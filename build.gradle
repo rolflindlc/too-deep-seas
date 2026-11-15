@@ -21,6 +21,8 @@ minecraft {
         }
         client {}
         server { args '--nogui' }
+        // Arranca un servidor, ejecuta las pruebas de test/GearGameTests y se cierra
+        gameTestServer { property 'forge.enabledGameTestNamespaces', 'toodeepseas' }
     }
 }
 
