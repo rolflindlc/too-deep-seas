@@ -3,6 +3,8 @@ package com.rolflin.toodeepseas.client;
 import com.rolflin.toodeepseas.TooDeepSeas;
 import com.rolflin.toodeepseas.item.ModItems;
 import com.rolflin.toodeepseas.item.TieredRodItem;
+import com.rolflin.toodeepseas.menu.ModMenus;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -18,10 +20,11 @@ public final class ClientSetup {
     private ClientSetup() {
     }
 
-    /** Igual que la caña vanilla: el modelo cambia a «lanzada» mientras el anzuelo está fuera. */
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
+            MenuScreens.register(ModMenus.MESA_PESCADOR.get(), MesaPescadorScreen::new);
+            // Igual que la caña vanilla: el modelo cambia a «lanzada» mientras el anzuelo está fuera
             for (RegistryObject<TieredRodItem> rod : ModItems.RODS) {
                 ItemProperties.register(rod.get(), new ResourceLocation("cast"), (stack, level, entity, seed) -> {
                     if (entity == null) return 0.0F;

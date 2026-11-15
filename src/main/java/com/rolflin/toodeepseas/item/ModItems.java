@@ -1,7 +1,9 @@
 package com.rolflin.toodeepseas.item;
 
 import com.rolflin.toodeepseas.TooDeepSeas;
+import com.rolflin.toodeepseas.block.ModBlocks;
 import com.rolflin.toodeepseas.core.RodTier;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -10,7 +12,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import javax.annotation.Nullable;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TooDeepSeas.MODID);
@@ -27,6 +32,43 @@ public final class ModItems {
     public static final List<RegistryObject<TieredRodItem>> RODS = List.of(
             CANA_COBRE, CANA_HIERRO, CANA_ORO, CANA_PRISMARINA, CANA_DIAMANTE, CANA_NETHERITA, CANA_VACIO);
 
+    public static final RegistryObject<BlockItem> MESA_PESCADOR = ITEMS.register("mesa_pescador",
+            () -> new BlockItem(ModBlocks.MESA_PESCADOR.get(), new Item.Properties()));
+
+    /** Accesorios por id de definición (el mismo que el del objeto), en el orden del catálogo. */
+    public static final Map<String, RegistryObject<AccessoryItem>> ACCESSORIES = new LinkedHashMap<>();
+    /** Cebos por id de definición. */
+    public static final Map<String, RegistryObject<BaitItem>> BAITS = new LinkedHashMap<>();
+
+    static {
+        // id y número de niveles, igual que en data/toodeepseas/accessories
+        accessory("sedal_reforzado", 3);
+        accessory("sedal_seda", 3);
+        accessory("sedal_trenzado", 3);
+        accessory("sedal_invisible", 3);
+        accessory("anzuelo_afilado", 3);
+        accessory("anzuelo_doble", 3);
+        accessory("anzuelo_iman", 3);
+        accessory("plomada", 3);
+        accessory("flotador", 3);
+        accessory("lastre_buceo", 3);
+        accessory("carrete", 3);
+        accessory("carrete_freno", 1);
+        accessory("carrete_escape", 3);
+        accessory("escama_guardian", 1);
+        accessory("ojo_nautilo", 3);
+        accessory("perla_encantada", 3);
+        accessory("corazon_marea", 1);
+        accessory("geoda_resonante", 1);
+        accessory("linterna_abisal", 1);
+        accessory("silbato_tiburon", 1);
+
+        for (String id : List.of("lombriz", "masa_pan", "carne_podrida_aderezada", "gamba_arrecife", "baya_luminosa",
+                "cebo_helado", "cebo_tinta_brillante", "crema_magma_cebada", "cebo_cobre_cargado", "pepita_cebo")) {
+            BAITS.put(id, ITEMS.register(id, () -> new BaitItem(id, new Item.Properties())));
+        }
+    }
+
     private ModItems() {
     }
 
@@ -34,9 +76,26 @@ public final class ModItems {
         return ITEMS.register(name, () -> new TieredRodItem(tier, properties));
     }
 
+    private static void accessory(String id, int levels) {
+        ACCESSORIES.put(id, ITEMS.register(id, () -> new AccessoryItem(id, levels, new Item.Properties())));
+    }
+
     /** Tier de cualquier caña: las del mod, el suyo; la vanilla (u otra caña de otro mod), madera. */
+    @Nullable
     public static RodTier tierOf(ItemStack stack) {
+        if (stack.isEmpty()) return null;
         if (stack.getItem() instanceof TieredRodItem rod) return rod.getTier();
         return stack.getItem() instanceof FishingRodItem ? RodTier.MADERA : null;
+    }
+
+    /** Objeto de un accesorio equipado, o vacío si ese id no tiene objeto (accesorio de otro datapack). */
+    public static ItemStack accessoryStack(String id, int level, int uses) {
+        RegistryObject<AccessoryItem> item = ACCESSORIES.get(id);
+        return item == null ? ItemStack.EMPTY : item.get().create(level, uses);
+    }
+
+    public static ItemStack baitStack(String id, int count) {
+        RegistryObject<BaitItem> item = BAITS.get(id);
+        return item == null || count <= 0 ? ItemStack.EMPTY : new ItemStack(item.get(), Math.min(64, count));
     }
 }
