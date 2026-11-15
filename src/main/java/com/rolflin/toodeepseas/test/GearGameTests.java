@@ -89,6 +89,13 @@ public final class GearGameTests {
         check(!menu.getSlot(acc + 1).hasItem() && !menu.getSlot(bait).hasItem(), "al retirar la caña se vacían las ranuras");
         check(RodData.slots(taken).size() == 1 && RodData.baits(taken).get(0).count() == 6, "la caña retirada conserva su equipo");
 
+        // Otra caña en la misma mesa no hereda nada de la anterior
+        ItemStack other = new ItemStack(ModItems.CANA_COBRE.get());
+        menu.getSlot(MesaPescadorMenu.ROD).set(other);
+        check(!menu.getSlot(acc).hasItem() && !menu.getSlot(acc + 1).hasItem() && !menu.getSlot(bait).hasItem(), "una caña nueva empieza vacía");
+        check(RodData.slots(other).isEmpty() && RodData.baits(other).isEmpty(), "y no recibe el equipo de la anterior");
+        menu.getSlot(MesaPescadorMenu.ROD).remove(1);
+
         // Mayús + clic desde la barra rápida (casilla 0 = índice INV_START + 27)
         player.getInventory().setItem(0, taken);
         player.getInventory().setItem(1, ModItems.accessoryStack("anzuelo_afilado", 1, -1));
@@ -138,7 +145,7 @@ public final class GearGameTests {
         check(isAccessory(player.getInventory().getItem(1), "anzuelo_afilado", 1) && RodData.slots(inv.getCarried()).isEmpty(), "clic derecho en casilla vacía saca el accesorio");
         inv.clicked(first + 2, 1, ClickType.PICKUP, player);
         check(player.getInventory().getItem(2).getCount() == 20 && RodData.baits(inv.getCarried()).isEmpty(), "después saca el cebo");
-        check(!inv.getCarried().hasTag(), "la caña vacía queda sin datos, como recién fabricada");
+        check(inv.getCarried().getTagElement(RodData.ROOT) == null, "la caña vacía queda sin datos de equipo, como recién fabricada");
         inv.clicked(first + 3, 1, ClickType.PICKUP, player);
         check(inv.getCarried().isEmpty() && ModItems.tierOf(player.getInventory().getItem(3)) != null, "con la caña vacía, el clic derecho la deja en la casilla");
         helper.succeed();

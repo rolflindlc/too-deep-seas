@@ -52,8 +52,10 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
 
     /** Caña cuyo equipo está ahora mismo desplegado en las ranuras (solo servidor). */
     private ItemStack loadedRod = ItemStack.EMPTY;
+    private boolean loaded;
     /** Accesorios de la caña que no tienen objeto (de otro datapack): se conservan tal cual. */
     private final List<RodData.Slot> hidden = new ArrayList<>();
+    private final List<RodData.Bait> hiddenBaits = new ArrayList<>();
     private boolean updating;
 
     /** Cliente. */
@@ -105,10 +107,13 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
         updating = true;
         try {
             ItemStack rod = rodInv.getItem(0);
-            if (rod.isEmpty() || rod != loadedRod) {
-                // La caña desplegada ya no está: su equipo se fue con ella en el NBT
-                if (!loadedRod.isEmpty()) gear.clearContent();
+            if (!loaded || rod.isEmpty() || rod != loadedRod) {
+                // La caña desplegada ya no está: su equipo se fue con ella en el NBT.
+                // (Al retirarla, su casilla conserva el mismo objeto con cantidad 0: por eso hace falta «loaded».)
+                if (loaded) gear.clearContent();
                 hidden.clear();
+                hiddenBaits.clear();
+                loaded = false;
                 loadedRod = ItemStack.EMPTY;
                 if (!rod.isEmpty() && ModItems.tierOf(rod) != null) load(rod);
             } else if (container == gear) {
@@ -134,12 +139,11 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
             if (stack.isEmpty() || next >= Math.min(BAIT_COUNT, tier.baitSlots)) rest.add(b);
             else gear.setItem(ACC_COUNT + next++, stack);
         }
-        hiddenBaits.clear();
         hiddenBaits.addAll(rest);
         loadedRod = rod;
+        loaded = true;
     }
 
-    private final List<RodData.Bait> hiddenBaits = new ArrayList<>();
 
     private void save(ItemStack rod) {
         List<RodData.Slot> slots = new ArrayList<>();
@@ -304,6 +308,7 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
         gear.clearContent();
         clearContainer(player, rodInv);
         loadedRod = ItemStack.EMPTY;
+        loaded = false;
         updating = false;
     }
 }
