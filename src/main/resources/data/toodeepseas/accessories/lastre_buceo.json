@@ -1,0 +1,19 @@
+{
+  "category": "peso",
+  "uses": [
+    300,
+    450,
+    650
+  ],
+  "trigger": "dive_second",
+  "effects": [
+    {
+      "stat": "dive",
+      "values": [
+        2.2,
+        2.5,
+        2.8
+      ]
+    }
+  ]
+}

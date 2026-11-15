@@ -1,0 +1,9 @@
+{
+  "category": "amuleto",
+  "uses": [
+    50
+  ],
+  "trigger": "cave_treasure",
+  "effects": [],
+  "special": "cave_treasure_glow"
+}

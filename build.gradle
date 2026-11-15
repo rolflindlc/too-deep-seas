@@ -5,8 +5,8 @@ plugins {
 }
 
 version = '0.1.0'
-group = 'com.rolflin.pesca'
-base { archivesName = 'pesca' }
+group = 'com.rolflin.toodeepseas'
+base { archivesName = "toodeepseas" }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -17,7 +17,7 @@ minecraft {
         configureEach {
             workingDirectory project.file('run')
             property 'forge.logging.console.level', 'debug'
-            mods { pesca { source sourceSets.main } }
+            mods { toodeepseas { source sourceSets.main } }
         }
         client {}
         server { args '--nogui' }

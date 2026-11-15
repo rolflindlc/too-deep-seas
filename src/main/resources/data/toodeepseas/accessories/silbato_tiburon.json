@@ -1,0 +1,9 @@
+{
+  "category": "amuleto",
+  "uses": [
+    15
+  ],
+  "trigger": "monster_spawn",
+  "effects": [],
+  "special": "monster_call;floor_luck:2"
+}

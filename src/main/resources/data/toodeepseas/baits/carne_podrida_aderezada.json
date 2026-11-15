@@ -1,0 +1,12 @@
+{
+  "families": {
+    "carnivoro": 2
+  },
+  "exclusives": [
+    "Piraña dorada",
+    "Barracuda"
+  ],
+  "condition": {
+    "min_depth": 45
+  }
+}

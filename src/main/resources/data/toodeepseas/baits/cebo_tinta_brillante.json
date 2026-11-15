@@ -1,0 +1,13 @@
+{
+  "families": {
+    "abisal": 2
+  },
+  "exclusives": [
+    "Rape",
+    "Calamar vampiro",
+    "Pez linterna"
+  ],
+  "condition": {
+    "min_depth": 70
+  }
+}

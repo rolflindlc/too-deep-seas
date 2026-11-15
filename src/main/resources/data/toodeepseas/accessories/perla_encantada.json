@@ -1,0 +1,11 @@
+{
+  "category": "amuleto",
+  "uses": [
+    10,
+    15,
+    25
+  ],
+  "trigger": "enchanted_loot",
+  "effects": [],
+  "special": "loot_enchants:1,1,2;loot_levels:5,10,15"
+}

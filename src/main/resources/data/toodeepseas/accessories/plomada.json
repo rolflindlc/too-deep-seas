@@ -1,0 +1,19 @@
+{
+  "category": "peso",
+  "uses": [
+    40,
+    60,
+    90
+  ],
+  "trigger": "run_end",
+  "effects": [
+    {
+      "stat": "descent",
+      "values": [
+        0.1,
+        0.2,
+        0.3
+      ]
+    }
+  ]
+}

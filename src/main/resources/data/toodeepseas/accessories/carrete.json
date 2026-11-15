@@ -1,0 +1,19 @@
+{
+  "category": "carrete",
+  "uses": [
+    600,
+    900,
+    1300
+  ],
+  "trigger": "move_second",
+  "effects": [
+    {
+      "stat": "hspeed",
+      "values": [
+        0.12,
+        0.24,
+        0.36
+      ]
+    }
+  ]
+}

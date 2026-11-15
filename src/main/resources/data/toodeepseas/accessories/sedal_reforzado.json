@@ -1,0 +1,19 @@
+{
+  "category": "sedal",
+  "uses": [
+    40,
+    60,
+    90
+  ],
+  "trigger": "run_end",
+  "effects": [
+    {
+      "stat": "depth",
+      "values": [
+        10,
+        20,
+        30
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "category": "anzuelo",
+  "uses": [
+    80,
+    120,
+    180
+  ],
+  "trigger": "treasure_pull",
+  "effects": [
+    {
+      "stat": "magnet_radius",
+      "values": [
+        24,
+        36,
+        48
+      ]
+    }
+  ]
+}

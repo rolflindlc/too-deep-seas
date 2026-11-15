@@ -1,4 +1,4 @@
-# Mod de pesca — Forge 1.20.1 (fase 2: núcleo de cañas)
+# Too Deep Seas — Forge 1.20.1 (fase 2: núcleo de cañas)
 
 ## Qué hay
 - `core/` (Java puro, sin Minecraft): `RodTier` (las 8 cañas), `RodStats` (equipo → parámetros del minijuego, con el tope de 4 bloques/s de bajada), `Loadout` (reglas de ranuras), `Stat`/`Modifier` (efectos de accesorios).
@@ -16,6 +16,6 @@ Las cañas están en la pestaña creativa «Herramientas y utilidades». En Linu
 
 ## Estado
 - Las pruebas de `core/` pasan (10 de 10).
-- El código que usa Minecraft y Forge (`PescaMod`, `ModItems`, `TieredRodItem`, `ClientSetup`) y el `build.gradle` no se han podido compilar donde se escribieron: si `gradlew runClient` da un error, copia el mensaje.
+- El código que usa Minecraft y Forge (`TooDeepSeas`, `ModItems`, `TieredRodItem`, `ClientSetup`) y el `build.gradle` no se han podido compilar donde se escribieron: si `gradlew runClient` da un error, copia el mensaje.
 - Las cañas usan la textura de la caña vanilla como provisional y aún no tienen receta (fase 5).
 - Todavía pescan como la caña vanilla: el Mixin de `FishingHook` llega con el minijuego en Java (fase 7).

@@ -1,0 +1,19 @@
+{
+  "category": "anzuelo",
+  "uses": [
+    120,
+    180,
+    260
+  ],
+  "trigger": "catch",
+  "effects": [
+    {
+      "stat": "hook_radius",
+      "values": [
+        2,
+        4,
+        6
+      ]
+    }
+  ]
+}

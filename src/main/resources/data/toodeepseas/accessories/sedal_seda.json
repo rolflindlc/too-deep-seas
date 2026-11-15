@@ -1,0 +1,19 @@
+{
+  "category": "sedal",
+  "uses": [
+    50,
+    75,
+    110
+  ],
+  "trigger": "run_end",
+  "effects": [
+    {
+      "stat": "cost",
+      "values": [
+        -0.15,
+        -0.3,
+        -0.45
+      ]
+    }
+  ]
+}

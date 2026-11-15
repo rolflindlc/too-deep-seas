@@ -1,0 +1,14 @@
+{
+  "families": {
+    "helado": 2
+  },
+  "exclusives": [
+    "Bacalao ártico",
+    "Pez de hielo transparente"
+  ],
+  "condition": {
+    "biomes": [
+      "helado"
+    ]
+  }
+}

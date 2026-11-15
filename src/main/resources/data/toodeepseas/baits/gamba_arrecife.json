@@ -1,0 +1,16 @@
+{
+  "families": {
+    "comun": 1.4,
+    "carnivoro": 1.4
+  },
+  "exclusives": [
+    "Pez loro arcoíris",
+    "Caballito de mar"
+  ],
+  "condition": {
+    "biomes": [
+      "oceano",
+      "calido"
+    ]
+  }
+}

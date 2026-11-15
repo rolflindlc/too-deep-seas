@@ -1,0 +1,16 @@
+{
+  "category": "carrete",
+  "uses": [
+    400
+  ],
+  "trigger": "turn",
+  "effects": [
+    {
+      "stat": "hspeed",
+      "values": [
+        -0.05
+      ]
+    }
+  ],
+  "special": "half_inertia"
+}

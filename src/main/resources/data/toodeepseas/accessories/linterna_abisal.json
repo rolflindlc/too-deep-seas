@@ -1,0 +1,9 @@
+{
+  "category": "amuleto",
+  "uses": [
+    40
+  ],
+  "trigger": "run_end_below_70",
+  "effects": [],
+  "special": "abyss_light;family:abisal*1.2,comun*0.9"
+}

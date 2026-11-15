@@ -1,0 +1,23 @@
+{
+  "type": "toodeepseas:rod_upgrade",
+  "category": "equipment",
+  "pattern": [
+    "CFC",
+    "FRF",
+    "CFC"
+  ],
+  "key": {
+    "R": {
+      "item": "toodeepseas:cana_hierro"
+    },
+    "F": {
+      "item": "minecraft:prismarine_shard"
+    },
+    "C": {
+      "item": "minecraft:prismarine_crystals"
+    }
+  },
+  "result": {
+    "item": "toodeepseas:cana_prismarina"
+  }
+}

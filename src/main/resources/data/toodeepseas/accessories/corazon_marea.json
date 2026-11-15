@@ -1,0 +1,9 @@
+{
+  "category": "amuleto",
+  "uses": [
+    30
+  ],
+  "trigger": "run_end_rain",
+  "effects": [],
+  "special": "luck_in_rain:1"
+}

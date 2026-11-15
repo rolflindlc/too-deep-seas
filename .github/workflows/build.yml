@@ -19,6 +19,6 @@ jobs:
       - name: Subir el jar
         uses: actions/upload-artifact@v4
         with:
-          name: pesca-jar
+          name: toodeepseas-jar
           path: build/libs/*.jar
           if-no-files-found: error

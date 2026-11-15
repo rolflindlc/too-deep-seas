@@ -1,0 +1,19 @@
+{
+  "category": "peso",
+  "uses": [
+    60,
+    90,
+    130
+  ],
+  "trigger": "every_20m",
+  "effects": [
+    {
+      "stat": "descent",
+      "values": [
+        -0.1,
+        -0.2,
+        -0.3
+      ]
+    }
+  ]
+}

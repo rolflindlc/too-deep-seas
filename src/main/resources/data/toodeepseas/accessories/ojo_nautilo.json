@@ -1,0 +1,11 @@
+{
+  "category": "amuleto",
+  "uses": [
+    40,
+    60,
+    90
+  ],
+  "trigger": "run_end",
+  "effects": [],
+  "special": "warn_bonus:0.3,0.6,1.0;monster_warn:0.2,0.4,0.6"
+}

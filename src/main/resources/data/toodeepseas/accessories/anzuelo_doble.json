@@ -1,0 +1,19 @@
+{
+  "category": "anzuelo",
+  "uses": [
+    25,
+    40,
+    60
+  ],
+  "trigger": "double_catch",
+  "effects": [
+    {
+      "stat": "dup_chance",
+      "values": [
+        0.1,
+        0.2,
+        0.3
+      ]
+    }
+  ]
+}

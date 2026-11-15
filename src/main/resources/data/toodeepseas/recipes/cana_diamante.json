@@ -1,0 +1,20 @@
+{
+  "type": "toodeepseas:rod_upgrade",
+  "category": "equipment",
+  "pattern": [
+    "MMM",
+    "MRM",
+    "MMM"
+  ],
+  "key": {
+    "R": {
+      "item": "toodeepseas:cana_hierro"
+    },
+    "M": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "toodeepseas:cana_diamante"
+  }
+}

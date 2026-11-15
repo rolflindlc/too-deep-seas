@@ -1,0 +1,12 @@
+{
+  "families": {
+    "tormenta": 3
+  },
+  "exclusives": [
+    "Pez relámpago",
+    "Raya eléctrica"
+  ],
+  "condition": {
+    "weather": "tormenta"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "families": {
+    "fluvial": 2
+  },
+  "exclusives": [
+    "Esturión",
+    "Anguila de río"
+  ],
+  "condition": {
+    "biomes": [
+      "rio",
+      "pantano"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "category": "amuleto",
+  "uses": [
+    3
+  ],
+  "trigger": "shield",
+  "effects": [],
+  "special": "shield:1;min_tier:2.5"
+}

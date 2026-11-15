@@ -1,0 +1,11 @@
+{
+  "category": "carrete",
+  "uses": [
+    20,
+    30,
+    45
+  ],
+  "trigger": "exit",
+  "effects": [],
+  "special": "exit_cost_div:3,4,5"
+}

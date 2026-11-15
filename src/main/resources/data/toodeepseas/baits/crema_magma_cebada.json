@@ -1,0 +1,12 @@
+{
+  "families": {
+    "igneo": 2
+  },
+  "exclusives": [
+    "Pez de obsidiana",
+    "Pez de brasa"
+  ],
+  "condition": {
+    "min_depth": 95
+  }
+}
