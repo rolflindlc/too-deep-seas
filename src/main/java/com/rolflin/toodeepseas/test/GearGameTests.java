@@ -7,6 +7,7 @@ import com.rolflin.toodeepseas.data.Defs;
 import com.rolflin.toodeepseas.data.RodData;
 import com.rolflin.toodeepseas.item.AccessoryItem;
 import com.rolflin.toodeepseas.item.BaitItem;
+import com.rolflin.toodeepseas.item.CofreClimaItem;
 import com.rolflin.toodeepseas.item.CofreItem;
 import com.rolflin.toodeepseas.item.ModItems;
 import com.rolflin.toodeepseas.menu.MesaPescadorMenu;
@@ -346,6 +347,62 @@ public final class GearGameTests {
             }
             check(best > worst, "el mejor cofre de " + bioma + " no da más que el peor: " + best + " <= " + worst);
         }
+        // Cofres exclusivos de clima: su botín no depende del bioma y también mejora con la calidad y la profundidad
+        check(ModItems.COFRES_CLIMA.size() == 2, "cofres de clima: " + ModItems.COFRES_CLIMA.keySet());
+        for (Cofres.Clima clima : ModItems.COFRES_CLIMA.keySet()) {
+            CofreClimaItem item = ModItems.COFRES_CLIMA.get(clima).get();
+            int worst = 0, best = 0;
+            for (Cofres.Calidad calidad : Cofres.Calidad.values()) for (Cofres.Banda banda : Cofres.Banda.values()) {
+                ItemStack stack = item.create(calidad, banda);
+                check(CofreItem.calidad(stack) == calidad && CofreItem.banda(stack) == banda && item.clima(stack) == clima,
+                        "el cofre de clima no guarda sus datos: " + stack.getTag());
+                int total = 0;
+                for (int i = 0; i < 5; i++) {
+                    List<ItemStack> loot = item.roll(level, stack, origin, player);
+                    check(!loot.isEmpty(), "cofre de clima vacío: " + clima + " " + calidad + " " + banda);
+                    for (ItemStack s : loot) {
+                        check(!s.isEmpty() && s.getCount() <= s.getMaxStackSize(), "montón imposible en el botín: " + s);
+                        total += s.getCount();
+                    }
+                }
+                if (calidad == Cofres.Calidad.SENCILLO && banda == Cofres.Banda.SUPERFICIE) worst = total;
+                if (calidad == Cofres.Calidad.ANCESTRAL && banda == Cofres.Banda.ABISAL) best = total;
+            }
+            check(best > worst, "el mejor cofre de " + clima + " no da más que el peor: " + best + " <= " + worst);
+        }
+        // Los libros de las tablas de clima salen encantados con lo suyo (canalización en la tormenta)
+        LootTable storm = level.getServer().getLootData().getLootTable(new ResourceLocation(TooDeepSeas.MODID, "cofres/exclusivo/tormenta"));
+        LootParams stormParams = new LootParams.Builder(level).withParameter(LootContextParams.ORIGIN, origin).create(LootContextParamSets.CHEST);
+        boolean channeling = false;
+        for (int i = 0; i < 2000 && !channeling; i++) {
+            for (ItemStack s : storm.getRandomItems(stormParams)) {
+                check(s.getItem() != Items.BOOK, "libro sin encantar en el cofre de tormenta");
+                if (s.getItem() == Items.ENCHANTED_BOOK) {
+                    channeling = net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantments(s)
+                            .containsKey(net.minecraft.world.item.enchantment.Enchantments.CHANNELING);
+                    check(channeling, "libro del cofre de tormenta sin canalización: " + s.getTag());
+                }
+            }
+        }
+        check(channeling, "en 2000 tiradas de tormenta no ha salido el libro de canalización");
+        // Qué cofre se pesca: despejado, lava y Vacío → siempre el del bioma; con lluvia o tormenta, el exclusivo ≈35 %
+        for (Cofres.Clima clima : Cofres.Clima.values()) {
+            int exclusivos = 0;
+            for (int i = 0; i < 1000; i++) {
+                ItemStack s = ModItems.cofrePescado(Cofres.Bioma.OCEANO, Cofres.Calidad.REFORZADO, Cofres.Banda.PROFUNDO, clima, i / 1000.0);
+                check(CofreItem.calidad(s) == Cofres.Calidad.REFORZADO && CofreItem.banda(s) == Cofres.Banda.PROFUNDO, "cofre pescado: " + s.getTag());
+                if (s.getItem() instanceof CofreClimaItem c) {
+                    exclusivos++;
+                    check(c.tipo() == clima, "cofre de " + c.tipo() + " con clima " + clima);
+                } else {
+                    check(((CofreItem) s.getItem()).clima(s) == clima, "el cofre del bioma no recuerda el clima");
+                }
+                ItemStack lava = ModItems.cofrePescado(Cofres.Bioma.LAVA, Cofres.Calidad.REFORZADO, Cofres.Banda.PROFUNDO, clima, i / 1000.0);
+                check(lava.getItem() == ModItems.COFRES.get(Cofres.Bioma.LAVA).get(), "cofre de clima en la lava");
+            }
+            check(exclusivos == (clima == Cofres.Clima.DESPEJADO ? 0 : 350), "cofres exclusivos con " + clima + ": " + exclusivos);
+        }
+
         // Sin NBT es el cofre más sencillo, y dos iguales se apilan
         ItemStack plain = new ItemStack(ModItems.COFRES.get(Cofres.Bioma.RIO).get());
         check(ItemStack.isSameItemSameTags(plain, ModItems.COFRES.get(Cofres.Bioma.RIO).get().create(Cofres.Calidad.SENCILLO, Cofres.Banda.SUPERFICIE, Cofres.Clima.DESPEJADO)), "el cofre sencillo lleva NBT de más");

@@ -92,6 +92,11 @@ public final class Cofres {
             return name().toLowerCase(Locale.ROOT);
         }
 
+        public static Clima byId(String id) {
+            for (Clima c : values()) if (c.id().equals(id)) return c;
+            return null;
+        }
+
         public static Clima byIndex(int i) {
             return values()[Math.max(0, Math.min(values().length - 1, i))];
         }
@@ -127,6 +132,40 @@ public final class Cofres {
         return out;
     }
 
+    /**
+     * Probabilidad de que, lloviendo o con tormenta, el cofre que sale sea el exclusivo de ese clima
+     * en lugar del cofre del bioma.
+     */
+    public static final double PROB_COFRE_CLIMA = 0.35;
+
+    /** Solo la lluvia y la tormenta tienen cofre propio. */
+    public static boolean tieneCofrePropio(Clima clima) {
+        return clima == Clima.LLUVIA || clima == Clima.TORMENTA;
+    }
+
+    /** Qué cofre toca: el del clima (true) o el del bioma (false). {@code azar} es un número al azar entre 0 y 1. */
+    public static boolean saleCofreDeClima(Bioma bioma, Clima clima, double azar) {
+        return tieneCofrePropio(climaEfectivo(bioma, clima)) && azar < PROB_COFRE_CLIMA;
+    }
+
+    /**
+     * Tablas de un cofre exclusivo de clima (cofre de lluvia, cofre de tormenta). No dependen del bioma:
+     * <ul>
+     * <li>la del clima ({@code cofres/exclusivo/lluvia}), de 2 a 5 veces según la calidad;</li>
+     * <li>{@code <clima>_profundo} 1 vez desde la segunda banda y {@code <clima>_abisal} 2 veces en la tercera;</li>
+     * <li>1 vez la de la calidad.</li>
+     * </ul>
+     */
+    public static List<Tirada> tiradasClima(Clima clima, Calidad calidad, Banda banda) {
+        if (!tieneCofrePropio(clima)) throw new IllegalArgumentException("Sin cofre propio: " + clima);
+        List<Tirada> out = new ArrayList<>();
+        out.add(new Tirada("cofres/exclusivo/" + clima.id(), 2 + calidad.ordinal()));
+        if (banda.ordinal() >= Banda.PROFUNDO.ordinal()) out.add(new Tirada("cofres/exclusivo/" + clima.id() + "_profundo", 1));
+        if (banda == Banda.ABISAL) out.add(new Tirada("cofres/exclusivo/" + clima.id() + "_abisal", 2));
+        out.add(new Tirada("cofres/calidad/" + calidad.id(), 1));
+        return out;
+    }
+
     /** Todas las tablas que puede pedir un cofre (para comprobar que existen). */
     public static List<String> todasLasTablas() {
         List<String> out = new ArrayList<>();
@@ -138,6 +177,12 @@ public final class Cofres {
                 out.add("cofres/clima/" + b.id() + "_lluvia");
                 out.add("cofres/clima/" + b.id() + "_tormenta");
             }
+        }
+        for (Clima c : Clima.values()) {
+            if (!tieneCofrePropio(c)) continue;
+            out.add("cofres/exclusivo/" + c.id());
+            out.add("cofres/exclusivo/" + c.id() + "_profundo");
+            out.add("cofres/exclusivo/" + c.id() + "_abisal");
         }
         for (Calidad c : Calidad.values()) out.add("cofres/calidad/" + c.id());
         return out;

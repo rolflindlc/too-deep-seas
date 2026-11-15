@@ -51,7 +51,14 @@ public final class ModItems {
     /** Cofres del tesoro: un objeto por bioma de pesca (cofre_oceano, cofre_lava...). */
     public static final Map<Cofres.Bioma, RegistryObject<CofreItem>> COFRES = new EnumMap<>(Cofres.Bioma.class);
 
+    /** Cofres exclusivos de clima: cofre_lluvia y cofre_tormenta. */
+    public static final Map<Cofres.Clima, RegistryObject<CofreClimaItem>> COFRES_CLIMA = new EnumMap<>(Cofres.Clima.class);
+
     static {
+        for (Cofres.Clima clima : Cofres.Clima.values()) {
+            if (!Cofres.tieneCofrePropio(clima)) continue;
+            COFRES_CLIMA.put(clima, ITEMS.register("cofre_" + clima.id(), () -> new CofreClimaItem(clima, new Item.Properties())));
+        }
         for (Cofres.Bioma bioma : Cofres.Bioma.values()) {
             Item.Properties properties = bioma == Cofres.Bioma.LAVA ? new Item.Properties().fireResistant() : new Item.Properties();
             COFRES.put(bioma, ITEMS.register("cofre_" + bioma.id(), () -> new CofreItem(bioma, properties)));
@@ -85,6 +92,16 @@ public final class ModItems {
     }
 
     private ModItems() {
+    }
+
+    /**
+     * El cofre que se pesca en un sitio: normalmente el del bioma (que recuerda el clima); lloviendo o con tormenta,
+     * a veces el exclusivo de ese clima ({@link Cofres#saleCofreDeClima}). {@code azar} es un número al azar entre 0 y 1.
+     */
+    public static ItemStack cofrePescado(Cofres.Bioma bioma, Cofres.Calidad calidad, Cofres.Banda banda, Cofres.Clima clima, double azar) {
+        clima = Cofres.climaEfectivo(bioma, clima);
+        if (Cofres.saleCofreDeClima(bioma, clima, azar)) return COFRES_CLIMA.get(clima).get().create(calidad, banda);
+        return COFRES.get(bioma).get().create(calidad, banda, clima);
     }
 
     private static RegistryObject<TieredRodItem> rod(String name, RodTier tier, Item.Properties properties) {

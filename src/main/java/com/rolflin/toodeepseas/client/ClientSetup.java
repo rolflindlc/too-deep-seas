@@ -1,6 +1,7 @@
 package com.rolflin.toodeepseas.client;
 
 import com.rolflin.toodeepseas.TooDeepSeas;
+import com.rolflin.toodeepseas.item.CofreClimaItem;
 import com.rolflin.toodeepseas.item.CofreItem;
 import com.rolflin.toodeepseas.item.ModItems;
 import com.rolflin.toodeepseas.item.TieredRodItem;
@@ -28,6 +29,10 @@ public final class ClientSetup {
             // Igual que la caña vanilla: el modelo cambia a «lanzada» mientras el anzuelo está fuera
             // El modelo del cofre cambia con su calidad: 0, 1/3, 2/3 y 1 (las propiedades de objeto se recortan a 0–1)
             for (RegistryObject<CofreItem> cofre : ModItems.COFRES.values()) {
+                ItemProperties.register(cofre.get(), new ResourceLocation(TooDeepSeas.MODID, "calidad"),
+                        (stack, level, entity, seed) -> CofreItem.calidad(stack).ordinal() / 3.0F);
+            }
+            for (RegistryObject<CofreClimaItem> cofre : ModItems.COFRES_CLIMA.values()) {
                 ItemProperties.register(cofre.get(), new ResourceLocation(TooDeepSeas.MODID, "calidad"),
                         (stack, level, entity, seed) -> CofreItem.calidad(stack).ordinal() / 3.0F);
             }

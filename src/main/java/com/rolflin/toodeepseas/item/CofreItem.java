@@ -51,6 +51,8 @@ public class CofreItem extends Item {
         this.bioma = bioma;
     }
 
+    /** Bioma del cofre; {@code null} en los cofres exclusivos de clima. */
+    @Nullable
     public Bioma bioma() {
         return bioma;
     }
@@ -82,13 +84,18 @@ public class CofreItem extends Item {
         return stack;
     }
 
+    /** Tablas de las que tira este cofre. */
+    protected List<Cofres.Tirada> tiradas(ItemStack stack) {
+        return Cofres.tiradas(bioma, calidad(stack), banda(stack), clima(stack));
+    }
+
     /** Botín de un cofre: tira de cada tabla las veces que toca y junta lo que sea igual. */
     public List<ItemStack> roll(ServerLevel level, ItemStack stack, Vec3 origin, @Nullable Player player) {
         LootParams.Builder builder = new LootParams.Builder(level).withParameter(LootContextParams.ORIGIN, origin);
         if (player != null) builder.withParameter(LootContextParams.THIS_ENTITY, player).withLuck(player.getLuck());
         LootParams params = builder.create(LootContextParamSets.CHEST);
         List<ItemStack> out = new ArrayList<>();
-        for (Cofres.Tirada tirada : Cofres.tiradas(bioma, calidad(stack), banda(stack), clima(stack))) {
+        for (Cofres.Tirada tirada : tiradas(stack)) {
             LootTable table = level.getServer().getLootData().getLootTable(new ResourceLocation(TooDeepSeas.MODID, tirada.table()));
             for (int i = 0; i < tirada.rolls(); i++) {
                 for (ItemStack loot : table.getRandomItems(params)) merge(out, loot);

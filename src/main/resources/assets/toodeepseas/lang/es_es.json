@@ -150,5 +150,11 @@
   "cofre.toodeepseas.banda.abisal": "abisal",
   "cofre.toodeepseas.clima.despejado": "despejado",
   "cofre.toodeepseas.clima.lluvia": "lluvia",
-  "cofre.toodeepseas.clima.tormenta": "tormenta"
+  "cofre.toodeepseas.clima.tormenta": "tormenta",
+  "cofre.toodeepseas.exclusivo.lluvia": "de lluvia",
+  "item.toodeepseas.cofre_lluvia": "Cofre de lluvia",
+  "cofre.toodeepseas.exclusivo.tormenta": "de tormenta",
+  "item.toodeepseas.cofre_tormenta": "Cofre de tormenta",
+  "tooltip.toodeepseas.cofre.exclusivo.lluvia": "Solo se pesca mientras llueve",
+  "tooltip.toodeepseas.cofre.exclusivo.tormenta": "Solo se pesca durante una tormenta"
 }

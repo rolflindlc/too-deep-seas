@@ -4,6 +4,7 @@ import com.rolflin.toodeepseas.block.ModBlocks;
 import com.rolflin.toodeepseas.item.AccessoryItem;
 import com.rolflin.toodeepseas.core.Cofres;
 import com.rolflin.toodeepseas.item.BaitItem;
+import com.rolflin.toodeepseas.item.CofreClimaItem;
 import com.rolflin.toodeepseas.item.CofreItem;
 import com.rolflin.toodeepseas.item.MaterialItem;
 import com.rolflin.toodeepseas.item.ModItems;
@@ -55,6 +56,11 @@ public class TooDeepSeas {
                         output.accept(cofre.create(calidad, Cofres.Banda.SUPERFICIE, Cofres.Clima.DESPEJADO));
                     }
                     output.accept(cofre.create(Cofres.Calidad.ANCESTRAL, Cofres.Banda.ABISAL, Cofres.Clima.TORMENTA));
+                }
+                // Cofres exclusivos de clima: las 4 calidades y el abisal
+                for (RegistryObject<CofreClimaItem> entry : ModItems.COFRES_CLIMA.values()) {
+                    for (Cofres.Calidad calidad : Cofres.Calidad.values()) output.accept(entry.get().create(calidad, Cofres.Banda.SUPERFICIE));
+                    output.accept(entry.get().create(Cofres.Calidad.ANCESTRAL, Cofres.Banda.ABISAL));
                 }
             })
             .build());

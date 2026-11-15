@@ -23,6 +23,7 @@ import java.util.List;
  * Comando provisional para probar el equipo hasta que exista la mesa del pescador (fase 4):
  * /tds equipar <accesorio> <nivel> · /tds cebo <cebo> <cantidad> · /tds vaciar
  * /tds cofre <bioma> [calidad 1-4] [banda 1-3] [clima 1-3]: da un cofre del tesoro con esas características
+ * (bioma también puede ser «lluvia» o «tormenta»: los cofres exclusivos de clima)
  */
 @Mod.EventBusSubscriber(modid = TooDeepSeas.MODID)
 public final class DebugCommand {
@@ -47,7 +48,8 @@ public final class DebugCommand {
                             return reply(c, "Cebo puesto", true);
                         }))))
                 .then(Commands.literal("cofre").then(Commands.argument("bioma", StringArgumentType.word())
-                        .suggests((c, b) -> SharedSuggestionProvider.suggest(Arrays.stream(Cofres.Bioma.values()).map(Cofres.Bioma::id), b))
+                        .suggests((c, b) -> SharedSuggestionProvider.suggest(java.util.stream.Stream.concat(Arrays.stream(Cofres.Bioma.values()).map(Cofres.Bioma::id),
+                                java.util.stream.Stream.of("lluvia", "tormenta")), b))
                         .executes(c -> cofre(c, 1, 1, 1))
                         .then(Commands.argument("calidad", IntegerArgumentType.integer(1, 4)).executes(c -> cofre(c, IntegerArgumentType.getInteger(c, "calidad"), 1, 1))
                                 .then(Commands.argument("banda", IntegerArgumentType.integer(1, 3)).executes(c -> cofre(c, IntegerArgumentType.getInteger(c, "calidad"), IntegerArgumentType.getInteger(c, "banda"), 1))
@@ -63,9 +65,12 @@ public final class DebugCommand {
 
     private static int cofre(CommandContext<CommandSourceStack> c, int calidad, int banda, int clima) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
         Cofres.Bioma bioma = Cofres.Bioma.byId(StringArgumentType.getString(c, "bioma"));
-        if (bioma == null) return reply(c, "Bioma desconocido", false);
+        Cofres.Clima exclusivo = Cofres.Clima.byId(StringArgumentType.getString(c, "bioma"));
+        if (bioma == null && (exclusivo == null || !Cofres.tieneCofrePropio(exclusivo))) return reply(c, "Bioma desconocido", false);
         ServerPlayer player = c.getSource().getPlayerOrException();
-        ItemStack stack = ModItems.COFRES.get(bioma).get().create(Cofres.Calidad.byIndex(calidad - 1), Cofres.Banda.byIndex(banda - 1), Cofres.Clima.byIndex(clima - 1));
+        ItemStack stack = bioma == null
+                ? ModItems.COFRES_CLIMA.get(exclusivo).get().create(Cofres.Calidad.byIndex(calidad - 1), Cofres.Banda.byIndex(banda - 1))
+                : ModItems.COFRES.get(bioma).get().create(Cofres.Calidad.byIndex(calidad - 1), Cofres.Banda.byIndex(banda - 1), Cofres.Clima.byIndex(clima - 1));
         if (!player.getInventory().add(stack)) player.drop(stack, false);
         return reply(c, "Cofre entregado", true);
     }

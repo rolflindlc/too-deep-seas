@@ -5,6 +5,7 @@ Uso: python3 tools/gen_cofres.py   (desde la raíz del repositorio; las texturas
 Cada entrada es (objeto, peso, mín, máx) o (objeto, peso, mín, máx, extra):
   extra = {"lvl": 2}        accesorio del mod de ese nivel
   extra = {"enchant": True} encantamiento al azar (libros)
+  extra = {"ench": {"riptide": (1,3)}} libro (u objeto) con ese encantamiento, nivel al azar entre los dos
   extra = {"levels": (a,b)} encantado como en una mesa con esos niveles
 """
 import json, os, sys
@@ -81,6 +82,29 @@ TORMENTA = {
  'pantano':[('gunpowder',5,1,3),('glowstone_dust',4,2,4)],
 }
 
+# Cofres exclusivos de clima (cofre de lluvia y cofre de tormenta): botín propio, igual en todos los biomas de agua
+CLIMAS = ['lluvia', 'tormenta']
+EXCLUSIVO = {
+ 'lluvia': [(M+'lombriz',9,3,6),(M+'masa_pan',5,2,4),('slime_ball',6,1,3),('lily_pad',5,1,3),('clay_ball',6,3,8),
+            ('glow_ink_sac',4,1,2),('salmon',5,2,4),('cod',5,2,4),('sea_pickle',3,1,2),('bucket',2,1,1),
+            ('experience_bottle',4,1,2),('book',2,1,1,{'ench':{'riptide':(1,1)}})],
+ 'lluvia_profundo': [('turtle_egg',3,1,2),('scute',4,1,2),('nautilus_shell',4,1,1),('lapis_lazuli',5,2,5),('emerald',4,1,2),
+                     ('book',4,1,1,{'ench':{'riptide':(1,2)}}),('book',3,1,1,{'ench':{'respiration':(1,2)}}),
+                     ('experience_bottle',5,1,3),(M+'baya_luminosa',5,2,4)],
+ 'lluvia_abisal': [('heart_of_the_sea',2,1,1),('turtle_helmet',3,1,1,{'levels':(20,30)}),('sponge',5,1,3),('diamond',5,1,2),
+                   ('book',5,1,1,{'ench':{'riptide':(2,3)}}),('book',4,1,1,{'ench':{'depth_strider':(2,3)}}),
+                   ('book',3,1,1,{'ench':{'aqua_affinity':(1,1)}}),('conduit',1,1,1),(M+'cebo_tinta_brillante',5,2,4)],
+ 'tormenta': [(M+'cebo_cobre_cargado',9,2,5),('copper_ingot',8,2,6),('raw_copper',5,2,5),('lightning_rod',4,1,1),
+              ('gunpowder',6,1,3),('glowstone_dust',5,2,5),('redstone',5,2,6),('prismarine_shard',4,2,5),
+              ('experience_bottle',5,1,3),('book',2,1,1,{'ench':{'channeling':(1,1)}})],
+ 'tormenta_profundo': [('copper_block',5,1,3),('gold_ingot',5,1,3),('amethyst_shard',5,2,5),('spectral_arrow',4,4,10),
+                       ('book',4,1,1,{'ench':{'channeling':(1,1)}}),('book',3,1,1,{'ench':{'loyalty':(1,2)}}),
+                       ('experience_bottle',6,2,4),('creeper_head',1,1,1),('tnt',3,1,2)],
+ 'tormenta_abisal': [('trident',3,1,1),('trident',2,1,1,{'levels':(20,30)}),('diamond',6,1,3),('creeper_head',2,1,1),
+                     ('skeleton_skull',2,1,1),('zombie_head',2,1,1),('book',4,1,1,{'ench':{'loyalty':(2,3)}}),
+                     ('book',3,1,1,{'ench':{'impaling':(3,5)}}),('music_disc_11',1,1,1),('experience_bottle',6,3,6)],
+}
+
 def acc(name, w, lvl=1):
     return (M+name, w, 1, 1, {'lvl': lvl}) if lvl > 1 else (M+name, w, 1, 1)
 
@@ -112,6 +136,9 @@ def entry(e):
         fn.append({'function': 'minecraft:set_nbt', 'tag': '{Lvl:%d}' % extra['lvl']})
     if extra.get('enchant'):
         fn.append({'function': 'minecraft:enchant_randomly'})
+    if extra.get('ench'):
+        fn.append({'function': 'minecraft:set_enchantments', 'enchantments': {
+            'minecraft:' + k: ({'type': 'minecraft:uniform', 'min': a, 'max': b} if b > a else a) for k, (a, b) in extra['ench'].items()}})
     if extra.get('levels'):
         a, b = extra['levels']
         fn.append({'function': 'minecraft:enchant_with_levels', 'levels': {'type': 'minecraft:uniform', 'min': a, 'max': b}, 'treasure': True})
@@ -139,6 +166,8 @@ for b in WATER:
     table('clima/%s_tormenta' % b, TORMENTA_COMUN + TORMENTA[b])
 for c in CALIDADES:
     table('calidad/' + c, CALIDAD[c])
+for name, entries in EXCLUSIVO.items():
+    table('exclusivo/' + name, entries)
 
 # Etiquetas de bioma: qué bioma de Minecraft cuenta como cada bioma de pesca (lo que no esté en ninguna es río)
 def opt(tag):
@@ -168,7 +197,7 @@ if 'toodeepseas:cofre_pesca' not in g['entries']:
 write(glm, g)
 
 # Modelos: uno por bioma y calidad; el del objeto elige con la propiedad toodeepseas:calidad (0, 1/3, 2/3, 1)
-for b in BIOMAS:
+for b in BIOMAS + CLIMAS:
     for i, c in enumerate(CALIDADES):
         write('assets/toodeepseas/models/item/cofre_%s%s.json' % (b, '' if i == 0 else '_' + c), {
             'parent': 'minecraft:item/generated', 'textures': {'layer0': 'toodeepseas:item/cofre_%s_%s' % (b, c)},
@@ -181,11 +210,12 @@ try:
 except ImportError:
     print('Sin Pillow: no se generan las texturas'); sys.exit(0)
 CUERPO = {'oceano': (46, 98, 168), 'calido': (30, 160, 170), 'helado': (150, 200, 232), 'rio': (122, 90, 52),
-          'pantano': (78, 96, 50), 'lava': (150, 46, 30), 'vacio': (62, 38, 96)}
+          'pantano': (78, 96, 50), 'lava': (150, 46, 30), 'vacio': (62, 38, 96),
+          'lluvia': (92, 116, 140), 'tormenta': (52, 54, 78)}
 HERRAJE = {'sencillo': (104, 78, 46), 'reforzado': (176, 182, 190), 'ornamentado': (236, 196, 64), 'ancestral': (96, 232, 220)}
 def sh(c, k):
     return tuple(max(0, min(255, int(v * k))) for v in c) + (255,)
-for b in BIOMAS:
+for b in BIOMAS + CLIMAS:
     for c in CALIDADES:
         im = Image.new('RGBA', (16, 16), (0, 0, 0, 0))
         body, trim = CUERPO[b], HERRAJE[c]
@@ -210,6 +240,12 @@ for b in BIOMAS:
         if c == 'ancestral':            # brillo
             for p in ((5, 5), (10, 11), (9, 4)):
                 im.putpixel(p, (255, 255, 255, 255))
+        if b == 'lluvia':               # gotas
+            for p in ((5, 0), (10, 1), (7, 2), (12, 0)):
+                im.putpixel(p, (120, 180, 255, 255))
+        if b == 'tormenta':             # rayo
+            for p in ((9, 0), (8, 1), (7, 2), (8, 2), (9, 2), (8, 4), (7, 5)):
+                im.putpixel(p, (255, 240, 110, 255))
         out = os.path.join(ROOT, 'assets/toodeepseas/textures/item/cofre_%s_%s.png' % (b, c))
         im.save(out)
 print('Cofres generados')

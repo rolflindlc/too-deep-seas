@@ -150,5 +150,11 @@
   "cofre.toodeepseas.banda.abisal": "abyssal",
   "cofre.toodeepseas.clima.despejado": "clear",
   "cofre.toodeepseas.clima.lluvia": "rain",
-  "cofre.toodeepseas.clima.tormenta": "thunderstorm"
+  "cofre.toodeepseas.clima.tormenta": "thunderstorm",
+  "cofre.toodeepseas.exclusivo.lluvia": "Rain",
+  "item.toodeepseas.cofre_lluvia": "Rain Chest",
+  "cofre.toodeepseas.exclusivo.tormenta": "Storm",
+  "item.toodeepseas.cofre_tormenta": "Storm Chest",
+  "tooltip.toodeepseas.cofre.exclusivo.lluvia": "Can only be fished while it rains",
+  "tooltip.toodeepseas.cofre.exclusivo.tormenta": "Can only be fished during a thunderstorm"
 }

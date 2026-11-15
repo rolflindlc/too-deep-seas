@@ -66,9 +66,36 @@ class CofresTest {
     }
 
     @Test
+    void losCofresDeClimaTienenSusPropiasTablas() {
+        assertEquals(List.of(new Cofres.Tirada("cofres/exclusivo/lluvia", 2), new Cofres.Tirada("cofres/calidad/sencillo", 1)),
+                Cofres.tiradasClima(Clima.LLUVIA, Calidad.SENCILLO, Banda.SUPERFICIE));
+        assertEquals(List.of(
+                new Cofres.Tirada("cofres/exclusivo/tormenta", 5),
+                new Cofres.Tirada("cofres/exclusivo/tormenta_profundo", 1),
+                new Cofres.Tirada("cofres/exclusivo/tormenta_abisal", 2),
+                new Cofres.Tirada("cofres/calidad/ancestral", 1)), Cofres.tiradasClima(Clima.TORMENTA, Calidad.ANCESTRAL, Banda.ABISAL));
+        Set<String> known = new HashSet<>(Cofres.todasLasTablas());
+        for (Clima w : new Clima[]{Clima.LLUVIA, Clima.TORMENTA}) for (Calidad c : Calidad.values()) for (Banda d : Banda.values()) {
+            for (Cofres.Tirada t : Cofres.tiradasClima(w, c, d)) assertTrue(known.contains(t.table()), t.table());
+        }
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class,
+                () -> Cofres.tiradasClima(Clima.DESPEJADO, Calidad.SENCILLO, Banda.SUPERFICIE));
+    }
+
+    @Test
+    void elCofreDeClimaSoloSaleConEseClimaYEnBiomasDeAgua() {
+        assertTrue(Cofres.saleCofreDeClima(Bioma.RIO, Clima.LLUVIA, 0.0));
+        assertTrue(Cofres.saleCofreDeClima(Bioma.OCEANO, Clima.TORMENTA, Cofres.PROB_COFRE_CLIMA - 0.001));
+        assertTrue(!Cofres.saleCofreDeClima(Bioma.OCEANO, Clima.TORMENTA, Cofres.PROB_COFRE_CLIMA));
+        assertTrue(!Cofres.saleCofreDeClima(Bioma.OCEANO, Clima.DESPEJADO, 0.0));
+        assertTrue(!Cofres.saleCofreDeClima(Bioma.LAVA, Clima.TORMENTA, 0.0));
+        assertTrue(!Cofres.saleCofreDeClima(Bioma.VACIO, Clima.LLUVIA, 0.0));
+    }
+
+    @Test
     void todasLasCombinacionesPidenTablasDeLaLista() {
         Set<String> known = new HashSet<>(Cofres.todasLasTablas());
-        assertEquals(7 * 3 + 5 * 2 + 4, known.size());
+        assertEquals(7 * 3 + 5 * 2 + 2 * 3 + 4, known.size());
         for (Bioma b : Bioma.values()) for (Calidad c : Calidad.values()) for (Banda d : Banda.values()) for (Clima w : Clima.values()) {
             for (Cofres.Tirada t : Cofres.tiradas(b, c, d, w)) {
                 assertTrue(known.contains(t.table()), t.table());

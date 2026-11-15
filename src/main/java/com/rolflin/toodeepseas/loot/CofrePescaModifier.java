@@ -23,7 +23,8 @@ import java.util.function.Supplier;
 
 /**
  * Provisional hasta que exista el minijuego en Java: al pescar a la manera vanilla, a veces (lo decide la condición
- * de azar del JSON) sale un cofre del tesoro en lugar del pez. El bioma y el clima son los del anzuelo, la calidad
+ * de azar del JSON) sale un cofre del tesoro en lugar del pez
+ * (lloviendo o con tormenta, a veces el cofre exclusivo de ese clima). El bioma y el clima son los del anzuelo, la calidad
  * la da la caña y la profundidad es siempre «superficie».
  */
 public class CofrePescaModifier extends LootModifier {
@@ -45,7 +46,8 @@ public class CofrePescaModifier extends LootModifier {
         ItemStack rod = context.getParamOrNull(LootContextParams.TOOL);
         Calidad calidad = Calidad.of(rod == null ? null : ModItems.tierOf(rod));
         generatedLoot.clear();
-        generatedLoot.add(ModItems.COFRES.get(bioma).get().create(calidad, Banda.SUPERFICIE, Biomas.clima(context.getLevel(), pos)));
+        generatedLoot.add(ModItems.cofrePescado(bioma, calidad, Banda.SUPERFICIE, Biomas.clima(context.getLevel(), pos),
+                context.getRandom().nextDouble()));
         return generatedLoot;
     }
 
