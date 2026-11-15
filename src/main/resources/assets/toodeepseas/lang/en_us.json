@@ -756,5 +756,7 @@
   "minijuego.toodeepseas.muerte.foca": "A hungry seal",
   "minijuego.toodeepseas.muerte.lucio": "A voracious pike",
   "minijuego.toodeepseas.muerte.anguila_fango": "A mud eel",
-  "minijuego.toodeepseas.muerte.ghast": "A ghast fireball"
+  "minijuego.toodeepseas.muerte.ghast": "A ghast fireball",
+  "minijuego.toodeepseas.poca_agua": "You need at least %s connected water blocks to fish",
+  "minijuego.toodeepseas.poca_lava": "You need at least %s connected lava blocks to fish"
 }

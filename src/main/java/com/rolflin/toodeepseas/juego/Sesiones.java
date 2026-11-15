@@ -19,6 +19,7 @@ import com.rolflin.toodeepseas.net.Network;
 import com.rolflin.toodeepseas.net.RecogerPacket;
 import com.rolflin.toodeepseas.world.Biomas;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -42,6 +43,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -57,11 +59,11 @@ import java.util.UUID;
  */
 @Mod.EventBusSubscriber(modid = TooDeepSeas.MODID)
 public final class Sesiones {
-    /** Bloques de líquido que se cuentan como mucho hacia abajo. */
-    public static final int MAX_MEDIDA = 128;
+    /** Bloques de agua (o lava) conectados que hacen falta para pescar. No tienen por qué estar uno debajo de otro. */
+    public static final int MIN_BLOQUES = 30;
 
     /** Una partida en curso: lo que se midió al lanzar. */
-    public record Sesion(Partida.Ajustes ajustes, FishingMedium medium, double realDepth) {
+    public record Sesion(Partida.Ajustes ajustes, FishingMedium medium) {
     }
 
     /** Lo que ha pasado al terminar. */
@@ -109,26 +111,39 @@ public final class Sesiones {
         return null;
     }
 
-    /** Bloques de agua o lava seguidos desde {@code pos} hacia abajo. */
-    public static int profundidad(Level level, BlockPos pos, TagKey<Fluid> fluido) {
-        BlockPos.MutableBlockPos p = pos.mutable();
-        int n = 0;
-        while (n < MAX_MEDIDA && p.getY() >= level.getMinBuildHeight() && level.getFluidState(p).is(fluido)) {
-            n++;
-            p.move(0, -1, 0);
+    /** Bloques de ese líquido conectados con {@code pos} (por las caras), contados hasta {@code tope}. */
+    public static int conectados(Level level, BlockPos pos, TagKey<Fluid> fluido, int tope) {
+        Set<BlockPos> vistos = new HashSet<>();
+        ArrayDeque<BlockPos> cola = new ArrayDeque<>();
+        if (!level.getFluidState(pos).is(fluido)) return 0;
+        vistos.add(pos);
+        cola.add(pos);
+        while (!cola.isEmpty() && vistos.size() < tope) {
+            BlockPos actual = cola.poll();
+            for (Direction dir : Direction.values()) {
+                BlockPos next = actual.relative(dir);
+                if (vistos.contains(next) || !level.isLoaded(next) || !level.getFluidState(next).is(fluido)) continue;
+                vistos.add(next);
+                cola.add(next);
+                if (vistos.size() >= tope) break;
+            }
         }
-        return n;
+        return vistos.size();
+    }
+
+    /** ¿Hay bastante líquido para pescar aquí? En el Vacío no hace falta. */
+    public static boolean haySitio(Level level, BlockPos pos, FishingMedium medium) {
+        return switch (medium) {
+            case VOID -> true;
+            case LAVA -> conectados(level, pos, FluidTags.LAVA, MIN_BLOQUES) >= MIN_BLOQUES;
+            default -> conectados(level, pos, FluidTags.WATER, MIN_BLOQUES) >= MIN_BLOQUES;
+        };
     }
 
     /** Mide el sitio y la caña. Null si eso no es una caña o si esa caña no puede pescar ahí. */
     @Nullable
     public static Sesion medir(Level level, BlockPos pos, FishingMedium medium, ItemStack rod, int seed) {
-        double real = switch (medium) {
-            case LAVA -> profundidad(level, pos, FluidTags.LAVA);
-            case VOID -> Double.POSITIVE_INFINITY;
-            default -> profundidad(level, pos, FluidTags.WATER);
-        };
-        RodStats stats = RodData.stats(rod, medium, real);
+        RodStats stats = RodData.stats(rod, medium);
         if (stats == null || !stats.canFish) return null;
         Bioma bioma = switch (medium) {
             case LAVA -> Bioma.LAVA;
@@ -144,7 +159,7 @@ public final class Sesiones {
         int lure = Math.max(0, Math.min(4, EnchantmentHelper.getFishingSpeedBonus(rod)));
         Partida.Ajustes aj = new Partida.Ajustes(seed, bioma, sub, Biomas.clima(level, pos), stats.effectiveDepth, stats.base, stats.k, stats.vh,
                 stats.dive, stats.hookR, stats.luck, lure, stats.attractR, stats.magnetR, cebos);
-        return new Sesion(aj, medium, real);
+        return new Sesion(aj, medium);
     }
 
     @SubscribeEvent
@@ -158,6 +173,11 @@ public final class Sesiones {
         BlockPos pos = hook.blockPosition();
         FishingMedium medium = medio(level, pos, hook.getY(), player.getY());
         if (medium == null) return;
+        if (!haySitio(level, pos, medium)) {
+            hook.discard();
+            player.displayClientMessage(Component.translatable("minijuego.toodeepseas.poca_" + (medium == FishingMedium.LAVA ? "lava" : "agua"), MIN_BLOQUES), true);
+            return;
+        }
         Sesion sesion = medir(level, pos, medium, player.getItemInHand(hand), level.getRandom().nextInt());
         hook.discard();
         if (sesion == null) {
@@ -201,7 +221,7 @@ public final class Sesiones {
         if (hand == null) return new Resultado(murio, murio ? p.causa.clave() : null, botin, 0, p.profFinal); // ya no tiene la caña: no hay botín
         ItemStack rod = player.getItemInHand(hand);
         RodTier tier = ModItems.tierOf(rod);
-        RodStats stats = RodData.stats(rod, sesion.medium(), sesion.realDepth());
+        RodStats stats = RodData.stats(rod, sesion.medium());
         RandomSource random = player.getRandom();
         Bioma bioma = sesion.ajustes().bioma();
         if (!murio) {

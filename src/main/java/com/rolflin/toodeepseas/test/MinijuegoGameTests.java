@@ -43,24 +43,29 @@ public final class MinijuegoGameTests {
                 a.attractR(), a.magnetR(), a.cebos());
     }
 
-    /** Pone una columna de 3 bloques de líquido y devuelve el de arriba. */
-    private static BlockPos columna(GameTestHelper helper, boolean lava) {
+    /** Una piscina de {@code n} bloques de líquido, repartidos en capas de 3×3 (no están en vertical): devuelve el primero. */
+    private static BlockPos piscina(GameTestHelper helper, boolean lava, int n) {
         ServerLevel level = helper.getLevel();
-        BlockPos top = helper.absolutePos(new BlockPos(1, 3, 1));
-        for (int i = 0; i < 3; i++) level.setBlockAndUpdate(top.below(i), (lava ? Blocks.LAVA : Blocks.WATER).defaultBlockState());
-        return top;
+        BlockPos base = helper.absolutePos(new BlockPos(1, 3, 1));
+        for (int i = 0; i < n; i++) level.setBlockAndUpdate(base.offset(i % 3, -(i / 9), (i / 3) % 3), (lava ? Blocks.LAVA : Blocks.WATER).defaultBlockState());
+        return base;
     }
 
-    private static void limpiar(GameTestHelper helper, BlockPos top) {
-        for (int i = 0; i < 3; i++) helper.getLevel().setBlockAndUpdate(top.below(i), Blocks.AIR.defaultBlockState());
+    private static void limpiar(GameTestHelper helper, BlockPos base, int n) {
+        for (int i = 0; i < n; i++) helper.getLevel().setBlockAndUpdate(base.offset(i % 3, -(i / 9), (i / 3) % 3), Blocks.AIR.defaultBlockState());
     }
 
     @GameTest(template = "empty")
     public static void minijuegoMedir(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         check(Sesiones.objetos().size() == 134, "tienen que ser 100 peces, 33 tesoros y el pez globo: " + Sesiones.objetos().size());
-        BlockPos agua = columna(helper, false);
-        check(Sesiones.profundidad(level, agua, FluidTags.WATER) == 3, "la columna de agua mide 3");
+        BlockPos agua = piscina(helper, false, 29);
+        check(Sesiones.conectados(level, agua, FluidTags.WATER, 100) == 29, "29 bloques conectados");
+        check(!Sesiones.haySitio(level, agua, FishingMedium.WATER), "con 29 bloques de agua no se pesca");
+        limpiar(helper, agua, 29);
+        agua = piscina(helper, false, 30);
+        check(Sesiones.haySitio(level, agua, FishingMedium.WATER), "con 30 bloques de agua conectados se pesca (aunque no estén en vertical)");
+        check(Sesiones.conectados(level, agua.east(10), FluidTags.WATER, 100) == 0, "fuera del agua no hay nada conectado");
         FishingMedium medio = Sesiones.medio(level, agua, agua.getY(), agua.getY() + 2);
         check(medio == FishingMedium.WATER || medio == FishingMedium.OCEAN, "el agua es agua: " + medio);
         check(Sesiones.medio(level, agua.above(3), agua.getY() + 3, agua.getY() + 5) == null, "en el aire no se pesca");
@@ -68,7 +73,9 @@ public final class MinijuegoGameTests {
         RodData.setBait(cana, "lombriz", 5);
         Sesiones.Sesion s = Sesiones.medir(level, agua, medio, cana, 42);
         check(s != null, "la caña de madera pesca en el agua");
-        check(s.ajustes().maxD() == 10, "con 3 bloques de agua la partida tiene el mínimo de 10 m: " + s.ajustes().maxD());
+        check(s.ajustes().maxD() == 30, "la profundidad es la del sedal de la caña de madera (30 m), no la del agua: " + s.ajustes().maxD());
+        Sesiones.Sesion sc = Sesiones.medir(level, agua, medio, new ItemStack(ModItems.CANA_COBRE.get()), 1);
+        check(sc != null && sc.ajustes().maxD() == 45, "la de cobre baja 45 m: " + (sc == null ? "-" : sc.ajustes().maxD()));
         check(s.ajustes().bioma().hasWeather && s.ajustes().seed() == 42, "bioma de agua y semilla");
         check(s.ajustes().cebos().contains("lombriz"), "el cebo de la caña cuenta");
         check(Sesiones.medir(level, agua, medio, new ItemStack(Items.STICK), 1) == null, "un palo no es una caña");
@@ -76,17 +83,18 @@ public final class MinijuegoGameTests {
         FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
         new AbrirMinijuegoPacket(s.ajustes()).encode(buf);
         check(AbrirMinijuegoPacket.decode(buf).ajustes().equals(s.ajustes()), "el paquete cambia los ajustes");
-        limpiar(helper, agua);
+        limpiar(helper, agua, 30);
 
-        BlockPos lava = columna(helper, true);
+        BlockPos lava = piscina(helper, true, 30);
+        check(Sesiones.haySitio(level, lava, FishingMedium.LAVA), "30 bloques de lava conectados bastan");
         check(Sesiones.medio(level, lava, lava.getY(), lava.getY() + 2) == FishingMedium.LAVA, "la lava es lava");
         check(Sesiones.medir(level, lava, FishingMedium.LAVA, new ItemStack(Items.FISHING_ROD), 1) == null, "la caña de madera no pesca en lava");
         Sesiones.Sesion sl = Sesiones.medir(level, lava, FishingMedium.LAVA, new ItemStack(ModItems.CANA_NETHERITA.get()), 1);
-        check(sl != null && sl.ajustes().bioma() == Bioma.LAVA, "la caña de netherita pesca en lava");
+        check(sl != null && sl.ajustes().bioma() == Bioma.LAVA && sl.ajustes().maxD() == 120, "la caña de netherita pesca en lava, a 120 m");
         check(Sesiones.medir(level, lava, FishingMedium.VOID, new ItemStack(ModItems.CANA_NETHERITA.get()), 1) == null, "la de netherita no pesca en el Vacío");
         Sesiones.Sesion sv = Sesiones.medir(level, lava, FishingMedium.VOID, new ItemStack(ModItems.CANA_VACIO.get()), 1);
         check(sv != null && sv.ajustes().bioma() == Bioma.VACIO && Double.isInfinite(sv.ajustes().maxD()), "la caña del vacío pesca en el Vacío, sin fondo");
-        limpiar(helper, lava);
+        limpiar(helper, lava, 30);
         helper.succeed();
     }
 
@@ -107,7 +115,7 @@ public final class MinijuegoGameTests {
     @GameTest(template = "empty")
     public static void minijuegoBotin(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        BlockPos agua = columna(helper, false);
+        BlockPos agua = piscina(helper, false, 30);
         FishingMedium medio = Sesiones.medio(level, agua, agua.getY(), agua.getY() + 2);
         List<Partida.Objeto> objs = Sesiones.objetos();
         ItemStack base = new ItemStack(ModItems.CANA_COBRE.get());
@@ -118,7 +126,7 @@ public final class MinijuegoGameTests {
         // Salir con botín: se busca una semilla en la que el jugador de pruebas pesque algo y salga vivo
         boolean probado = false;
         for (int seed = 1; seed <= 200 && !probado; seed++) {
-            Sesiones.Sesion sesion = new Sesiones.Sesion(conSemilla(medida.ajustes(), seed), medida.medium(), medida.realDepth());
+            Sesiones.Sesion sesion = new Sesiones.Sesion(conSemilla(medida.ajustes(), seed), medida.medium());
             Grabacion g = new Grabacion();
             Partida cliente = jugar(sesion.ajustes(), objs, g, 9, false);
             if (cliente.estado == Partida.Estado.MUERTO || cliente.botin.isEmpty()) continue;
@@ -138,7 +146,7 @@ public final class MinijuegoGameTests {
         check(probado, "ninguna semilla da una partida con botín");
 
         // Morir: se pierde todo y la caña se gasta
-        Sesiones.Sesion sesion = new Sesiones.Sesion(conSemilla(medida.ajustes(), 7), medida.medium(), medida.realDepth());
+        Sesiones.Sesion sesion = new Sesiones.Sesion(conSemilla(medida.ajustes(), 7), medida.medium());
         Grabacion g = new Grabacion();
         Partida cliente = jugar(sesion.ajustes(), objs, g, 9, true);
         check(cliente.estado == Partida.Estado.MUERTO, "pegado a la pared izquierda se muere");
@@ -153,7 +161,7 @@ public final class MinijuegoGameTests {
         // Sin caña en la mano no hay botín ni error
         Player sinCana = helper.makeMockPlayer();
         check(Sesiones.terminar(sinCana, sesion, g.bytes()).coste() == 0, "sin caña no se gasta nada");
-        limpiar(helper, agua);
+        limpiar(helper, agua, 30);
         helper.succeed();
     }
 }

@@ -453,10 +453,8 @@ public class MinijuegoScreen extends Screen {
             }
         }
         if (def.tesoro() != null) {
-            int col = def.tesoro().chest() ? 0xFFA0672E : RAREZA[def.rarity()];
-            rect(x - 2.5, y - 2, 5, 4, 0xFF3A2A18);
-            rect(x - 2, y - 1.5, 4, 3, col);
-            rect(x - 0.5, y - 0.5, 1, 1, 0xFFFFF0B0);
+            int idx = Math.max(0, Math.min(TESORO_FORMA.length - 1, def.tesoro().order()));
+            tesoro(TESORO_FORMA[idx], 0xFF000000 | TESORO_COLOR[idx], x, y, t);
             if (Math.sin(t * 3 + x) > 0.7) {
                 rect(x + 3, y - 4, 1, 3, 0xFFFFFFFF);
                 rect(x + 2, y - 3, 3, 1, 0xFFFFFFFF);
@@ -510,13 +508,333 @@ public class MinijuegoScreen extends Screen {
                 rect(x + f * 2.6, y - 4.6, 1.2, 1.2, 0xFFFFF0A0);
             }
             default -> {
-                rect(x - 3, y - 1.6, 6, 3.2, col);
-                rect(x - 2, y - 2.2, 4, 4.4, col);
-                rect(x - f * 5, y - 2, 2, 4, col);
-                rect(x - f * 3.6, y - 1, 1, 2, col);
+                int base = 0xFF000000 | def.pez().color();
+                double ga = def.pez().ghost() ? 0.45 + 0.3 * Math.sin(t * 3 + it.ph) : 1;
+                int oscuro = alfa(mul(base, 0.62), ga), claro = alfa(mul(base, 1.3), ga);
+                double wag = Math.sin(t * 9 + it.ph);
+                for (int i = 0; i < 3; i++) { // cola que se mueve
+                    double h = 1.1 + i * 0.9;
+                    rect(x - f * (4.4 + i * 1.1) - 0.55, y - h + wag * i * 0.45, 1.1, 2 * h, i == 2 ? oscuro : col);
+                }
+                rect(x - 1.5, y - 3.5, 3.2, 1.3, oscuro); // aleta dorsal
+                elipse(x, y, 4.4, 2.5, col);
+                elipse(x + f * 0.4, y + 1.1, 3.2, 1.0, claro); // vientre
+                rect(x - f * 0.5 - 0.3, y - 0.2, 1.2, 1.8, oscuro); // aleta lateral
+                rect(x + f * 1.3 - 0.2, y - 1.6, 0.5, 3.2, alfa(0x000000, 0.25 * ga)); // agalla
+                rect(x + f * 2.3 - 0.9, y - 1.5, 1.8, 1.8, 0xFFFFFFFF); // ojo
             }
         }
-        rect(x + f * 1.4 - 0.4, y - 1, 0.9, 0.9, 0xFF101010);
+        rect(x + f * (forma.isEmpty() ? 2.5 : 1.4) - 0.4, y - 1, 0.9, 0.9, 0xFF101010);
+    }
+
+    private static int mul(int c, double f) {
+        return 0xFF000000 | ((int) Math.min(255, ((c >> 16) & 255) * f) << 16) | ((int) Math.min(255, ((c >> 8) & 255) * f) << 8) | (int) Math.min(255, (c & 255) * f);
+    }
+
+    private void elipse(double cx, double cy, double rx, double ry, int color) {
+        for (double dy = -ry; dy < ry; dy += 0.5) {
+            double q = (dy + 0.25) / ry, k = 1 - q * q;
+            if (k <= 0) continue;
+            double hw = rx * Math.sqrt(k);
+            rect(cx - hw, cy + dy, 2 * hw, 0.5, color);
+        }
+    }
+
+    // Cada tesoro del catálogo (en el orden del prototipo) tiene su forma y su color
+    private static final String[] TESORO_FORMA = {"botella", "pepita", "cofre", "concha", "corona", "perla", "cristal", "tridente", "gota", "corazon", "moneda",
+            "coral", "ancla", "geoda", "caliz", "anfora", "idolo", "gema", "lagrima", "corona_rey", "huevo", "cuarzo", "pepitas", "escama", "arca", "plantilla",
+            "restos", "fragmento", "shulker", "frasco", "cabeza", "elitros", "trofeo"};
+    private static final int[] TESORO_COLOR = {0x7FD1B9, 0xFFD24A, 0xA0672E, 0xF0D8B0, 0xD8C040, 0x3A3050, 0xA8E8FF, 0x5FA090, 0x90FF60, 0x3AD0FF, 0xFFD23A,
+            0xFF4A5A, 0x8A949C, 0xC08AFF, 0xE8C040, 0xB8683A, 0x3AFF9A, 0x5A7AFF, 0xE0F0FF, 0xFFD23A, 0x7AD0C0, 0xF0E6E0, 0xFFD24A, 0xFF7A2A, 0x3A3038, 0x4A4450,
+            0x6A4A40, 0xB070FF, 0x9A6A9A, 0xE070D0, 0x3A3A44, 0x8A7AB8, 0xD0B0FF};
+
+    /** Dibuja un tesoro: cada uno con su forma, su color, su sombra y su brillo. */
+    private void tesoro(String forma, int c, double x, double y, double t) {
+        int d = mul(c, 0.55), l = mul(c, 1.45);
+        double pulso = 0.5 + 0.5 * Math.sin(t * 3 + x);
+        switch (forma) {
+            case "botella" -> {
+                rect(x - 2.2, y - 1.2, 4.4, 5.4, d);
+                rect(x - 1.7, y - 0.7, 3.4, 4.4, alfa(c, 0.9));
+                rect(x - 0.9, y - 3.6, 1.8, 2.8, c);
+                rect(x - 0.9, y - 4.4, 1.8, 1, 0xFFA0672E);
+                rect(x - 0.6, y - 0.2, 1.2, 2.6, 0xFFF5ECD0);
+            }
+            case "pepita" -> {
+                disco(x, y + 0.3, 2.7, d);
+                disco(x - 0.3, y, 2.2, c);
+                rect(x - 1.3, y - 1.4, 1.2, 0.9, l);
+            }
+            case "cofre" -> {
+                rect(x - 4.4, y - 3.4, 8.8, 6.8, 0xFF2A1C0E);
+                rect(x - 3.9, y - 2.9, 7.8, 5.8, c);
+                rect(x - 3.9, y - 2.9, 7.8, 2, l);
+                rect(x - 3.9, y - 0.9, 7.8, 0.8, 0xFF2A1C0E);
+                rect(x - 3.9, y - 0.3, 7.8, 1, 0xFFE8C24A);
+                rect(x - 0.7, y - 0.6, 1.4, 2.2, 0xFFFFE070);
+            }
+            case "concha" -> {
+                for (double dy = -3.6; dy < 0; dy += 0.5) {
+                    double hw = Math.sqrt(Math.max(0, 3.8 * 3.8 - (dy + 0.25) * (dy + 0.25)));
+                    rect(x - hw, y + 1.8 + dy, 2 * hw, 0.5, c);
+                }
+                rect(x - 3.8, y + 1.8, 7.6, 0.8, d);
+                for (int i = -2; i <= 2; i++) linea(x, y + 1.8, x + i * 1.5, y - 1.6, 0.4, d);
+            }
+            case "corona" -> {
+                rect(x - 4, y, 8, 2.6, c);
+                rect(x - 4, y - 3, 1.6, 3.2, c);
+                rect(x - 0.8, y - 3.8, 1.6, 4, c);
+                rect(x + 2.4, y - 3, 1.6, 3.2, c);
+                rect(x - 4, y + 2.2, 8, 0.6, d);
+                rect(x - 0.5, y + 0.6, 1, 1, 0xFFD83A3A);
+            }
+            case "perla" -> {
+                disco(x, y, 3, 0xFF9088B8);
+                disco(x, y, 2.5, c);
+                rect(x - 1.4, y - 1.6, 1.1, 1.1, 0xFFFFFFFF);
+                rect(x + 0.4, y + 0.6, 0.6, 0.6, 0xFF6A5C90);
+            }
+            case "cristal" -> {
+                rect(x - 2.2, y - 2, 4.4, 4.8, d);
+                rect(x - 1.8, y - 2, 3.6, 4.4, c);
+                rect(x - 1.4, y - 3.6, 2.8, 1.8, c);
+                rect(x - 0.7, y - 4.4, 1.4, 1, c);
+                rect(x - 1.2, y - 2.5, 0.8, 4.5, l);
+            }
+            case "tridente" -> {
+                rect(x - 0.6, y - 1, 1.2, 5.6, c);
+                rect(x - 2.6, y - 1.6, 5.2, 1.1, c);
+                rect(x - 2.6, y - 4.6, 1.1, 3.2, c);
+                rect(x - 0.6, y - 5.2, 1.2, 3.8, c);
+                rect(x + 1.5, y - 4.6, 1.1, 3.2, c);
+                rect(x - 0.4, y + 1, 0.8, 0.8, d);
+                rect(x - 2.4, y - 3, 0.6, 0.6, d);
+            }
+            case "gota" -> {
+                disco(x, y + 1, 2.7, d);
+                disco(x, y + 1, 2.3, c);
+                rect(x - 0.7, y - 3.4, 1.4, 2.4, c);
+                rect(x - 1.4, y, 0.9, 1.2, l);
+                rect(x + 0.6, y + 1.6, 0.7, 0.7, d);
+                disco(x, y + 1, 4.2, alfa(c, 0.12 + 0.1 * pulso));
+            }
+            case "corazon" -> {
+                disco(x, y, 4.8, alfa(c, 0.12 + 0.12 * pulso));
+                disco(x, y, 3.2, d);
+                disco(x, y, 2.8, c);
+                disco(x, y, 1.6, l);
+                disco(x, y, 0.8, c);
+                rect(x - 2, y - 2.2, 1, 0.8, 0xFFFFFFFF);
+            }
+            case "moneda" -> {
+                disco(x, y, 3, 0xFFB8901A);
+                disco(x, y, 2.5, c);
+                disco(x, y, 1.6, 0xFFB8901A);
+                disco(x, y, 1.2, c);
+                rect(x - 1.8, y - 1.8, 0.9, 0.9, l);
+            }
+            case "coral" -> {
+                linea(x, y + 3.2, x, y - 1, 1.3, c);
+                linea(x, y - 1, x - 2.6, y - 3.6, 1.2, c);
+                linea(x, y - 1, x + 2.6, y - 3.2, 1.2, c);
+                linea(x, y + 1.2, x + 2.2, y + 0.2, 1, c);
+                rect(x - 3.2, y - 4.2, 1, 1, l);
+                rect(x + 2.2, y - 3.8, 1, 1, l);
+                rect(x - 2, y + 3, 4, 0.8, d);
+            }
+            case "ancla" -> {
+                rect(x - 0.6, y - 3.6, 1.2, 6.6, c);
+                rect(x - 2.2, y - 2.6, 4.4, 1, c);
+                rect(x - 1, y - 4.6, 2, 1, c);
+                for (double a = 0.3; a < Math.PI - 0.3; a += 0.25) rect(x + Math.cos(a) * 2.8 - 0.5, y + 0.5 + Math.sin(a) * 2.6 - 0.5, 1, 1, c);
+                rect(x - 3.4, y + 0.6, 1, 1, c);
+                rect(x + 2.4, y + 0.6, 1, 1, c);
+                rect(x - 0.4, y - 3.4, 0.5, 4, l);
+            }
+            case "geoda" -> {
+                disco(x, y, 3.6, 0xFF6E6A78);
+                disco(x, y, 2.6, d);
+                disco(x, y, 2, c);
+                rect(x - 0.7, y - 1.8, 1.2, 2.6, l);
+                rect(x + 0.6, y - 0.8, 1, 1.8, l);
+                rect(x - 1.8, y - 0.4, 0.9, 1.4, l);
+            }
+            case "caliz" -> {
+                rect(x - 3, y - 3.2, 6, 1.2, c);
+                rect(x - 2.5, y - 2, 5, 1, c);
+                rect(x - 1.5, y - 1, 3, 1, c);
+                rect(x - 0.6, y, 1.2, 2.5, c);
+                rect(x - 2.2, y + 2.4, 4.4, 1, d);
+                rect(x - 2.4, y - 2.8, 1, 0.7, l);
+                rect(x - 0.7, y - 2.4, 1.4, 0.8, 0xFFC03030);
+            }
+            case "anfora" -> {
+                rect(x - 1.2, y - 3.8, 2.4, 2.8, c);
+                rect(x - 1.8, y - 4.4, 3.6, 0.9, d);
+                elipse(x, y + 1, 2.8, 3, c);
+                rect(x - 3.5, y - 2.6, 1, 2.8, d);
+                rect(x + 2.5, y - 2.6, 1, 2.8, d);
+                rect(x - 2.8, y + 0.3, 5.6, 0.7, d);
+                rect(x - 1, y - 2, 2, 1.3, 0xFFC03030);
+                rect(x - 1.8, y + 1.4, 0.9, 1.6, l);
+            }
+            case "idolo" -> {
+                disco(x, y, 4.5, alfa(c, 0.1 + 0.15 * pulso));
+                rect(x - 2.8, y - 4, 5.6, 7.6, d);
+                rect(x - 2.3, y - 3.5, 4.6, 6.6, c);
+                rect(x - 1.5, y - 2.2, 1, 1, 0xFF101010);
+                rect(x + 0.5, y - 2.2, 1, 1, 0xFF101010);
+                rect(x - 1.2, y, 2.4, 0.8, 0xFF101010);
+                rect(x - 1.2, y + 1.6, 2.4, 0.6, d);
+            }
+            case "gema" -> {
+                rect(x - 2, y - 3.2, 4, 1.3, l);
+                rect(x - 3.4, y - 1.9, 6.8, 1.5, c);
+                rect(x - 2.6, y - 0.4, 5.2, 1, c);
+                rect(x - 1.8, y + 0.6, 3.6, 1, d);
+                rect(x - 1, y + 1.6, 2, 1, d);
+                rect(x - 0.4, y + 2.6, 0.8, 0.8, d);
+                rect(x - 1.6, y - 2.8, 1, 0.8, 0xFFFFFFFF);
+                disco(x, y, 5, alfa(c, 0.08 + 0.1 * pulso));
+            }
+            case "lagrima" -> {
+                disco(x, y + 1.2, 2.6, c);
+                rect(x - 1, y - 2.6, 2, 2, c);
+                rect(x - 0.5, y - 4, 1, 1.6, c);
+                rect(x - 1.6, y + 0.2, 0.9, 1.6, 0xFFFFFFFF);
+                disco(x, y + 0.5, 5, alfa(c, 0.1 + 0.1 * pulso));
+            }
+            case "corona_rey" -> {
+                rect(x - 4.6, y, 9.2, 3, c);
+                for (int i = -2; i <= 2; i++) rect(x + i * 2 - 0.7, y - 3.2 - (i == 0 ? 1.4 : 0), 1.4, 3.4 + (i == 0 ? 1.4 : 0), c);
+                rect(x - 4.6, y + 2.4, 9.2, 0.6, d);
+                rect(x - 3.2, y + 0.8, 1, 1, 0xFFD83A3A);
+                rect(x - 0.5, y + 0.8, 1, 1, 0xFF3AD870);
+                rect(x + 2.2, y + 0.8, 1, 1, 0xFF3A7AFF);
+                rect(x - 0.6, y - 4.8, 1.2, 1.2, 0xFFFFFFFF);
+            }
+            case "huevo" -> {
+                elipse(x, y, 2.8, 3.6, d);
+                elipse(x, y, 2.4, 3.2, c);
+                rect(x - 1.4, y - 2.3, 1, 1.3, l);
+                rect(x + 0.5, y + 0.4, 1, 1, 0xFF1C4A4A);
+                rect(x - 1, y + 1.6, 1, 1, 0xFF1C4A4A);
+                rect(x - 0.4, y - 0.8, 0.8, 0.8, 0xFF1C4A4A);
+            }
+            case "cuarzo" -> {
+                rect(x - 3.2, y - 0.8, 1.9, 4, c);
+                rect(x - 2.8, y - 1.8, 1.1, 1.2, l);
+                rect(x - 1, y - 3.4, 2.2, 6.4, l);
+                rect(x - 0.5, y - 4.4, 1.2, 1.2, 0xFFFFFFFF);
+                rect(x + 1.4, y - 0.4, 1.9, 3.4, c);
+                rect(x + 1.8, y - 1.4, 1.1, 1.2, l);
+                rect(x - 3.2, y + 2.8, 6.6, 0.7, d);
+            }
+            case "pepitas" -> {
+                disco(x - 2, y + 1.3, 1.9, d);
+                disco(x - 2, y + 1.2, 1.5, c);
+                disco(x + 2, y + 1.4, 1.9, d);
+                disco(x + 2, y + 1.3, 1.5, c);
+                disco(x, y - 1.3, 2.2, d);
+                disco(x, y - 1.4, 1.8, c);
+                rect(x - 0.8, y - 2.2, 0.9, 0.7, l);
+            }
+            case "escama" -> {
+                disco(x, y, 4.5, alfa(0xFF7A2A, 0.12 + 0.12 * pulso));
+                elipse(x, y, 3.1, 3.8, d);
+                elipse(x, y, 2.7, 3.4, c);
+                linea(x, y - 3, x, y + 3, 0.5, d);
+                linea(x - 2, y - 1.2, x + 2, y - 1.2, 0.5, d);
+                linea(x - 1.6, y + 1.2, x + 1.6, y + 1.2, 0.5, d);
+                rect(x - 1.6, y - 2.6, 1, 0.8, l);
+            }
+            case "arca" -> {
+                rect(x - 4.4, y - 3.4, 8.8, 6.8, 0xFF14101A);
+                rect(x - 3.9, y - 2.9, 7.8, 5.8, c);
+                rect(x - 3.4, y - 2.9, 1.1, 5.8, 0xFFD4A832);
+                rect(x + 2.3, y - 2.9, 1.1, 5.8, 0xFFD4A832);
+                rect(x - 3.9, y - 0.9, 7.8, 0.7, 0xFF14101A);
+                rect(x - 0.8, y - 0.8, 1.6, 2, 0xFFD4A832);
+            }
+            case "plantilla" -> {
+                rect(x - 3.2, y - 3.8, 6.4, 7.6, d);
+                rect(x - 2.7, y - 3.3, 5.4, 6.6, c);
+                rect(x - 1.8, y - 2.4, 3.6, 1.2, l);
+                rect(x - 1.8, y - 0.4, 1.4, 1.2, l);
+                rect(x + 0.4, y - 0.4, 1.4, 1.2, l);
+                rect(x - 1.8, y + 1.6, 3.6, 1, l);
+                rect(x - 3.2, y - 0.8, 0.8, 1.6, 0xFF14101A);
+            }
+            case "restos" -> {
+                rect(x - 3.2, y - 2.8, 6.4, 5.6, d);
+                rect(x - 2.7, y - 2.3, 5.4, 4.6, c);
+                rect(x - 1.2, y - 2.3, 0.8, 3, 0xFFE0A050);
+                rect(x + 1, y - 1.2, 0.8, 3.2, 0xFFE0A050);
+                rect(x - 2.4, y + 0.8, 1, 1, 0xFF3A2A28);
+            }
+            case "fragmento" -> {
+                disco(x, y, 4.6, alfa(c, 0.12 + 0.14 * pulso));
+                rect(x - 1, y - 4.2, 2, 2.4, l);
+                rect(x - 2.2, y - 1.8, 4.4, 3, c);
+                rect(x - 1.4, y + 1.2, 2.8, 1.4, d);
+                rect(x - 0.5, y + 2.6, 1, 1.2, d);
+                rect(x - 0.4, y - 3.4, 0.5, 4, 0xFFFFFFFF);
+            }
+            case "shulker" -> {
+                rect(x - 3.6, y - 3.4, 7.2, 3.4, c);
+                rect(x - 3.6, y + 0.4, 7.2, 3, d);
+                rect(x - 3.6, y - 0.4, 7.2, 0.8, 0xFFCDA0CD);
+                rect(x - 2.6, y - 2.6, 1.6, 1, l);
+                rect(x - 0.6, y - 0.8, 1.2, 1.6, 0xFF3A1A4A);
+            }
+            case "frasco" -> {
+                disco(x, y + 1.6, 4.6, alfa(c, 0.12 + 0.12 * pulso));
+                disco(x, y + 1.6, 3.2, d);
+                disco(x, y + 1.6, 2.8, c);
+                rect(x - 1, y - 3.4, 2, 2.4, 0xFFC8B8D0);
+                rect(x - 1.1, y - 4.2, 2.2, 1, 0xFFA0672E);
+                rect(x - 1.8, y + 0.6, 1, 1, l);
+                rect(x + 0.4, y + 2.2, 0.8, 0.8, l);
+            }
+            case "cabeza" -> {
+                rect(x - 3.8, y - 2.4, 7.6, 5, d);
+                rect(x - 3.3, y - 1.9, 6.6, 4, c);
+                rect(x - 4.8, y + 0.2, 1.8, 2.6, c);
+                rect(x + 3, y + 0.2, 1.8, 2.6, c);
+                rect(x - 3.4, y - 4.8, 1, 2.8, 0xFFB8B8B8);
+                rect(x + 2.4, y - 4.8, 1, 2.8, 0xFFB8B8B8);
+                rect(x - 2, y - 0.8, 1.2, 1, 0xFFE070D0);
+                rect(x + 0.8, y - 0.8, 1.2, 1, 0xFFE070D0);
+                rect(x - 2.4, y + 1.8, 4.8, 0.7, 0xFFE8E8E8);
+            }
+            case "elitros" -> {
+                for (int r = 0; r < 7; r++) {
+                    double wl = r < 3 ? 1.4 + r * 1.1 : 4.6 - (r - 3) * 0.8;
+                    rect(x - 0.4 - wl, y - 3.6 + r, wl, 1, c);
+                    rect(x + 0.4, y - 3.6 + r, wl, 1, c);
+                }
+                linea(x - 0.6, y - 3, x - 4.2, y + 1, 0.5, d);
+                linea(x + 0.6, y - 3, x + 4.2, y + 1, 0.5, d);
+                linea(x - 0.6, y - 1.5, x - 3, y + 2, 0.5, d);
+                linea(x + 0.6, y - 1.5, x + 3, y + 2, 0.5, d);
+            }
+            case "trofeo" -> {
+                disco(x, y - 0.5, 5.4, alfa(c, 0.1 + 0.12 * pulso));
+                rect(x - 3.2, y - 3.6, 6.4, 1.4, c);
+                rect(x - 2.6, y - 2.2, 5.2, 1.2, c);
+                rect(x - 1.6, y - 1, 3.2, 1.2, c);
+                rect(x - 4.4, y - 3, 1, 2.4, d);
+                rect(x + 3.4, y - 3, 1, 2.4, d);
+                rect(x - 0.6, y + 0.2, 1.2, 2, c);
+                rect(x - 2.4, y + 2.2, 4.8, 1.2, d);
+                rect(x - 0.5, y - 2.8, 1, 1, 0xFFFFFFFF);
+            }
+            default -> {
+                rect(x - 3, y - 3, 6, 6, d);
+                rect(x - 2.5, y - 2.5, 5, 5, c);
+            }
+        }
     }
 
     private void peligro(Peligro h, double cam, double t) {

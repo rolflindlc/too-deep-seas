@@ -31,7 +31,7 @@ public final class RodStats {
 
     /** Lo que el servidor lee de la caña y del mundo al lanzar. */
     public record Input(RodTier tier, List<Modifier> modifiers, int luck, int lure, int depthEnchant,
-                        FishingMedium medium, double realDepth) {
+                        FishingMedium medium) {
     }
 
     public final RodTier tier;
@@ -39,7 +39,7 @@ public final class RodStats {
     public final boolean canFish;
     /** Profundidad del sedal con bonus (m). */
     public final double maxDepth;
-    /** Profundidad de la partida (m). Infinita en el Vacío. */
+    /** Profundidad de la partida (m): la del sedal de la caña, sea cual sea la del agua. Infinita en el Vacío. */
     public final double effectiveDepth;
     public final double base;
     public final double k;
@@ -78,7 +78,7 @@ public final class RodStats {
         this.maxDepth = Math.min(CAP_DEPTH, tier.lineDepth + depth + 5.0 * clamp(in.depthEnchant(), 0, 3));
         this.effectiveDepth = in.medium() == FishingMedium.VOID
                 ? Double.POSITIVE_INFINITY
-                : Math.max(MIN_DEPTH, Math.min(in.realDepth(), maxDepth));
+                : Math.max(MIN_DEPTH, maxDepth);
         this.base = BASE_DESCENT * (1 + clamp(descent, -CAP_DESCENT, CAP_DESCENT));
         this.k = ACCEL_PER_BLOCK;
         if (tier == RodTier.PRISMARINA && in.medium() == FishingMedium.OCEAN) hspeed += 0.15;

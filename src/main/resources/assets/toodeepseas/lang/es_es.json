@@ -756,5 +756,7 @@
   "minijuego.toodeepseas.muerte.foca": "Una foca hambrienta",
   "minijuego.toodeepseas.muerte.lucio": "Un lucio voraz",
   "minijuego.toodeepseas.muerte.anguila_fango": "Una anguila del fango",
-  "minijuego.toodeepseas.muerte.ghast": "Un proyectil de ghast"
+  "minijuego.toodeepseas.muerte.ghast": "Un proyectil de ghast",
+  "minijuego.toodeepseas.poca_agua": "Hace falta una masa de al menos %s bloques de agua conectados para pescar",
+  "minijuego.toodeepseas.poca_lava": "Hace falta una masa de al menos %s bloques de lava conectados para pescar"
 }

@@ -80,7 +80,7 @@ public final class RodTooltip {
      */
     public static List<Component> statLines(ItemStack rod) {
         List<Component> out = new ArrayList<>();
-        RodStats s = RodData.stats(rod, FishingMedium.WATER, Double.MAX_VALUE);
+        RodStats s = RodData.stats(rod, FishingMedium.WATER);
         if (s == null) return out;
         out.add(Component.translatable("stat.toodeepseas.sedal", Fmt.num(s.maxDepth, 0)));
         out.add(Component.translatable("stat.toodeepseas.bajada", Fmt.num(s.base, 2), Fmt.pct(s.base / RodStats.BASE_DESCENT - 1)));

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RodStatsTest {
     private static RodStats stats(RodTier tier, FishingMedium medium, double realDepth, int luck, int lure, int depthEnch, Modifier... mods) {
-        return RodStats.compute(new RodStats.Input(tier, List.of(mods), luck, lure, depthEnch, medium, realDepth));
+        return RodStats.compute(new RodStats.Input(tier, List.of(mods), luck, lure, depthEnch, medium));
     }
 
     @Test
@@ -33,9 +33,11 @@ class RodStatsTest {
 
     @Test
     void profundidadEfectiva() {
-        assertEquals(10, stats(RodTier.MADERA, FishingMedium.WATER, 1, 0, 0, 0).effectiveDepth);   // mínimo de 10 m
-        assertEquals(30, stats(RodTier.MADERA, FishingMedium.WATER, 200, 0, 0, 0).effectiveDepth); // limita el sedal
-        assertEquals(25, stats(RodTier.HIERRO, FishingMedium.WATER, 25, 0, 0, 0).effectiveDepth);  // limita el agua
+        // la profundidad de la partida es la del sedal de la caña, aunque el agua sea más o menos honda
+        assertEquals(30, stats(RodTier.MADERA, FishingMedium.WATER, 1, 0, 0, 0).effectiveDepth);
+        assertEquals(30, stats(RodTier.MADERA, FishingMedium.WATER, 200, 0, 0, 0).effectiveDepth);
+        assertEquals(70, stats(RodTier.HIERRO, FishingMedium.WATER, 25, 0, 0, 0).effectiveDepth);
+        assertEquals(120, stats(RodTier.NETHERITA, FishingMedium.LAVA, 5, 0, 0, 0).effectiveDepth);
         assertEquals(Double.POSITIVE_INFINITY, stats(RodTier.VACIO, FishingMedium.VOID, 0, 0, 0, 0).effectiveDepth);
     }
 

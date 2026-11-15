@@ -193,11 +193,11 @@ public final class RodData {
 
     /** Parámetros del minijuego para esta caña tal como está equipada, o null si no es una caña. */
     @Nullable
-    public static RodStats stats(ItemStack rod, FishingMedium medium, double realDepth) {
+    public static RodStats stats(ItemStack rod, FishingMedium medium) {
         RodTier tier = ModItems.tierOf(rod);
         if (tier == null) return null;
         return RodStats.compute(new RodStats.Input(tier, modifiers(rod),
-                EnchantmentHelper.getFishingLuckBonus(rod), EnchantmentHelper.getFishingSpeedBonus(rod), 0, medium, realDepth));
+                EnchantmentHelper.getFishingLuckBonus(rod), EnchantmentHelper.getFishingSpeedBonus(rod), 0, medium));
     }
 
     /** Una caña vacía no guarda la etiqueta, para que sea idéntica a una recién fabricada. */
