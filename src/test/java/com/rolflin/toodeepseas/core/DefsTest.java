@@ -74,7 +74,7 @@ class DefsTest {
         assertEquals(3, d.maxLevel());
         assertEquals(90, d.usesAt(3));
         assertEquals(List.of(new Modifier(Stat.DEPTH, 20)), d.modifiers(2));
-        RodStats s = RodStats.compute(new RodStats.Input(RodTier.COBRE, d.modifiers(1), 0, 0, 0, FishingMedium.WATER, 200));
+        RodStats s = RodStats.compute(new RodStats.Input(RodTier.COBRE, d.modifiers(1), 0, 0, 0, FishingMedium.WATER));
         assertEquals(55, s.maxDepth);
     }
 
