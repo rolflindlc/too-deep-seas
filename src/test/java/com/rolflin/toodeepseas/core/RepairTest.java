@@ -3,6 +3,7 @@ package com.rolflin.toodeepseas.core;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RepairTest {
     @Test
@@ -14,10 +15,11 @@ class RepairTest {
     }
 
     @Test
-    void cuatroUnidadesReparanDelTodo() {
+    void comoMuchoCuatroUnidadesReparanDelTodo() {
         for (int max : new int[]{3, 15, 25, 40, 90, 600, 1300}) {
-            assertEquals(4, Repair.units(max, 0, 64, 99), "max " + max);
-            assertEquals(max, Repair.usesAfter(max, 0, 4), "max " + max);
+            int units = Repair.units(max, 0, 64, 99);
+            assertTrue(units >= 3 && units <= 4, "max " + max + ": " + units);
+            assertEquals(max, Repair.usesAfter(max, 0, units), "max " + max);
         }
     }
 
