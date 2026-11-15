@@ -149,9 +149,9 @@ public final class Terreno {
 
     /** Huecos abiertos de una cueva a la altura {@code y}, de izquierda a derecha. */
     public static double[][] secSpans(Seccion s, double y) {
-        double u = Math.max(0, Math.min(1, (y - s.y0) / (s.y1 - s.y0))), fade = Math.sin(Math.PI * u);
+        double u = Math.max(0, Math.min(1, (y - s.y0) / (s.y1 - s.y0))), fade = StrictMath.sin(Math.PI * u);
         double rg = s.rough, wob = (Azar.vnoise(s.sd + 1, y / 40) - 0.5) * 8 * fade * Math.min(1, rg + 0.4);
-        double bul = s.wm > 1 ? Math.pow(fade, 0.6) * (s.wm - 1) * s.cw : 0;
+        double bul = s.wm > 1 ? StrictMath.pow(fade, 0.6) * (s.wm - 1) * s.cw : 0;
         double half = (s.cw + bul + (Azar.vnoise(s.sd + 2, y / 25) - 0.5) * 6 * fade) / 2;
         double n1 = (Azar.vnoise(s.sd + 3, y / 12) - 0.5) * 4 * fade * Math.min(1, rg);
         double n2 = (Azar.vnoise(s.sd + 4, y / 12) - 0.5) * 4 * fade * Math.min(1, rg);
@@ -179,7 +179,7 @@ public final class Terreno {
             if (u <= p.u0() || u >= p.u1()) continue;
             double[] big = m.get(0);
             for (double[] q : m) if (q[1] - q[0] > big[1] - big[0]) big = q;
-            double pw = Math.min(p.w() * Math.sqrt(Math.sin(Math.PI * (u - p.u0()) / (p.u1() - p.u0()))), big[1] - big[0] - 28);
+            double pw = Math.min(p.w() * Math.sqrt(StrictMath.sin(Math.PI * (u - p.u0()) / (p.u1() - p.u0()))), big[1] - big[0] - 28);
             if (pw < 1.5) continue;
             double a = Math.max(big[0] + 14, Math.min(big[1] - 14 - pw, big[0] + (big[1] - big[0]) * p.f() - pw / 2));
             int at = m.indexOf(big);
@@ -316,7 +316,7 @@ public final class Terreno {
             }
             out.add(sec);
             // más espacio abierto en el abismo (territorio del monstruo)
-            d = (y1 + fo) / PPB + (6 + r.next() * 8) / Math.pow(p.freq() * (magma ? 1.3 : 1), 1.5) + (d >= 62 ? 10 : 0);
+            d = (y1 + fo) / PPB + (6 + r.next() * 8) / StrictMath.pow(p.freq() * (magma ? 1.3 : 1), 1.5) + (d >= 62 ? 10 : 0);
         }
         return out;
     }
