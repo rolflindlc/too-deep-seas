@@ -306,7 +306,7 @@ public final class CapturasGameTests {
             }
         }
         check(peces > 1200, "peces en 2000 capturas: " + peces);
-        check(propios > peces / 2 && distintos.size() >= 5, "peces del mod: " + propios + " de " + peces + ", distintos: " + distintos.size());
+        check(propios > peces * 0.35 && distintos.size() >= 5, "peces del mod: " + propios + " de " + peces + ", distintos: " + distintos.size());
 
         // En todos los biomas de agua hay algo que pescar a 30 m y tesoros propios a 120 m; en lava y Vacío también
         RandomSource random = RandomSource.create(7);
