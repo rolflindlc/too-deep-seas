@@ -39,6 +39,7 @@ import net.minecraftforge.registries.RegistryObject;
 @Mod(TooDeepSeas.MODID)
 public class TooDeepSeas {
     public static final String MODID = "toodeepseas";
+    public static final org.slf4j.Logger LOGGER = com.mojang.logging.LogUtils.getLogger();
 
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
