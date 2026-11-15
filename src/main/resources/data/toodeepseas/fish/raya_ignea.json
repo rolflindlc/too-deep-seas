@@ -1,0 +1,14 @@
+{
+  "name": "Raya ígnea",
+  "order": 87,
+  "rarity": 3,
+  "min_depth": 45,
+  "biomes": [
+    "lava"
+  ],
+  "movement": "zigzag",
+  "family": "igneo",
+  "color": "#f03514",
+  "sub_biome": "deltas",
+  "shape": "raya"
+}

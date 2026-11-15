@@ -1,0 +1,13 @@
+{
+  "name": "Pez sapo luminoso",
+  "order": 37,
+  "rarity": 3,
+  "min_depth": 70,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "circle",
+  "family": "abisal",
+  "color": "#4131aa",
+  "shape": "rape"
+}

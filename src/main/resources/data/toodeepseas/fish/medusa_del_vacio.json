@@ -1,0 +1,13 @@
+{
+  "name": "Medusa del vacío",
+  "order": 92,
+  "rarity": 1,
+  "min_depth": 0,
+  "biomes": [
+    "vacio"
+  ],
+  "movement": "vertical",
+  "family": "vacio",
+  "color": "#bb7be0",
+  "shape": "medusa"
+}

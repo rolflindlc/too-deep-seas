@@ -1,0 +1,14 @@
+{
+  "name": "Pez de obsidiana",
+  "order": 77,
+  "rarity": 3,
+  "min_depth": 95,
+  "biomes": [
+    "oceano",
+    "calido"
+  ],
+  "movement": "swim",
+  "family": "igneo",
+  "color": "#f39349",
+  "bait": "crema_magma_cebada"
+}

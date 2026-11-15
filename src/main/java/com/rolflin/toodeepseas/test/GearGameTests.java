@@ -3,6 +3,7 @@ package com.rolflin.toodeepseas.test;
 import com.rolflin.toodeepseas.TooDeepSeas;
 import com.rolflin.toodeepseas.core.Cofres;
 import com.rolflin.toodeepseas.core.RodTier;
+import com.rolflin.toodeepseas.core.juego.Perfil;
 import com.rolflin.toodeepseas.data.Defs;
 import com.rolflin.toodeepseas.data.RodData;
 import com.rolflin.toodeepseas.item.AccessoryItem;
@@ -80,6 +81,7 @@ public final class GearGameTests {
     public static void datosCargados(GameTestHelper helper) {
         check(Defs.ACCESSORIES.ids().size() == 20, "accesorios cargados: " + Defs.ACCESSORIES.ids().size());
         check(Defs.BAITS.ids().size() == 10, "cebos cargados: " + Defs.BAITS.ids().size());
+        check(Defs.PECES.ids().size() == 100, "peces cargados: " + Defs.PECES.ids().size());
         for (String id : Defs.ACCESSORIES.ids()) check(ModItems.ACCESSORIES.containsKey(id), "accesorio sin objeto: " + id);
         for (String id : Defs.BAITS.ids()) check(ModItems.BAITS.containsKey(id), "cebo sin objeto: " + id);
         for (String recipe : new String[]{"mesa_pescador", "cana_cobre", "cana_hierro", "cana_oro", "cana_prismarina", "cana_diamante", "cana_netherita", "taller/cana_vacio"}) {
@@ -445,6 +447,12 @@ public final class GearGameTests {
             }
         }
         check(chests > 60 && chests < 145, "cofres en 1000 capturas: " + chests);
+
+        // Sub-biomas del Nether (en la lava hacen de clima)
+        check(Biomas.subBioma(helper.getLevel().registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(Biomes.SOUL_SAND_VALLEY)) == Perfil.SubBioma.ALMAS, "desierto de almas");
+        check(Biomas.subBioma(helper.getLevel().registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(Biomes.BASALT_DELTAS)) == Perfil.SubBioma.DELTAS, "deltas de basalto");
+        check(Biomas.subBioma(helper.getLevel().registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(Biomes.NETHER_WASTES)) == Perfil.SubBioma.YERMOS, "yermos");
+        check(Biomas.subBioma(helper.getLevel(), helper.absolutePos(BlockPos.ZERO)) == null, "fuera del Nether no hay sub-bioma");
 
         // Biomas de Minecraft → biomas de pesca
         Registry<Biome> biomes = level.registryAccess().registryOrThrow(Registries.BIOME);

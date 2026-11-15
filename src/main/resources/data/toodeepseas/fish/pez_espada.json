@@ -1,0 +1,15 @@
+{
+  "name": "Pez espada",
+  "order": 12,
+  "rarity": 3,
+  "min_depth": 45,
+  "biomes": [
+    "oceano"
+  ],
+  "movement": "dart",
+  "family": "carnivoro",
+  "color": "#c14e5d",
+  "weather": [
+    "tormenta"
+  ]
+}

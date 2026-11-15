@@ -1,0 +1,13 @@
+{
+  "name": "Esturión",
+  "order": 57,
+  "rarity": 3,
+  "min_depth": 30,
+  "biomes": [
+    "rio"
+  ],
+  "movement": "sine",
+  "family": "fluvial",
+  "color": "#b7aa4e",
+  "bait": "baya_luminosa"
+}

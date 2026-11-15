@@ -1,0 +1,12 @@
+{
+  "name": "Pez de magma",
+  "order": 79,
+  "rarity": 1,
+  "min_depth": 0,
+  "biomes": [
+    "lava"
+  ],
+  "movement": "jet",
+  "family": "igneo",
+  "color": "#f05619"
+}

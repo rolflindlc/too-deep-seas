@@ -1,0 +1,14 @@
+{
+  "name": "Pez carmesí",
+  "order": 82,
+  "rarity": 1,
+  "min_depth": 0,
+  "biomes": [
+    "lava"
+  ],
+  "movement": "school",
+  "family": "igneo",
+  "color": "#f3543f",
+  "sub_biome": "carmesi",
+  "bait": "hongo_carmesi_cebado"
+}

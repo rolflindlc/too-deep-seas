@@ -1,0 +1,13 @@
+{
+  "name": "Calamar de hielo",
+  "order": 51,
+  "rarity": 2,
+  "min_depth": 45,
+  "biomes": [
+    "helado"
+  ],
+  "movement": "jet",
+  "family": "helado",
+  "color": "#9ddce7",
+  "shape": "calamar"
+}

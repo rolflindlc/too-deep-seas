@@ -3,6 +3,7 @@ package com.rolflin.toodeepseas.world;
 import com.rolflin.toodeepseas.TooDeepSeas;
 import com.rolflin.toodeepseas.core.Cofres.Bioma;
 import com.rolflin.toodeepseas.core.Cofres.Clima;
+import com.rolflin.toodeepseas.core.juego.Perfil.SubBioma;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -10,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 
 /**
  * Traduce el sitio donde ha caído el anzuelo a los biomas y climas de pesca del mod.
@@ -42,6 +44,21 @@ public final class Biomas {
         if (biome.is(CALIDO)) return Bioma.CALIDO;
         if (biome.is(OCEANO)) return Bioma.OCEANO;
         return Bioma.RIO;
+    }
+
+    /** Sub-bioma del Nether en ese punto (en la lava hace el papel del clima); fuera del Nether, {@code null}. */
+    @javax.annotation.Nullable
+    public static SubBioma subBioma(Level level, BlockPos pos) {
+        return level.dimension() == Level.NETHER ? subBioma(level.getBiome(pos)) : null;
+    }
+
+    /** Lo que no sea ninguno de los otros cuatro biomas del Nether (también los de otros mods) cuenta como yermos. */
+    public static SubBioma subBioma(Holder<Biome> biome) {
+        if (biome.is(Biomes.BASALT_DELTAS)) return SubBioma.DELTAS;
+        if (biome.is(Biomes.SOUL_SAND_VALLEY)) return SubBioma.ALMAS;
+        if (biome.is(Biomes.CRIMSON_FOREST)) return SubBioma.CARMESI;
+        if (biome.is(Biomes.WARPED_FOREST)) return SubBioma.DISTORSIONADO;
+        return SubBioma.YERMOS;
     }
 
     /** Clima en ese punto: en los biomas donde nunca llueve (desierto, sabana) siempre está despejado. */

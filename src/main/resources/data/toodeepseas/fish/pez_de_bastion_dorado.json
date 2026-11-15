@@ -1,0 +1,12 @@
+{
+  "name": "Pez de bastión dorado",
+  "order": 88,
+  "rarity": 3,
+  "min_depth": 25,
+  "biomes": [
+    "lava"
+  ],
+  "movement": "flee",
+  "family": "igneo",
+  "color": "#f05a14"
+}

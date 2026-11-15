@@ -1,0 +1,17 @@
+{
+  "name": "Salamandra acuática",
+  "order": 74,
+  "rarity": 3,
+  "min_depth": 30,
+  "biomes": [
+    "pantano"
+  ],
+  "movement": "circle",
+  "family": "fluvial",
+  "color": "#74b148",
+  "weather": [
+    "lluvia",
+    "tormenta"
+  ],
+  "shape": "anguila"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Pez payaso",
+  "order": 25,
+  "rarity": 1,
+  "min_depth": 0,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "ambush",
+  "family": "comun",
+  "color": "#d8d65a"
+}

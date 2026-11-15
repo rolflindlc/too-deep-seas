@@ -1,0 +1,12 @@
+{
+  "name": "Pez león",
+  "order": 29,
+  "rarity": 2,
+  "min_depth": 20,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "vertical",
+  "family": "carnivoro",
+  "color": "#bf4a65"
+}

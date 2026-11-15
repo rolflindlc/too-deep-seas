@@ -1,0 +1,14 @@
+{
+  "name": "Calamar vampiro",
+  "order": 18,
+  "rarity": 3,
+  "min_depth": 70,
+  "biomes": [
+    "oceano"
+  ],
+  "movement": "jet",
+  "family": "abisal",
+  "color": "#7041c8",
+  "bait": "cebo_tinta_brillante",
+  "shape": "calamar"
+}

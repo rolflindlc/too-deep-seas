@@ -1,0 +1,13 @@
+{
+  "name": "Carpa",
+  "order": 53,
+  "rarity": 0,
+  "min_depth": 0,
+  "biomes": [
+    "rio",
+    "pantano"
+  ],
+  "movement": "swim",
+  "family": "fluvial",
+  "color": "#a9bb58"
+}

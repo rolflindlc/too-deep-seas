@@ -1,0 +1,17 @@
+{
+  "name": "Pez de hielo transparente",
+  "order": 40,
+  "rarity": 3,
+  "min_depth": 20,
+  "biomes": [
+    "helado"
+  ],
+  "movement": "flee",
+  "family": "helado",
+  "color": "#a5dde9",
+  "weather": [
+    "despejado"
+  ],
+  "bait": "cebo_helado",
+  "ghost": true
+}

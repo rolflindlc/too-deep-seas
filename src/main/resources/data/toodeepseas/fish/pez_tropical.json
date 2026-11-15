@@ -1,0 +1,12 @@
+{
+  "name": "Pez tropical",
+  "order": 2,
+  "rarity": 1,
+  "min_depth": 0,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "circle",
+  "family": "comun",
+  "color": "#df77c3"
+}

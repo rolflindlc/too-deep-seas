@@ -1,0 +1,16 @@
+{
+  "name": "Piraña dorada",
+  "order": 65,
+  "rarity": 4,
+  "min_depth": 45,
+  "biomes": [
+    "rio"
+  ],
+  "movement": "dart",
+  "family": "carnivoro",
+  "color": "#bf4a4a",
+  "weather": [
+    "tormenta"
+  ],
+  "bait": "carne_podrida_aderezada"
+}

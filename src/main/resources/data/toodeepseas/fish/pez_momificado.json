@@ -1,0 +1,15 @@
+{
+  "name": "Pez momificado",
+  "order": 76,
+  "rarity": 4,
+  "min_depth": 40,
+  "biomes": [
+    "pantano"
+  ],
+  "movement": "ambush",
+  "family": "abisal",
+  "color": "#4b37be",
+  "weather": [
+    "tormenta"
+  ]
+}

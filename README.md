@@ -1,4 +1,4 @@
-# Too Deep Seas — Forge 1.20.1 (fase 6: aldeas, y cofres del tesoro)
+# Too Deep Seas — Forge 1.20.1 (fase 7a: terreno y peces del minijuego)
 
 ## Qué hay
 - `core/` (Java puro): `RodTier` (las 8 cañas), `RodStats` (equipo → parámetros del minijuego, tope de 4 bloques/s), `Loadout` (ranuras), `AccessoryDef` y `BaitDef` (definiciones de datapack).
@@ -11,7 +11,9 @@
 - `loot/`: modificador de botín que añade fragmentos del vacío (ciudades del End, shulkers) y lombrices (pala sobre tierra o hierba).
 - Cofres del tesoro (`core/Cofres`, `item/CofreItem`, `world/Biomas`, `loot/CofrePescaModifier`): un cofre por bioma de pesca, con calidad, profundidad y clima; sus tablas de botín están en `data/toodeepseas/loot_tables/cofres` y se generan con `tools/gen_cofres.py`.
 - Aldeas (`world/Aldeas`, `mixin/`, `Config`): la mesa del pescador es el puesto de trabajo del pescador y sustituye al barril en las casas de pescador que se generen.
-- `prototipo/pesca.html`: prototipo web del minijuego.
+- Cofres exclusivos de clima (`item/CofreClimaItem`): cofre de lluvia y cofre de tormenta, con botín propio (`loot_tables/cofres/exclusivo`).
+- Minijuego, fase 7a (`core/juego/`, Java puro): `Azar` (el azar determinista del prototipo), `Perfil` (terreno de cada bioma y sub-bioma del Nether), `Terreno` (túnel y cuevas de una partida a partir de la semilla) y `PezDef` (los 100 peces, en `data/toodeepseas/fish/*.json`, enviados al cliente). Todavía no hay pantalla: las cañas pescan como en vanilla.
+- `prototipo/pesca.html`: prototipo web del minijuego. `tools/paridad/`: carga el prototipo en Node (`harness.js`) para volcar los peces (`gen_peces.js`) y el terreno de referencia (`gen_terreno.js`) con el que se compara el de Java.
 
 ## Descargar el jar
 Pestaña Actions del repositorio → última ejecución en verde → Artifacts → `toodeepseas-jar`. Copia el `.jar` a `mods` (Forge 1.20.1, 47.x).
@@ -32,13 +34,14 @@ Pestaña Actions del repositorio → última ejecución en verde → Artifacts �
 - **Cofres del tesoro** (como las cajas de pesca de Terraria): clic derecho para abrirlos.
   - Hay uno por bioma (océano, océano cálido, océano helado, río, pantano, lava, Vacío). Cada cofre recuerda la calidad (sencillo, reforzado, ornamentado, ancestral: la da el tier de la caña), la profundidad (superficie, aguas profundas, abisal) y el clima (despejado, lluvia, tormenta).
   - Botín: 2–5 tiradas del bioma según la calidad, más las de profundidad, las del clima y una de equipo de pesca según la calidad.
-  - De momento salen al pescar a la manera vanilla (10 % de las capturas, siempre de superficie) y en el creativo. El resto, con `/tds cofre <bioma> [calidad 1-4] [banda 1-3] [clima 1-3]`.
+  - **Cofres exclusivos de clima**: el cofre de lluvia y el de tormenta solo se pescan con ese clima, en cualquier bioma de agua (35 % de los cofres que salgan mientras llueve o hay tormenta; el resto son del bioma). Tienen botín propio: tridente, canalización, lealtad y cabezas en la tormenta; propulsión acuática, respiración, corazón del mar y conducto en la lluvia. También mejoran con la calidad y la profundidad.
+  - De momento salen al pescar a la manera vanilla (10 % de las capturas, siempre de superficie) y en el creativo. El resto, con `/tds cofre <bioma|lluvia|tormenta> [calidad 1-4] [banda 1-3] [clima 1-3]`.
   - Qué bioma de Minecraft cuenta como cada uno: etiquetas `data/toodeepseas/tags/worldgen/biome/pesca/`. Lo que no esté en ninguna es «río».
 - **Aldeas**: un aldeano sin trabajo junto a una mesa del pescador se hace pescador; el barril ya no sirve para eso. Las aldeas nuevas traen la mesa en la casa del pescador (las ya generadas conservan su barril, que sigue valiendo para el aldeano que lo tuviera). Con `barrilLegado = true` en `config/toodeepseas-common.toml` el barril vuelve a valer y las aldeas se generan como siempre (pide reiniciar).
 - `/tds equipar <accesorio> <nivel>`, `/tds cebo <cebo> <cantidad>`, `/tds vaciar` con la caña en la mano (operador).
 
 ## Estado
-- Compila en GitHub Actions y pasan las pruebas de `core/` y las de dentro del juego (`test/GearGameTests`: datos, recetas, mesa, taller, atajo, botín, cofres y aldeas). Actions falla si el servidor de pruebas no arranca y comprueba que el jar lleva el refmap de Mixin.
+- Compila en GitHub Actions y pasan las pruebas de `core/` y las de dentro del juego (`test/GearGameTests`: datos, recetas, mesa, taller, atajo, botín, cofres y aldeas). El terreno de Java se compara con el del prototipo en 44 partidas (11 biomas × 4 semillas y equipos). Actions falla si el servidor de pruebas no arranca y comprueba que el jar lleva el refmap de Mixin.
 - Lo visual (ventana de la mesa, descripciones, texturas) solo se ha comprobado compilando: falta verlo en el juego.
 - Las cañas pescan todavía como la vanilla y usan su textura. Las texturas de accesorios, cebos y mesa son provisionales.
 - La gamba de arrecife y el diente de tiburón tigre no se consiguen todavía en supervivencia: son botín del minijuego y del monstruo.

@@ -1,0 +1,12 @@
+{
+  "name": "Pez pulmonado",
+  "order": 69,
+  "rarity": 2,
+  "min_depth": 10,
+  "biomes": [
+    "pantano"
+  ],
+  "movement": "vertical",
+  "family": "fluvial",
+  "color": "#9cbc5c"
+}

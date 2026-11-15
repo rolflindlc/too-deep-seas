@@ -1,0 +1,16 @@
+{
+  "name": "Pez loro arcoíris",
+  "order": 23,
+  "rarity": 2,
+  "min_depth": 10,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "circle",
+  "family": "comun",
+  "color": "#d66edd",
+  "weather": [
+    "despejado"
+  ],
+  "bait": "gamba_arrecife"
+}

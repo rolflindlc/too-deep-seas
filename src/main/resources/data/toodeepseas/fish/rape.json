@@ -1,0 +1,14 @@
+{
+  "name": "Rape",
+  "order": 17,
+  "rarity": 3,
+  "min_depth": 70,
+  "biomes": [
+    "oceano"
+  ],
+  "movement": "ambush",
+  "family": "abisal",
+  "color": "#5c32ae",
+  "bait": "cebo_tinta_brillante",
+  "shape": "rape"
+}

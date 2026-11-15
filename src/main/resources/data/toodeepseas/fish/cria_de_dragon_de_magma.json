@@ -1,0 +1,12 @@
+{
+  "name": "Cría de dragón de magma",
+  "order": 90,
+  "rarity": 4,
+  "min_depth": 95,
+  "biomes": [
+    "lava"
+  ],
+  "movement": "jet",
+  "family": "igneo",
+  "color": "#f15327"
+}

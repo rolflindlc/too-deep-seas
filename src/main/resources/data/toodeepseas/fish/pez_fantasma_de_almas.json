@@ -1,0 +1,14 @@
+{
+  "name": "Pez fantasma de almas",
+  "order": 81,
+  "rarity": 3,
+  "min_depth": 30,
+  "biomes": [
+    "lava"
+  ],
+  "movement": "flee",
+  "family": "igneo",
+  "color": "#f17f22",
+  "sub_biome": "almas",
+  "ghost": true
+}

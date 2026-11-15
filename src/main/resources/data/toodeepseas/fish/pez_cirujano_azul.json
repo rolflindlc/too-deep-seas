@@ -1,0 +1,12 @@
+{
+  "name": "Pez cirujano azul",
+  "order": 26,
+  "rarity": 0,
+  "min_depth": 0,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "school",
+  "family": "comun",
+  "color": "#da62a4"
+}

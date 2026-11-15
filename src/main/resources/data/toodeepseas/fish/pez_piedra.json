@@ -1,0 +1,13 @@
+{
+  "name": "Pez piedra",
+  "order": 34,
+  "rarity": 3,
+  "min_depth": 45,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "ambush",
+  "family": "carnivoro",
+  "color": "#a65c3a",
+  "shape": "rape"
+}

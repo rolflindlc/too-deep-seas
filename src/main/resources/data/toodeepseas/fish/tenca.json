@@ -1,0 +1,12 @@
+{
+  "name": "Tenca",
+  "order": 66,
+  "rarity": 0,
+  "min_depth": 0,
+  "biomes": [
+    "pantano"
+  ],
+  "movement": "swim",
+  "family": "fluvial",
+  "color": "#bead60"
+}

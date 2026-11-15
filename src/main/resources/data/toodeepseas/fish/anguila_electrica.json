@@ -1,0 +1,16 @@
+{
+  "name": "Anguila eléctrica",
+  "order": 68,
+  "rarity": 3,
+  "min_depth": 20,
+  "biomes": [
+    "pantano"
+  ],
+  "movement": "sine",
+  "family": "tormenta",
+  "color": "#f5e35c",
+  "weather": [
+    "tormenta"
+  ],
+  "shape": "anguila"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Pez hacha abisal",
+  "order": 20,
+  "rarity": 3,
+  "min_depth": 95,
+  "biomes": [
+    "oceano"
+  ],
+  "movement": "flee",
+  "family": "abisal",
+  "color": "#376dbe"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Pez fango",
+  "order": 67,
+  "rarity": 1,
+  "min_depth": 0,
+  "biomes": [
+    "pantano"
+  ],
+  "movement": "ambush",
+  "family": "fluvial",
+  "color": "#96a744",
+  "weather": [
+    "lluvia",
+    "tormenta"
+  ]
+}

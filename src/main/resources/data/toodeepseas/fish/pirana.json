@@ -1,0 +1,12 @@
+{
+  "name": "Piraña",
+  "order": 64,
+  "rarity": 2,
+  "min_depth": 20,
+  "biomes": [
+    "rio"
+  ],
+  "movement": "school",
+  "family": "carnivoro",
+  "color": "#b13e5b"
+}

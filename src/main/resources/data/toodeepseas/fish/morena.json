@@ -1,0 +1,13 @@
+{
+  "name": "Morena",
+  "order": 30,
+  "rarity": 2,
+  "min_depth": 20,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "ambush",
+  "family": "carnivoro",
+  "color": "#b94157",
+  "shape": "anguila"
+}

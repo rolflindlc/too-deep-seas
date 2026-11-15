@@ -1,0 +1,17 @@
+{
+  "name": "Arenque",
+  "order": 6,
+  "rarity": 1,
+  "min_depth": 0,
+  "biomes": [
+    "oceano",
+    "helado"
+  ],
+  "movement": "flee",
+  "family": "comun",
+  "color": "#abd449",
+  "weather": [
+    "lluvia",
+    "tormenta"
+  ]
+}

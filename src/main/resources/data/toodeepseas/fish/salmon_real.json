@@ -1,0 +1,16 @@
+{
+  "name": "Salmón real",
+  "order": 63,
+  "rarity": 3,
+  "min_depth": 20,
+  "biomes": [
+    "rio"
+  ],
+  "movement": "jet",
+  "family": "fluvial",
+  "color": "#8eb54a",
+  "weather": [
+    "lluvia",
+    "tormenta"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Lucio",
+  "order": 55,
+  "rarity": 2,
+  "min_depth": 10,
+  "biomes": [
+    "rio"
+  ],
+  "movement": "ambush",
+  "family": "carnivoro",
+  "color": "#c25171"
+}

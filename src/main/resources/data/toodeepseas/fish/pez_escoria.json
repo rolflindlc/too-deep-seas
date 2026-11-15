@@ -1,0 +1,12 @@
+{
+  "name": "Pez escoria",
+  "order": 89,
+  "rarity": 3,
+  "min_depth": 60,
+  "biomes": [
+    "lava"
+  ],
+  "movement": "swim",
+  "family": "igneo",
+  "color": "#f07319"
+}

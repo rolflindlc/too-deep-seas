@@ -1,0 +1,15 @@
+{
+  "name": "Pez volador",
+  "order": 9,
+  "rarity": 2,
+  "min_depth": 0,
+  "biomes": [
+    "oceano"
+  ],
+  "movement": "jet",
+  "family": "comun",
+  "color": "#df77cf",
+  "weather": [
+    "despejado"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Anguila de río",
+  "order": 58,
+  "rarity": 2,
+  "min_depth": 10,
+  "biomes": [
+    "rio",
+    "pantano"
+  ],
+  "movement": "flee",
+  "family": "fluvial",
+  "color": "#b89951",
+  "weather": [
+    "lluvia",
+    "tormenta"
+  ],
+  "bait": "baya_luminosa",
+  "shape": "anguila"
+}

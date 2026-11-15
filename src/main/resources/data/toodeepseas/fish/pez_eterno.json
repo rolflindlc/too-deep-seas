@@ -1,0 +1,12 @@
+{
+  "name": "Pez eterno",
+  "order": 99,
+  "rarity": 4,
+  "min_depth": 600,
+  "biomes": [
+    "vacio"
+  ],
+  "movement": "jet",
+  "family": "vacio",
+  "color": "#db8be4"
+}

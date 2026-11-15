@@ -1,0 +1,14 @@
+{
+  "name": "Pez distorsionado",
+  "order": 83,
+  "rarity": 1,
+  "min_depth": 0,
+  "biomes": [
+    "lava"
+  ],
+  "movement": "circle",
+  "family": "igneo",
+  "color": "#f37f49",
+  "sub_biome": "distorsionado",
+  "bait": "hongo_distorsionado_cebado"
+}

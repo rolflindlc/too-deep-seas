@@ -1,0 +1,15 @@
+{
+  "name": "Pez ángel",
+  "order": 27,
+  "rarity": 1,
+  "min_depth": 10,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "sine",
+  "family": "comun",
+  "color": "#e0837b",
+  "weather": [
+    "despejado"
+  ]
+}

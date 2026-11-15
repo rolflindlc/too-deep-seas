@@ -1,0 +1,13 @@
+{
+  "name": "Pez gato de cristal",
+  "order": 62,
+  "rarity": 2,
+  "min_depth": 10,
+  "biomes": [
+    "rio"
+  ],
+  "movement": "circle",
+  "family": "fluvial",
+  "color": "#7abe60",
+  "ghost": true
+}

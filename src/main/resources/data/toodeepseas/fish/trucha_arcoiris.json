@@ -1,0 +1,16 @@
+{
+  "name": "Trucha arcoíris",
+  "order": 56,
+  "rarity": 1,
+  "min_depth": 0,
+  "biomes": [
+    "rio"
+  ],
+  "movement": "zigzag",
+  "family": "fluvial",
+  "color": "#6eb851",
+  "weather": [
+    "lluvia",
+    "tormenta"
+  ]
+}

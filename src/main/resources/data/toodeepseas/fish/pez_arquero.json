@@ -1,0 +1,15 @@
+{
+  "name": "Pez arquero",
+  "order": 71,
+  "rarity": 2,
+  "min_depth": 0,
+  "biomes": [
+    "pantano"
+  ],
+  "movement": "dart",
+  "family": "fluvial",
+  "color": "#bcbc5c",
+  "weather": [
+    "despejado"
+  ]
+}

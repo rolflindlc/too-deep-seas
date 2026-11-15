@@ -1,0 +1,13 @@
+{
+  "name": "Pez de cuarzo",
+  "order": 84,
+  "rarity": 1,
+  "min_depth": 10,
+  "biomes": [
+    "lava"
+  ],
+  "movement": "dart",
+  "family": "igneo",
+  "color": "#f39c44",
+  "sub_biome": "yermos"
+}

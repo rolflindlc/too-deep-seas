@@ -1,0 +1,16 @@
+{
+  "name": "Pez cristal de aurora",
+  "order": 49,
+  "rarity": 3,
+  "min_depth": 45,
+  "biomes": [
+    "helado"
+  ],
+  "movement": "sine",
+  "family": "helado",
+  "color": "#a9d7ea",
+  "weather": [
+    "despejado"
+  ],
+  "ghost": true
+}

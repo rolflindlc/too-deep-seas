@@ -1,0 +1,14 @@
+{
+  "name": "Platija",
+  "order": 44,
+  "rarity": 1,
+  "min_depth": 10,
+  "biomes": [
+    "helado",
+    "oceano"
+  ],
+  "movement": "ambush",
+  "family": "comun",
+  "color": "#d9b45e",
+  "shape": "raya"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Pez globo",
+  "order": 3,
+  "rarity": 1,
+  "min_depth": 5,
+  "biomes": [
+    "oceano",
+    "calido"
+  ],
+  "movement": "vertical",
+  "family": "comun",
+  "color": "#bf49d4"
+}

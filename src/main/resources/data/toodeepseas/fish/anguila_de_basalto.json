@@ -1,0 +1,14 @@
+{
+  "name": "Anguila de basalto",
+  "order": 80,
+  "rarity": 2,
+  "min_depth": 10,
+  "biomes": [
+    "lava"
+  ],
+  "movement": "sine",
+  "family": "igneo",
+  "color": "#f07f0f",
+  "sub_biome": "deltas",
+  "shape": "anguila"
+}

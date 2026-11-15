@@ -1,0 +1,12 @@
+{
+  "name": "Merluza negra",
+  "order": 50,
+  "rarity": 3,
+  "min_depth": 70,
+  "biomes": [
+    "helado"
+  ],
+  "movement": "flee",
+  "family": "abisal",
+  "color": "#3069a6"
+}

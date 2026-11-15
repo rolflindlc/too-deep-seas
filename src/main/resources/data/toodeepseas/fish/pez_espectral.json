@@ -1,0 +1,13 @@
+{
+  "name": "Pez espectral",
+  "order": 97,
+  "rarity": 3,
+  "min_depth": 200,
+  "biomes": [
+    "vacio"
+  ],
+  "movement": "flee",
+  "family": "vacio",
+  "color": "#b87fe1",
+  "ghost": true
+}

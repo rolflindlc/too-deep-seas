@@ -1,0 +1,13 @@
+{
+  "name": "Pez víbora",
+  "order": 19,
+  "rarity": 3,
+  "min_depth": 80,
+  "biomes": [
+    "oceano"
+  ],
+  "movement": "ambush",
+  "family": "abisal",
+  "color": "#3139aa",
+  "shape": "rape"
+}

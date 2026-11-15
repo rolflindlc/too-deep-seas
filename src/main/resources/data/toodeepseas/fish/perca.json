@@ -1,0 +1,12 @@
+{
+  "name": "Perca",
+  "order": 54,
+  "rarity": 0,
+  "min_depth": 0,
+  "biomes": [
+    "rio"
+  ],
+  "movement": "school",
+  "family": "fluvial",
+  "color": "#9cbf63"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Caballito de mar",
+  "order": 24,
+  "rarity": 2,
+  "min_depth": 5,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "vertical",
+  "family": "comun",
+  "color": "#58d651",
+  "bait": "gamba_arrecife",
+  "shape": "caballito"
+}

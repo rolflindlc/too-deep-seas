@@ -1,0 +1,14 @@
+{
+  "name": "Pez de brasa",
+  "order": 78,
+  "rarity": 3,
+  "min_depth": 95,
+  "biomes": [
+    "oceano",
+    "helado"
+  ],
+  "movement": "zigzag",
+  "family": "igneo",
+  "color": "#f28e31",
+  "bait": "crema_magma_cebada"
+}

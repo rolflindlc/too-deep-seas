@@ -1,0 +1,13 @@
+{
+  "name": "Trucha ártica",
+  "order": 41,
+  "rarity": 1,
+  "min_depth": 0,
+  "biomes": [
+    "helado",
+    "rio"
+  ],
+  "movement": "zigzag",
+  "family": "helado",
+  "color": "#99c7e6"
+}

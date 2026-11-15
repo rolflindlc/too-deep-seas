@@ -1,0 +1,15 @@
+{
+  "name": "Pez de escarcha",
+  "order": 48,
+  "rarity": 2,
+  "min_depth": 20,
+  "biomes": [
+    "helado"
+  ],
+  "movement": "circle",
+  "family": "helado",
+  "color": "#bae2ee",
+  "weather": [
+    "tormenta"
+  ]
+}

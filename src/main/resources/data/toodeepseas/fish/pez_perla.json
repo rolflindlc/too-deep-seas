@@ -1,0 +1,12 @@
+{
+  "name": "Pez perla",
+  "order": 91,
+  "rarity": 1,
+  "min_depth": 0,
+  "biomes": [
+    "vacio"
+  ],
+  "movement": "circle",
+  "family": "vacio",
+  "color": "#c773de"
+}

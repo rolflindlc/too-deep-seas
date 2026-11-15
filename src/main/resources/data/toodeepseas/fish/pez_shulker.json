@@ -1,0 +1,12 @@
+{
+  "name": "Pez shulker",
+  "order": 95,
+  "rarity": 2,
+  "min_depth": 100,
+  "biomes": [
+    "vacio"
+  ],
+  "movement": "dart",
+  "family": "vacio",
+  "color": "#ac66db"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Manta raya",
+  "order": 35,
+  "rarity": 3,
+  "min_depth": 45,
+  "biomes": [
+    "calido",
+    "oceano"
+  ],
+  "movement": "sine",
+  "family": "comun",
+  "color": "#dfc877",
+  "weather": [
+    "despejado"
+  ],
+  "shape": "raya"
+}

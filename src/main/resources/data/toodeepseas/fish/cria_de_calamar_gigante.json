@@ -1,0 +1,16 @@
+{
+  "name": "Cría de calamar gigante",
+  "order": 22,
+  "rarity": 4,
+  "min_depth": 95,
+  "biomes": [
+    "oceano"
+  ],
+  "movement": "jet",
+  "family": "abisal",
+  "color": "#3776be",
+  "weather": [
+    "tormenta"
+  ],
+  "shape": "calamar"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Pez de púrpura",
+  "order": 96,
+  "rarity": 2,
+  "min_depth": 50,
+  "biomes": [
+    "vacio"
+  ],
+  "movement": "zigzag",
+  "family": "vacio",
+  "color": "#b86edd"
+}

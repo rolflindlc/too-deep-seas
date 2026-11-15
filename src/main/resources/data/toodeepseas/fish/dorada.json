@@ -1,0 +1,15 @@
+{
+  "name": "Dorada",
+  "order": 8,
+  "rarity": 1,
+  "min_depth": 10,
+  "biomes": [
+    "oceano"
+  ],
+  "movement": "swim",
+  "family": "comun",
+  "color": "#d49849",
+  "weather": [
+    "despejado"
+  ]
+}

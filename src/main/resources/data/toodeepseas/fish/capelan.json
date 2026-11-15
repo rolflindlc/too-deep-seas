@@ -1,0 +1,16 @@
+{
+  "name": "Capelán",
+  "order": 42,
+  "rarity": 0,
+  "min_depth": 0,
+  "biomes": [
+    "helado"
+  ],
+  "movement": "school",
+  "family": "helado",
+  "color": "#bee7ef",
+  "weather": [
+    "lluvia",
+    "tormenta"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Raya eléctrica",
+  "order": 14,
+  "rarity": 3,
+  "min_depth": 45,
+  "biomes": [
+    "oceano"
+  ],
+  "movement": "sine",
+  "family": "tormenta",
+  "color": "#f4ec57",
+  "weather": [
+    "tormenta"
+  ],
+  "bait": "cebo_cobre_cargado",
+  "shape": "raya"
+}

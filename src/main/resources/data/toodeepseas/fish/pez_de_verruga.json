@@ -1,0 +1,13 @@
+{
+  "name": "Pez de verruga",
+  "order": 86,
+  "rarity": 1,
+  "min_depth": 10,
+  "biomes": [
+    "lava"
+  ],
+  "movement": "vertical",
+  "family": "igneo",
+  "color": "#f3933f",
+  "bait": "verruga_cebada"
+}

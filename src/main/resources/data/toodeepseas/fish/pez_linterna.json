@@ -1,0 +1,13 @@
+{
+  "name": "Pez linterna",
+  "order": 16,
+  "rarity": 2,
+  "min_depth": 70,
+  "biomes": [
+    "oceano"
+  ],
+  "movement": "circle",
+  "family": "abisal",
+  "color": "#344db2",
+  "bait": "cebo_tinta_brillante"
+}

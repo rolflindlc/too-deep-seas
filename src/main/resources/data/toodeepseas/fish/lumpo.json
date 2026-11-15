@@ -1,0 +1,12 @@
+{
+  "name": "Lumpo",
+  "order": 45,
+  "rarity": 1,
+  "min_depth": 10,
+  "biomes": [
+    "helado"
+  ],
+  "movement": "vertical",
+  "family": "helado",
+  "color": "#95c6e4"
+}

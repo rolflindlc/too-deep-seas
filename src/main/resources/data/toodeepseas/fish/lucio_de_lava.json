@@ -1,0 +1,12 @@
+{
+  "name": "Lucio de lava",
+  "order": 85,
+  "rarity": 2,
+  "min_depth": 25,
+  "biomes": [
+    "lava"
+  ],
+  "movement": "ambush",
+  "family": "igneo",
+  "color": "#f17b27"
+}

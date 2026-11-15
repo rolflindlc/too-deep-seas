@@ -1,0 +1,12 @@
+{
+  "name": "Pez lobo",
+  "order": 46,
+  "rarity": 2,
+  "min_depth": 45,
+  "biomes": [
+    "helado"
+  ],
+  "movement": "dart",
+  "family": "carnivoro",
+  "color": "#bd5742"
+}

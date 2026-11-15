@@ -1,0 +1,13 @@
+{
+  "name": "Anguila estelar",
+  "order": 93,
+  "rarity": 2,
+  "min_depth": 0,
+  "biomes": [
+    "vacio"
+  ],
+  "movement": "sine",
+  "family": "vacio",
+  "color": "#bc83e2",
+  "shape": "anguila"
+}

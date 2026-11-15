@@ -1,0 +1,12 @@
+{
+  "name": "Sardina",
+  "order": 4,
+  "rarity": 0,
+  "min_depth": 0,
+  "biomes": [
+    "oceano"
+  ],
+  "movement": "school",
+  "family": "comun",
+  "color": "#8edd6e"
+}

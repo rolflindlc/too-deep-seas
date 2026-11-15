@@ -1,0 +1,14 @@
+{
+  "name": "Barracuda",
+  "order": 10,
+  "rarity": 2,
+  "min_depth": 45,
+  "biomes": [
+    "oceano",
+    "calido"
+  ],
+  "movement": "dart",
+  "family": "carnivoro",
+  "color": "#b94941",
+  "bait": "carne_podrida_aderezada"
+}

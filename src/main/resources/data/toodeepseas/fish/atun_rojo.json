@@ -1,0 +1,12 @@
+{
+  "name": "Atún rojo",
+  "order": 11,
+  "rarity": 2,
+  "min_depth": 30,
+  "biomes": [
+    "oceano"
+  ],
+  "movement": "swim",
+  "family": "comun",
+  "color": "#7edb66"
+}

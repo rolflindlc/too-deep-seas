@@ -1,0 +1,12 @@
+{
+  "name": "Pez de coral",
+  "order": 94,
+  "rarity": 1,
+  "min_depth": 0,
+  "biomes": [
+    "vacio"
+  ],
+  "movement": "school",
+  "family": "vacio",
+  "color": "#9a6adc"
+}

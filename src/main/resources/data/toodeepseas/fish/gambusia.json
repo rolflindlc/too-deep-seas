@@ -1,0 +1,12 @@
+{
+  "name": "Gambusia",
+  "order": 72,
+  "rarity": 0,
+  "min_depth": 0,
+  "biomes": [
+    "pantano"
+  ],
+  "movement": "school",
+  "family": "fluvial",
+  "color": "#82b148"
+}

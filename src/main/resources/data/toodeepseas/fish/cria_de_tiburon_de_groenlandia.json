@@ -1,0 +1,12 @@
+{
+  "name": "Cría de tiburón de Groenlandia",
+  "order": 47,
+  "rarity": 4,
+  "min_depth": 70,
+  "biomes": [
+    "helado"
+  ],
+  "movement": "swim",
+  "family": "abisal",
+  "color": "#3473b2"
+}

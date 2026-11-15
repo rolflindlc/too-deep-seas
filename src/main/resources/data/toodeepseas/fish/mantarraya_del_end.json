@@ -1,0 +1,13 @@
+{
+  "name": "Mantarraya del End",
+  "order": 98,
+  "rarity": 3,
+  "min_depth": 300,
+  "biomes": [
+    "vacio"
+  ],
+  "movement": "swim",
+  "family": "vacio",
+  "color": "#755ad8",
+  "shape": "raya"
+}

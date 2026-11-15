@@ -1,0 +1,17 @@
+{
+  "name": "Pez relámpago",
+  "order": 15,
+  "rarity": 3,
+  "min_depth": 20,
+  "biomes": [
+    "oceano",
+    "calido"
+  ],
+  "movement": "zigzag",
+  "family": "tormenta",
+  "color": "#f4e04e",
+  "weather": [
+    "tormenta"
+  ],
+  "bait": "cebo_cobre_cargado"
+}

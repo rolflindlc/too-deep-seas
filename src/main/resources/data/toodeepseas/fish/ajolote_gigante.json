@@ -1,0 +1,13 @@
+{
+  "name": "Ajolote gigante",
+  "order": 75,
+  "rarity": 3,
+  "min_depth": 30,
+  "biomes": [
+    "pantano"
+  ],
+  "movement": "jet",
+  "family": "fluvial",
+  "color": "#bcae5c",
+  "shape": "calamar"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Gobio",
+  "order": 61,
+  "rarity": 0,
+  "min_depth": 0,
+  "biomes": [
+    "rio"
+  ],
+  "movement": "school",
+  "family": "fluvial",
+  "color": "#b99155",
+  "weather": [
+    "despejado"
+  ]
+}

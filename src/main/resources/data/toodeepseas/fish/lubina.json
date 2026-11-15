@@ -1,0 +1,12 @@
+{
+  "name": "Lubina",
+  "order": 7,
+  "rarity": 1,
+  "min_depth": 10,
+  "biomes": [
+    "oceano"
+  ],
+  "movement": "sine",
+  "family": "comun",
+  "color": "#da7662"
+}

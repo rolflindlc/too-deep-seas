@@ -1,0 +1,12 @@
+{
+  "name": "Pez ballesta",
+  "order": 31,
+  "rarity": 1,
+  "min_depth": 10,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "dart",
+  "family": "comun",
+  "color": "#83d95e"
+}

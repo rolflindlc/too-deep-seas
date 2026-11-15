@@ -1,0 +1,12 @@
+{
+  "name": "Barbo",
+  "order": 60,
+  "rarity": 1,
+  "min_depth": 0,
+  "biomes": [
+    "rio"
+  ],
+  "movement": "dart",
+  "family": "fluvial",
+  "color": "#91bf63"
+}

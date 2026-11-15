@@ -1,0 +1,16 @@
+{
+  "name": "Pez de turbera",
+  "order": 73,
+  "rarity": 2,
+  "min_depth": 20,
+  "biomes": [
+    "pantano"
+  ],
+  "movement": "zigzag",
+  "family": "fluvial",
+  "color": "#6ab148",
+  "weather": [
+    "lluvia",
+    "tormenta"
+  ]
+}

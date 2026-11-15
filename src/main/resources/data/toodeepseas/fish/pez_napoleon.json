@@ -1,0 +1,15 @@
+{
+  "name": "Pez napoleón",
+  "order": 33,
+  "rarity": 2,
+  "min_depth": 30,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "swim",
+  "family": "comun",
+  "color": "#d77d56",
+  "weather": [
+    "despejado"
+  ]
+}

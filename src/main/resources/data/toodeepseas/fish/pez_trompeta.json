@@ -1,0 +1,16 @@
+{
+  "name": "Pez trompeta",
+  "order": 36,
+  "rarity": 2,
+  "min_depth": 20,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "dart",
+  "family": "comun",
+  "color": "#a8de73",
+  "weather": [
+    "lluvia",
+    "tormenta"
+  ]
+}

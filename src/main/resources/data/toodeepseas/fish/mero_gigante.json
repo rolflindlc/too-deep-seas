@@ -1,0 +1,12 @@
+{
+  "name": "Mero gigante",
+  "order": 32,
+  "rarity": 3,
+  "min_depth": 45,
+  "biomes": [
+    "calido"
+  ],
+  "movement": "swim",
+  "family": "carnivoro",
+  "color": "#b5405d"
+}

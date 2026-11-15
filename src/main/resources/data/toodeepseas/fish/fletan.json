@@ -1,0 +1,13 @@
+{
+  "name": "Fletán",
+  "order": 43,
+  "rarity": 2,
+  "min_depth": 30,
+  "biomes": [
+    "helado"
+  ],
+  "movement": "sine",
+  "family": "helado",
+  "color": "#bae3ee",
+  "shape": "raya"
+}

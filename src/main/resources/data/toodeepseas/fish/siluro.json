@@ -1,0 +1,12 @@
+{
+  "name": "Siluro",
+  "order": 59,
+  "rarity": 2,
+  "min_depth": 20,
+  "biomes": [
+    "rio"
+  ],
+  "movement": "vertical",
+  "family": "fluvial",
+  "color": "#8bb851"
+}
