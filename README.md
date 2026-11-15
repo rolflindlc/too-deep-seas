@@ -1,21 +1,21 @@
 # Too Deep Seas — Forge 1.20.1 (fase 2: núcleo de cañas)
 
 ## Qué hay
-- `core/` (Java puro, sin Minecraft): `RodTier` (las 8 cañas), `RodStats` (equipo → parámetros del minijuego, con el tope de 4 bloques/s de bajada), `Loadout` (reglas de ranuras), `Stat`/`Modifier` (efectos de accesorios).
+- `core/` (Java puro): `RodTier` (las 8 cañas), `RodStats` (equipo → parámetros del minijuego, tope de 4 bloques/s), `Loadout` (ranuras), `AccessoryDef` y `BaitDef` (definiciones de datapack).
 - `item/`: `TieredRodItem` y el registro de las 7 cañas nuevas (la de madera es la vanilla).
-- `client/`: el modelo «lanzada» de cada caña.
-- `src/test`: pruebas JUnit de `RodStats` y `Loadout`.
+- `data/`: carga de `data/toodeepseas/accessories/*.json` y `baits/*.json`, equipo guardado en el NBT de la caña (`RodData`) y comando de pruebas `/tds`.
+- `net/`: envío de las definiciones al cliente al entrar y tras `/reload`.
+- `recipe/`: receta de mejora que conserva accesorios, cebo y encantamientos.
+- `prototipo/pesca.html`: prototipo web del minijuego.
 
-## Cómo usarlo
-Hace falta conexión a internet la primera vez (descarga Gradle 8.8, Forge 47.3.0 y, si falta, un JDK 17).
+## Descargar el jar
+Pestaña Actions del repositorio → última ejecución en verde → Artifacts → `toodeepseas-jar`. Copia el `.jar` a `mods` (Forge 1.20.1, 47.x).
 
-    gradlew test        # pruebas de la parte pura
-    gradlew runClient   # abre Minecraft con el mod
-
-Las cañas están en la pestaña creativa «Herramientas y utilidades». En Linux o macOS: `./gradlew`.
+## Probar en el juego
+- Recetas: caña anterior en el centro rodeada de 8 materiales (cobre, hierro, oro o diamante; prismarina: fragmentos en los lados y cristales en las esquinas). Netherita: mesa de herrería.
+- `/tds equipar <accesorio> <nivel>`, `/tds cebo <cebo> <cantidad>`, `/tds vaciar` con la caña en la mano (requiere permisos de operador).
 
 ## Estado
-- Las pruebas de `core/` pasan (10 de 10).
-- El código que usa Minecraft y Forge (`TooDeepSeas`, `ModItems`, `TieredRodItem`, `ClientSetup`) y el `build.gradle` no se han podido compilar donde se escribieron: si `gradlew runClient` da un error, copia el mensaje.
-- Las cañas usan la textura de la caña vanilla como provisional y aún no tienen receta (fase 5).
-- Todavía pescan como la caña vanilla: el Mixin de `FishingHook` llega con el minijuego en Java (fase 7).
+- Compila en GitHub Actions y pasan las 13 pruebas de `core/`.
+- Sin probar dentro del juego.
+- Las cañas pescan todavía como la vanilla y usan su textura; los accesorios y cebos aún no son objetos (fase 4).
