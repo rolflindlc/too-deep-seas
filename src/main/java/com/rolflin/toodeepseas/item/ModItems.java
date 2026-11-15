@@ -4,6 +4,8 @@ import com.rolflin.toodeepseas.TooDeepSeas;
 import com.rolflin.toodeepseas.block.ModBlocks;
 import com.rolflin.toodeepseas.core.Cofres;
 import com.rolflin.toodeepseas.core.RodTier;
+import com.rolflin.toodeepseas.core.juego.Catalogo;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
@@ -54,7 +56,25 @@ public final class ModItems {
     /** Cofres exclusivos de clima: cofre_lluvia y cofre_tormenta. */
     public static final Map<Cofres.Clima, RegistryObject<CofreClimaItem>> COFRES_CLIMA = new EnumMap<>(Cofres.Clima.class);
 
+    /** Peces del minijuego como objetos (96: los otros 4 son los de Minecraft), por id de pez. */
+    public static final Map<String, RegistryObject<PezItem>> PECES = new LinkedHashMap<>();
+    /** Tesoros de pesca propios del mod, por id. */
+    public static final Map<String, RegistryObject<TesoroItem>> TESOROS = new LinkedHashMap<>();
+    /** Pescado cocinado y platos. */
+    public static final Map<String, RegistryObject<ComidaItem>> COMIDAS = new LinkedHashMap<>();
+
     static {
+        for (Catalogo.Pez pez : Catalogo.PECES) {
+            if (pez.own()) PECES.put(pez.id(), ITEMS.register(pez.id(), () -> new PezItem(pez)));
+        }
+        for (Catalogo.Tesoro tesoro : Catalogo.TESOROS) {
+            if (!tesoro.own()) continue;
+            TESOROS.put(tesoro.id(), ITEMS.register(tesoro.id(),
+                    () -> tesoro.kind().equals("cabeza") ? new CoronaItem(tesoro) : new TesoroItem(tesoro)));
+        }
+        for (Catalogo.Comida comida : Catalogo.COMIDAS) {
+            COMIDAS.put(comida.id(), ITEMS.register(comida.id(), () -> new ComidaItem(comida)));
+        }
         for (Cofres.Clima clima : Cofres.Clima.values()) {
             if (!Cofres.tieneCofrePropio(clima)) continue;
             COFRES_CLIMA.put(clima, ITEMS.register("cofre_" + clima.id(), () -> new CofreClimaItem(clima, new Item.Properties())));
@@ -102,6 +122,23 @@ public final class ModItems {
         clima = Cofres.climaEfectivo(bioma, clima);
         if (Cofres.saleCofreDeClima(bioma, clima, azar)) return COFRES_CLIMA.get(clima).get().create(calidad, banda);
         return COFRES.get(bioma).get().create(calidad, banda, clima);
+    }
+
+    /** El objeto de un pez del minijuego (los 4 vanilla, el de Minecraft); vacío si ese pez no tiene objeto. */
+    public static ItemStack pezStack(String id) {
+        Catalogo.Pez pez = Catalogo.pez(id);
+        return pez == null ? ItemStack.EMPTY : stackOf(pez.item());
+    }
+
+    /** El objeto de un tesoro del catálogo; vacío si no existe o si es un cofre (esos dependen del sitio: {@link #cofrePescado}). */
+    public static ItemStack tesoroStack(String id) {
+        Catalogo.Tesoro tesoro = Catalogo.tesoro(id);
+        return tesoro == null || tesoro.item() == null ? ItemStack.EMPTY : stackOf(tesoro.item());
+    }
+
+    private static ItemStack stackOf(String itemId) {
+        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemId));
+        return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 
     private static RegistryObject<TieredRodItem> rod(String name, RodTier tier, Item.Properties properties) {

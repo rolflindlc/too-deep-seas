@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "toodeepseas:trucha_artica",
+    "toodeepseas:carpa",
+    "toodeepseas:perca",
+    "toodeepseas:trucha_arcoiris",
+    "toodeepseas:anguila_de_rio",
+    "toodeepseas:siluro",
+    "toodeepseas:barbo",
+    "toodeepseas:gobio",
+    "toodeepseas:pez_gato_de_cristal",
+    "toodeepseas:tenca",
+    "toodeepseas:pez_fango",
+    "toodeepseas:pez_pulmonado",
+    "toodeepseas:bagre_del_pantano",
+    "toodeepseas:pez_arquero",
+    "toodeepseas:gambusia",
+    "toodeepseas:pez_de_turbera"
+  ]
+}

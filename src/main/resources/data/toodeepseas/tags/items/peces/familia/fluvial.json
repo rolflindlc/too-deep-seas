@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:salmon",
+    "toodeepseas:carpa",
+    "toodeepseas:perca",
+    "toodeepseas:trucha_arcoiris",
+    "toodeepseas:esturion",
+    "toodeepseas:anguila_de_rio",
+    "toodeepseas:siluro",
+    "toodeepseas:barbo",
+    "toodeepseas:gobio",
+    "toodeepseas:pez_gato_de_cristal",
+    "toodeepseas:salmon_real",
+    "toodeepseas:tenca",
+    "toodeepseas:pez_fango",
+    "toodeepseas:pez_pulmonado",
+    "toodeepseas:bagre_del_pantano",
+    "toodeepseas:pez_arquero",
+    "toodeepseas:gambusia",
+    "toodeepseas:pez_de_turbera",
+    "toodeepseas:salamandra_acuatica",
+    "toodeepseas:ajolote_gigante"
+  ]
+}

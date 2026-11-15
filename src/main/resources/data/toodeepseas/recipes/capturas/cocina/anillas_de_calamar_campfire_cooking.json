@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "ingredient": {
+    "tag": "toodeepseas:peces/cocina/calamar"
+  },
+  "result": "toodeepseas:anillas_de_calamar",
+  "experience": 0.35,
+  "cookingtime": 600
+}

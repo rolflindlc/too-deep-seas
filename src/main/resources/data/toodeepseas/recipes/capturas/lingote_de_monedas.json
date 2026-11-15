@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "toodeepseas:moneda_de_oro"
+    },
+    {
+      "item": "toodeepseas:moneda_de_oro"
+    },
+    {
+      "item": "toodeepseas:moneda_de_oro"
+    },
+    {
+      "item": "toodeepseas:moneda_de_oro"
+    }
+  ],
+  "result": {
+    "item": "minecraft:gold_ingot"
+  }
+}

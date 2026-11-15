@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "toodeepseas:sardina",
+    "toodeepseas:caballa",
+    "toodeepseas:arenque",
+    "toodeepseas:lubina",
+    "toodeepseas:dorada",
+    "toodeepseas:raya",
+    "toodeepseas:pez_payaso",
+    "toodeepseas:pez_cirujano_azul",
+    "toodeepseas:pez_angel",
+    "toodeepseas:pez_mariposa",
+    "toodeepseas:pez_ballesta",
+    "toodeepseas:bacalao_artico",
+    "toodeepseas:trucha_artica",
+    "toodeepseas:capelan",
+    "toodeepseas:platija",
+    "toodeepseas:lumpo",
+    "toodeepseas:carpa",
+    "toodeepseas:perca",
+    "toodeepseas:trucha_arcoiris",
+    "toodeepseas:barbo",
+    "toodeepseas:gobio",
+    "toodeepseas:tenca",
+    "toodeepseas:pez_fango",
+    "toodeepseas:bagre_del_pantano",
+    "toodeepseas:gambusia"
+  ]
+}

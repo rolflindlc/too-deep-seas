@@ -36,11 +36,22 @@ mixin {
     config 'toodeepseas.mixins.json'
 }
 
-repositories { mavenCentral() }
+repositories {
+    mavenCentral()
+    // Solo para probar la integración con Farmer's Delight en Actions (-Pfd_version=<versión de Modrinth>)
+    maven {
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
+}
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    // El jar no depende de Farmer's Delight: solo se carga en las ejecuciones de prueba cuando se pide
+    if (project.hasProperty('fd_version')) {
+        runtimeOnly fg.deobf("maven.modrinth:farmers-delight:${project.property('fd_version')}")
+    }
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

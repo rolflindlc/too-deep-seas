@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:cod",
+    "minecraft:salmon",
+    "toodeepseas:sardina",
+    "toodeepseas:caballa",
+    "toodeepseas:pez_cirujano_azul",
+    "toodeepseas:capelan",
+    "toodeepseas:carpa",
+    "toodeepseas:perca",
+    "toodeepseas:gobio",
+    "toodeepseas:tenca",
+    "toodeepseas:gambusia"
+  ]
+}

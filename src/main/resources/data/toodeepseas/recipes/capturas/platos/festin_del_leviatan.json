@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "farmersdelight"
+      }
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "toodeepseas:huevo_de_leviatan"
+    },
+    {
+      "tag": "toodeepseas:peces/legendarios"
+    },
+    {
+      "item": "minecraft:golden_carrot"
+    },
+    {
+      "item": "minecraft:milk_bucket"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "item": "toodeepseas:festin_del_leviatan"
+  }
+}

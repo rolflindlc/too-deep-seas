@@ -1,0 +1,29 @@
+{
+  "type": "farmersdelight:cooking",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ],
+  "cookingtime": 200,
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "tag": "toodeepseas:peces/familia/vacio"
+    },
+    {
+      "item": "minecraft:chorus_fruit"
+    },
+    {
+      "item": "minecraft:chorus_fruit"
+    }
+  ],
+  "container": {
+    "item": "minecraft:stick"
+  },
+  "recipe_book_tab": "meals",
+  "result": {
+    "item": "toodeepseas:brocheta_del_vacio"
+  }
+}

@@ -1,0 +1,2773 @@
+{
+  "peces": [
+    {
+      "id": "bacalao",
+      "item": "minecraft:cod",
+      "own": false,
+      "rarity": 0,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 0
+    },
+    {
+      "id": "salmon",
+      "item": "minecraft:salmon",
+      "own": false,
+      "rarity": 0,
+      "family": "fluvial",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 0
+    },
+    {
+      "id": "pez_tropical",
+      "item": "minecraft:tropical_fish",
+      "own": false,
+      "rarity": 1,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 0
+    },
+    {
+      "id": "pez_globo",
+      "item": "minecraft:pufferfish",
+      "own": false,
+      "rarity": 1,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 0
+    },
+    {
+      "id": "sardina",
+      "item": "toodeepseas:sardina",
+      "own": true,
+      "rarity": 0,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "caballa",
+      "item": "toodeepseas:caballa",
+      "own": true,
+      "rarity": 0,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "arenque",
+      "item": "toodeepseas:arenque",
+      "own": true,
+      "rarity": 1,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "lubina",
+      "item": "toodeepseas:lubina",
+      "own": true,
+      "rarity": 1,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "dorada",
+      "item": "toodeepseas:dorada",
+      "own": true,
+      "rarity": 1,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "pez_volador",
+      "item": "toodeepseas:pez_volador",
+      "own": true,
+      "rarity": 2,
+      "family": "comun",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "barracuda",
+      "item": "toodeepseas:barracuda",
+      "own": true,
+      "rarity": 2,
+      "family": "carnivoro",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "atun_rojo",
+      "item": "toodeepseas:atun_rojo",
+      "own": true,
+      "rarity": 2,
+      "family": "comun",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pez_espada",
+      "item": "toodeepseas:pez_espada",
+      "own": true,
+      "rarity": 3,
+      "family": "carnivoro",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "raya",
+      "item": "toodeepseas:raya",
+      "own": true,
+      "rarity": 1,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [
+        [
+          "minecraft:poison",
+          10,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "raya_electrica",
+      "item": "toodeepseas:raya_electrica",
+      "own": true,
+      "rarity": 3,
+      "family": "tormenta",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:speed",
+          20,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "pez_relampago",
+      "item": "toodeepseas:pez_relampago",
+      "own": true,
+      "rarity": 3,
+      "family": "tormenta",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:speed",
+          20,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 5
+    },
+    {
+      "id": "pez_linterna",
+      "item": "toodeepseas:pez_linterna",
+      "own": true,
+      "rarity": 2,
+      "family": "abisal",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [
+        [
+          "minecraft:night_vision",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 5
+    },
+    {
+      "id": "rape",
+      "item": "toodeepseas:rape",
+      "own": true,
+      "rarity": 3,
+      "family": "abisal",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:night_vision",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "calamar_vampiro",
+      "item": "toodeepseas:calamar_vampiro",
+      "own": true,
+      "rarity": 3,
+      "family": "abisal",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:night_vision",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pez_vibora",
+      "item": "toodeepseas:pez_vibora",
+      "own": true,
+      "rarity": 3,
+      "family": "abisal",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:night_vision",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "pez_hacha_abisal",
+      "item": "toodeepseas:pez_hacha_abisal",
+      "own": true,
+      "rarity": 3,
+      "family": "abisal",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:night_vision",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "celacanto",
+      "item": "toodeepseas:celacanto",
+      "own": true,
+      "rarity": 4,
+      "family": "abisal",
+      "nutrition": 5,
+      "saturation": 0.4,
+      "effects": [
+        [
+          "minecraft:night_vision",
+          120,
+          0,
+          1.0
+        ],
+        [
+          "minecraft:luck",
+          120,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "cria_de_calamar_gigante",
+      "item": "toodeepseas:cria_de_calamar_gigante",
+      "own": true,
+      "rarity": 4,
+      "family": "abisal",
+      "nutrition": 5,
+      "saturation": 0.4,
+      "effects": [
+        [
+          "minecraft:night_vision",
+          120,
+          0,
+          1.0
+        ],
+        [
+          "minecraft:luck",
+          120,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "pez_loro_arcoiris",
+      "item": "toodeepseas:pez_loro_arcoiris",
+      "own": true,
+      "rarity": 2,
+      "family": "comun",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "caballito_de_mar",
+      "item": "toodeepseas:caballito_de_mar",
+      "own": true,
+      "rarity": 2,
+      "family": "comun",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "pez_payaso",
+      "item": "toodeepseas:pez_payaso",
+      "own": true,
+      "rarity": 1,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pez_cirujano_azul",
+      "item": "toodeepseas:pez_cirujano_azul",
+      "own": true,
+      "rarity": 0,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pez_angel",
+      "item": "toodeepseas:pez_angel",
+      "own": true,
+      "rarity": 1,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "pez_mariposa",
+      "item": "toodeepseas:pez_mariposa",
+      "own": true,
+      "rarity": 1,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pez_leon",
+      "item": "toodeepseas:pez_leon",
+      "own": true,
+      "rarity": 2,
+      "family": "carnivoro",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [
+        [
+          "minecraft:poison",
+          10,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "morena",
+      "item": "toodeepseas:morena",
+      "own": true,
+      "rarity": 2,
+      "family": "carnivoro",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pez_ballesta",
+      "item": "toodeepseas:pez_ballesta",
+      "own": true,
+      "rarity": 1,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "mero_gigante",
+      "item": "toodeepseas:mero_gigante",
+      "own": true,
+      "rarity": 3,
+      "family": "carnivoro",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "pez_napoleon",
+      "item": "toodeepseas:pez_napoleon",
+      "own": true,
+      "rarity": 2,
+      "family": "comun",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pez_piedra",
+      "item": "toodeepseas:pez_piedra",
+      "own": true,
+      "rarity": 3,
+      "family": "carnivoro",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:poison",
+          10,
+          1,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "manta_raya",
+      "item": "toodeepseas:manta_raya",
+      "own": true,
+      "rarity": 3,
+      "family": "comun",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "pez_trompeta",
+      "item": "toodeepseas:pez_trompeta",
+      "own": true,
+      "rarity": 2,
+      "family": "comun",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pez_sapo_luminoso",
+      "item": "toodeepseas:pez_sapo_luminoso",
+      "own": true,
+      "rarity": 3,
+      "family": "abisal",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:night_vision",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 5
+    },
+    {
+      "id": "cria_de_tiburon_martillo",
+      "item": "toodeepseas:cria_de_tiburon_martillo",
+      "own": true,
+      "rarity": 4,
+      "family": "carnivoro",
+      "nutrition": 5,
+      "saturation": 0.4,
+      "effects": [
+        [
+          "minecraft:luck",
+          120,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "bacalao_artico",
+      "item": "toodeepseas:bacalao_artico",
+      "own": true,
+      "rarity": 1,
+      "family": "helado",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pez_de_hielo_transparente",
+      "item": "toodeepseas:pez_de_hielo_transparente",
+      "own": true,
+      "rarity": 3,
+      "family": "helado",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:invisibility",
+          15,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "trucha_artica",
+      "item": "toodeepseas:trucha_artica",
+      "own": true,
+      "rarity": 1,
+      "family": "helado",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "capelan",
+      "item": "toodeepseas:capelan",
+      "own": true,
+      "rarity": 0,
+      "family": "helado",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "fletan",
+      "item": "toodeepseas:fletan",
+      "own": true,
+      "rarity": 2,
+      "family": "helado",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "platija",
+      "item": "toodeepseas:platija",
+      "own": true,
+      "rarity": 1,
+      "family": "comun",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "lumpo",
+      "item": "toodeepseas:lumpo",
+      "own": true,
+      "rarity": 1,
+      "family": "helado",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pez_lobo",
+      "item": "toodeepseas:pez_lobo",
+      "own": true,
+      "rarity": 2,
+      "family": "carnivoro",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "cria_de_tiburon_de_groenlandia",
+      "item": "toodeepseas:cria_de_tiburon_de_groenlandia",
+      "own": true,
+      "rarity": 4,
+      "family": "abisal",
+      "nutrition": 5,
+      "saturation": 0.4,
+      "effects": [
+        [
+          "minecraft:night_vision",
+          120,
+          0,
+          1.0
+        ],
+        [
+          "minecraft:luck",
+          120,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "pez_de_escarcha",
+      "item": "toodeepseas:pez_de_escarcha",
+      "own": true,
+      "rarity": 2,
+      "family": "helado",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 5
+    },
+    {
+      "id": "pez_cristal_de_aurora",
+      "item": "toodeepseas:pez_cristal_de_aurora",
+      "own": true,
+      "rarity": 3,
+      "family": "helado",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:invisibility",
+          15,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "merluza_negra",
+      "item": "toodeepseas:merluza_negra",
+      "own": true,
+      "rarity": 3,
+      "family": "abisal",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:night_vision",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "calamar_de_hielo",
+      "item": "toodeepseas:calamar_de_hielo",
+      "own": true,
+      "rarity": 2,
+      "family": "helado",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "pez_glaciar_ancestral",
+      "item": "toodeepseas:pez_glaciar_ancestral",
+      "own": true,
+      "rarity": 4,
+      "family": "helado",
+      "nutrition": 5,
+      "saturation": 0.4,
+      "effects": [
+        [
+          "minecraft:luck",
+          120,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "carpa",
+      "item": "toodeepseas:carpa",
+      "own": true,
+      "rarity": 0,
+      "family": "fluvial",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "perca",
+      "item": "toodeepseas:perca",
+      "own": true,
+      "rarity": 0,
+      "family": "fluvial",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "lucio",
+      "item": "toodeepseas:lucio",
+      "own": true,
+      "rarity": 2,
+      "family": "carnivoro",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "trucha_arcoiris",
+      "item": "toodeepseas:trucha_arcoiris",
+      "own": true,
+      "rarity": 1,
+      "family": "fluvial",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "esturion",
+      "item": "toodeepseas:esturion",
+      "own": true,
+      "rarity": 3,
+      "family": "fluvial",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "anguila_de_rio",
+      "item": "toodeepseas:anguila_de_rio",
+      "own": true,
+      "rarity": 2,
+      "family": "fluvial",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "siluro",
+      "item": "toodeepseas:siluro",
+      "own": true,
+      "rarity": 2,
+      "family": "fluvial",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "barbo",
+      "item": "toodeepseas:barbo",
+      "own": true,
+      "rarity": 1,
+      "family": "fluvial",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "gobio",
+      "item": "toodeepseas:gobio",
+      "own": true,
+      "rarity": 0,
+      "family": "fluvial",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "pez_gato_de_cristal",
+      "item": "toodeepseas:pez_gato_de_cristal",
+      "own": true,
+      "rarity": 2,
+      "family": "fluvial",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [
+        [
+          "minecraft:invisibility",
+          15,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "salmon_real",
+      "item": "toodeepseas:salmon_real",
+      "own": true,
+      "rarity": 3,
+      "family": "fluvial",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pirana",
+      "item": "toodeepseas:pirana",
+      "own": true,
+      "rarity": 2,
+      "family": "carnivoro",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pirana_dorada",
+      "item": "toodeepseas:pirana_dorada",
+      "own": true,
+      "rarity": 4,
+      "family": "carnivoro",
+      "nutrition": 5,
+      "saturation": 0.4,
+      "effects": [
+        [
+          "minecraft:luck",
+          120,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "tenca",
+      "item": "toodeepseas:tenca",
+      "own": true,
+      "rarity": 0,
+      "family": "fluvial",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pez_fango",
+      "item": "toodeepseas:pez_fango",
+      "own": true,
+      "rarity": 1,
+      "family": "fluvial",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "anguila_electrica",
+      "item": "toodeepseas:anguila_electrica",
+      "own": true,
+      "rarity": 3,
+      "family": "tormenta",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:speed",
+          20,
+          0,
+          1.0
+        ]
+      ],
+      "always": false,
+      "fuel": 0,
+      "lines": 5
+    },
+    {
+      "id": "pez_pulmonado",
+      "item": "toodeepseas:pez_pulmonado",
+      "own": true,
+      "rarity": 2,
+      "family": "fluvial",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "bagre_del_pantano",
+      "item": "toodeepseas:bagre_del_pantano",
+      "own": true,
+      "rarity": 1,
+      "family": "fluvial",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pez_arquero",
+      "item": "toodeepseas:pez_arquero",
+      "own": true,
+      "rarity": 2,
+      "family": "fluvial",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "gambusia",
+      "item": "toodeepseas:gambusia",
+      "own": true,
+      "rarity": 0,
+      "family": "fluvial",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "pez_de_turbera",
+      "item": "toodeepseas:pez_de_turbera",
+      "own": true,
+      "rarity": 2,
+      "family": "fluvial",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "salamandra_acuatica",
+      "item": "toodeepseas:salamandra_acuatica",
+      "own": true,
+      "rarity": 3,
+      "family": "fluvial",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "ajolote_gigante",
+      "item": "toodeepseas:ajolote_gigante",
+      "own": true,
+      "rarity": 3,
+      "family": "fluvial",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [],
+      "always": false,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "pez_momificado",
+      "item": "toodeepseas:pez_momificado",
+      "own": true,
+      "rarity": 4,
+      "family": "abisal",
+      "nutrition": 5,
+      "saturation": 0.4,
+      "effects": [
+        [
+          "minecraft:hunger",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 4
+    },
+    {
+      "id": "pez_de_obsidiana",
+      "item": "toodeepseas:pez_de_obsidiana",
+      "own": true,
+      "rarity": 3,
+      "family": "igneo",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 1600,
+      "lines": 5
+    },
+    {
+      "id": "pez_de_brasa",
+      "item": "toodeepseas:pez_de_brasa",
+      "own": true,
+      "rarity": 3,
+      "family": "igneo",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 4800,
+      "lines": 3
+    },
+    {
+      "id": "pez_de_magma",
+      "item": "toodeepseas:pez_de_magma",
+      "own": true,
+      "rarity": 1,
+      "family": "igneo",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 1600,
+      "lines": 4
+    },
+    {
+      "id": "anguila_de_basalto",
+      "item": "toodeepseas:anguila_de_basalto",
+      "own": true,
+      "rarity": 2,
+      "family": "igneo",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 1600,
+      "lines": 3
+    },
+    {
+      "id": "pez_fantasma_de_almas",
+      "item": "toodeepseas:pez_fantasma_de_almas",
+      "own": true,
+      "rarity": 3,
+      "family": "igneo",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          30,
+          0,
+          1.0
+        ],
+        [
+          "minecraft:invisibility",
+          15,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 1600,
+      "lines": 3
+    },
+    {
+      "id": "pez_carmesi",
+      "item": "toodeepseas:pez_carmesi",
+      "own": true,
+      "rarity": 1,
+      "family": "igneo",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 1600,
+      "lines": 3
+    },
+    {
+      "id": "pez_distorsionado",
+      "item": "toodeepseas:pez_distorsionado",
+      "own": true,
+      "rarity": 1,
+      "family": "igneo",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 1600,
+      "lines": 3
+    },
+    {
+      "id": "pez_de_cuarzo",
+      "item": "toodeepseas:pez_de_cuarzo",
+      "own": true,
+      "rarity": 1,
+      "family": "igneo",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 1600,
+      "lines": 4
+    },
+    {
+      "id": "lucio_de_lava",
+      "item": "toodeepseas:lucio_de_lava",
+      "own": true,
+      "rarity": 2,
+      "family": "igneo",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 1600,
+      "lines": 3
+    },
+    {
+      "id": "pez_de_verruga",
+      "item": "toodeepseas:pez_de_verruga",
+      "own": true,
+      "rarity": 1,
+      "family": "igneo",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 1600,
+      "lines": 3
+    },
+    {
+      "id": "raya_ignea",
+      "item": "toodeepseas:raya_ignea",
+      "own": true,
+      "rarity": 3,
+      "family": "igneo",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 1600,
+      "lines": 3
+    },
+    {
+      "id": "pez_de_bastion_dorado",
+      "item": "toodeepseas:pez_de_bastion_dorado",
+      "own": true,
+      "rarity": 3,
+      "family": "igneo",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 1600,
+      "lines": 4
+    },
+    {
+      "id": "pez_escoria",
+      "item": "toodeepseas:pez_escoria",
+      "own": true,
+      "rarity": 3,
+      "family": "igneo",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          30,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 1600,
+      "lines": 4
+    },
+    {
+      "id": "cria_de_dragon_de_magma",
+      "item": "toodeepseas:cria_de_dragon_de_magma",
+      "own": true,
+      "rarity": 4,
+      "family": "igneo",
+      "nutrition": 5,
+      "saturation": 0.4,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          120,
+          0,
+          1.0
+        ],
+        [
+          "minecraft:luck",
+          120,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 20000,
+      "lines": 4
+    },
+    {
+      "id": "pez_perla",
+      "item": "toodeepseas:pez_perla",
+      "own": true,
+      "rarity": 1,
+      "family": "vacio",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [
+        [
+          "minecraft:slow_falling",
+          15,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "medusa_del_vacio",
+      "item": "toodeepseas:medusa_del_vacio",
+      "own": true,
+      "rarity": 1,
+      "family": "vacio",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [
+        [
+          "minecraft:slow_falling",
+          15,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 3
+    },
+    {
+      "id": "anguila_estelar",
+      "item": "toodeepseas:anguila_estelar",
+      "own": true,
+      "rarity": 2,
+      "family": "vacio",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [
+        [
+          "minecraft:slow_falling",
+          15,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "pez_de_coral",
+      "item": "toodeepseas:pez_de_coral",
+      "own": true,
+      "rarity": 1,
+      "family": "vacio",
+      "nutrition": 2,
+      "saturation": 0.1,
+      "effects": [
+        [
+          "minecraft:slow_falling",
+          15,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "pez_shulker",
+      "item": "toodeepseas:pez_shulker",
+      "own": true,
+      "rarity": 2,
+      "family": "vacio",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [
+        [
+          "minecraft:slow_falling",
+          15,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "pez_de_purpura",
+      "item": "toodeepseas:pez_de_purpura",
+      "own": true,
+      "rarity": 2,
+      "family": "vacio",
+      "nutrition": 3,
+      "saturation": 0.2,
+      "effects": [
+        [
+          "minecraft:slow_falling",
+          15,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "pez_espectral",
+      "item": "toodeepseas:pez_espectral",
+      "own": true,
+      "rarity": 3,
+      "family": "vacio",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:slow_falling",
+          15,
+          0,
+          1.0
+        ],
+        [
+          "minecraft:invisibility",
+          15,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 2
+    },
+    {
+      "id": "mantarraya_del_end",
+      "item": "toodeepseas:mantarraya_del_end",
+      "own": true,
+      "rarity": 3,
+      "family": "vacio",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        [
+          "minecraft:slow_falling",
+          15,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 1
+    },
+    {
+      "id": "pez_eterno",
+      "item": "toodeepseas:pez_eterno",
+      "own": true,
+      "rarity": 4,
+      "family": "vacio",
+      "nutrition": 5,
+      "saturation": 0.4,
+      "effects": [
+        [
+          "minecraft:slow_falling",
+          60,
+          0,
+          1.0
+        ],
+        [
+          "minecraft:luck",
+          120,
+          0,
+          1.0
+        ]
+      ],
+      "always": true,
+      "fuel": 0,
+      "lines": 2
+    }
+  ],
+  "tesoros": [
+    {
+      "id": "botella_con_mensaje",
+      "name": "Botella con mensaje",
+      "order": 0,
+      "item": "toodeepseas:botella_con_mensaje",
+      "own": true,
+      "chest": false,
+      "rarity": 1,
+      "min_depth": 3,
+      "biomes": [
+        "oceano",
+        "calido",
+        "helado",
+        "rio",
+        "pantano"
+      ],
+      "weather": [],
+      "kind": "abrir",
+      "effects": [],
+      "leftover": "minecraft:glass_bottle",
+      "xp": 5,
+      "stack": 64,
+      "lines": 1
+    },
+    {
+      "id": "pepita_de_rio",
+      "name": "Pepita de río",
+      "order": 1,
+      "item": "toodeepseas:pepita_de_rio",
+      "own": true,
+      "chest": false,
+      "rarity": 1,
+      "min_depth": 4,
+      "biomes": [
+        "rio"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 1
+    },
+    {
+      "id": "cofre_hundido",
+      "name": "Cofre hundido",
+      "order": 2,
+      "item": null,
+      "own": false,
+      "chest": true,
+      "rarity": 2,
+      "min_depth": 15,
+      "biomes": [
+        "oceano",
+        "calido",
+        "helado",
+        "rio",
+        "pantano"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 0
+    },
+    {
+      "id": "concha_de_nautilo",
+      "name": "Concha de nautilo",
+      "order": 3,
+      "item": "minecraft:nautilus_shell",
+      "own": false,
+      "chest": false,
+      "rarity": 2,
+      "min_depth": 20,
+      "biomes": [
+        "oceano",
+        "calido",
+        "helado"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 0
+    },
+    {
+      "id": "corona_del_pantano",
+      "name": "Corona del pantano",
+      "order": 4,
+      "item": "toodeepseas:corona_del_pantano",
+      "own": true,
+      "chest": false,
+      "rarity": 3,
+      "min_depth": 25,
+      "biomes": [
+        "pantano"
+      ],
+      "weather": [
+        "lluvia",
+        "tormenta"
+      ],
+      "kind": "cabeza",
+      "effects": [
+        [
+          "minecraft:luck",
+          0
+        ]
+      ],
+      "leftover": null,
+      "xp": 0,
+      "stack": 1,
+      "lines": 1
+    },
+    {
+      "id": "perla_negra",
+      "name": "Perla negra",
+      "order": 5,
+      "item": "toodeepseas:perla_negra",
+      "own": true,
+      "chest": false,
+      "rarity": 3,
+      "min_depth": 30,
+      "biomes": [
+        "calido"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 1
+    },
+    {
+      "id": "cristal_glacial",
+      "name": "Cristal glacial",
+      "order": 6,
+      "item": "toodeepseas:cristal_glacial",
+      "own": true,
+      "chest": false,
+      "rarity": 3,
+      "min_depth": 30,
+      "biomes": [
+        "helado"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 1
+    },
+    {
+      "id": "tridente_oxidado",
+      "name": "Tridente oxidado",
+      "order": 7,
+      "item": "toodeepseas:tridente_oxidado",
+      "own": true,
+      "chest": false,
+      "rarity": 3,
+      "min_depth": 35,
+      "biomes": [
+        "oceano",
+        "calido",
+        "helado"
+      ],
+      "weather": [
+        "tormenta"
+      ],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 1,
+      "lines": 1
+    },
+    {
+      "id": "reliquia_del_cieno",
+      "name": "Reliquia del cieno",
+      "order": 8,
+      "item": "toodeepseas:reliquia_del_cieno",
+      "own": true,
+      "chest": false,
+      "rarity": 4,
+      "min_depth": 45,
+      "biomes": [
+        "pantano",
+        "rio"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 1
+    },
+    {
+      "id": "corazon_del_mar",
+      "name": "Corazón del mar",
+      "order": 9,
+      "item": "minecraft:heart_of_the_sea",
+      "own": false,
+      "chest": false,
+      "rarity": 4,
+      "min_depth": 50,
+      "biomes": [
+        "oceano",
+        "calido",
+        "helado"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 0
+    },
+    {
+      "id": "moneda_de_oro",
+      "name": "Moneda de oro",
+      "order": 10,
+      "item": "toodeepseas:moneda_de_oro",
+      "own": true,
+      "chest": false,
+      "rarity": 2,
+      "min_depth": 20,
+      "biomes": [
+        "oceano",
+        "calido",
+        "helado",
+        "rio",
+        "pantano"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 1
+    },
+    {
+      "id": "coral_rojo",
+      "name": "Coral rojo",
+      "order": 11,
+      "item": "toodeepseas:coral_rojo",
+      "own": true,
+      "chest": false,
+      "rarity": 2,
+      "min_depth": 25,
+      "biomes": [
+        "calido"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 2
+    },
+    {
+      "id": "ancla_antigua",
+      "name": "Ancla antigua",
+      "order": 12,
+      "item": "toodeepseas:ancla_antigua",
+      "own": true,
+      "chest": false,
+      "rarity": 2,
+      "min_depth": 28,
+      "biomes": [
+        "oceano",
+        "helado"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 1
+    },
+    {
+      "id": "geoda",
+      "name": "Geoda",
+      "order": 13,
+      "item": "toodeepseas:geoda",
+      "own": true,
+      "chest": false,
+      "rarity": 3,
+      "min_depth": 50,
+      "biomes": [
+        "oceano",
+        "calido",
+        "helado",
+        "rio",
+        "pantano"
+      ],
+      "weather": [],
+      "kind": "abrir",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 1
+    },
+    {
+      "id": "caliz_hundido",
+      "name": "Cáliz hundido",
+      "order": 14,
+      "item": "toodeepseas:caliz_hundido",
+      "own": true,
+      "chest": false,
+      "rarity": 3,
+      "min_depth": 55,
+      "biomes": [
+        "oceano",
+        "calido",
+        "helado",
+        "rio",
+        "pantano"
+      ],
+      "weather": [],
+      "kind": "caliz",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 1,
+      "lines": 1
+    },
+    {
+      "id": "anfora_sellada",
+      "name": "Ánfora sellada",
+      "order": 15,
+      "item": "toodeepseas:anfora_sellada",
+      "own": true,
+      "chest": false,
+      "rarity": 3,
+      "min_depth": 70,
+      "biomes": [
+        "oceano",
+        "calido",
+        "helado",
+        "rio",
+        "pantano"
+      ],
+      "weather": [],
+      "kind": "abrir",
+      "effects": [],
+      "leftover": null,
+      "xp": 10,
+      "stack": 64,
+      "lines": 1
+    },
+    {
+      "id": "reliquia_del_pantano_negro",
+      "name": "Reliquia del pantano negro",
+      "order": 16,
+      "item": "toodeepseas:reliquia_del_pantano_negro",
+      "own": true,
+      "chest": false,
+      "rarity": 4,
+      "min_depth": 85,
+      "biomes": [
+        "pantano"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 1
+    },
+    {
+      "id": "gema_abisal",
+      "name": "Gema abisal",
+      "order": 17,
+      "item": "toodeepseas:gema_abisal",
+      "own": true,
+      "chest": false,
+      "rarity": 4,
+      "min_depth": 85,
+      "biomes": [
+        "oceano",
+        "calido",
+        "helado",
+        "rio",
+        "pantano"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 1
+    },
+    {
+      "id": "lagrima_del_abismo",
+      "name": "Lágrima del abismo",
+      "order": 18,
+      "item": "toodeepseas:lagrima_del_abismo",
+      "own": true,
+      "chest": false,
+      "rarity": 4,
+      "min_depth": 100,
+      "biomes": [
+        "oceano",
+        "calido",
+        "helado",
+        "rio",
+        "pantano"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 1
+    },
+    {
+      "id": "corona_del_rey_ahogado",
+      "name": "Corona del rey ahogado",
+      "order": 19,
+      "item": "toodeepseas:corona_del_rey_ahogado",
+      "own": true,
+      "chest": false,
+      "rarity": 4,
+      "min_depth": 105,
+      "biomes": [
+        "oceano",
+        "calido",
+        "helado",
+        "rio",
+        "pantano"
+      ],
+      "weather": [],
+      "kind": "cabeza",
+      "effects": [
+        [
+          "minecraft:conduit_power",
+          0
+        ]
+      ],
+      "leftover": null,
+      "xp": 0,
+      "stack": 1,
+      "lines": 1
+    },
+    {
+      "id": "huevo_de_leviatan",
+      "name": "Huevo de leviatán",
+      "order": 20,
+      "item": "toodeepseas:huevo_de_leviatan",
+      "own": true,
+      "chest": false,
+      "rarity": 4,
+      "min_depth": 110,
+      "biomes": [
+        "oceano",
+        "calido",
+        "helado"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 1
+    },
+    {
+      "id": "cuarzo_del_nether",
+      "name": "Cuarzo del Nether",
+      "order": 21,
+      "item": "minecraft:quartz",
+      "own": false,
+      "chest": false,
+      "rarity": 1,
+      "min_depth": 0,
+      "biomes": [
+        "lava"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 0
+    },
+    {
+      "id": "pepitas_de_oro",
+      "name": "Pepitas de oro",
+      "order": 22,
+      "item": "minecraft:gold_nugget",
+      "own": false,
+      "chest": false,
+      "rarity": 1,
+      "min_depth": 5,
+      "biomes": [
+        "lava"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 0
+    },
+    {
+      "id": "escama_ignea",
+      "name": "Escama ígnea",
+      "order": 23,
+      "item": "toodeepseas:escama_ignea",
+      "own": true,
+      "chest": false,
+      "rarity": 2,
+      "min_depth": 25,
+      "biomes": [
+        "lava"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 2
+    },
+    {
+      "id": "tesoro_de_bastion",
+      "name": "Tesoro de bastión",
+      "order": 24,
+      "item": null,
+      "own": false,
+      "chest": true,
+      "rarity": 3,
+      "min_depth": 25,
+      "biomes": [
+        "lava"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 0
+    },
+    {
+      "id": "plantilla_de_netherita",
+      "name": "Plantilla de netherita",
+      "order": 25,
+      "item": "minecraft:netherite_upgrade_smithing_template",
+      "own": false,
+      "chest": false,
+      "rarity": 4,
+      "min_depth": 60,
+      "biomes": [
+        "lava"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 0
+    },
+    {
+      "id": "restos_ancestrales",
+      "name": "Restos ancestrales",
+      "order": 26,
+      "item": "minecraft:ancient_debris",
+      "own": false,
+      "chest": false,
+      "rarity": 4,
+      "min_depth": 95,
+      "biomes": [
+        "lava"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 0
+    },
+    {
+      "id": "fragmento_del_vacio",
+      "name": "Fragmento del vacío",
+      "order": 27,
+      "item": "toodeepseas:fragmento_vacio",
+      "own": false,
+      "chest": false,
+      "rarity": 2,
+      "min_depth": 30,
+      "biomes": [
+        "vacio"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 0
+    },
+    {
+      "id": "concha_de_shulker",
+      "name": "Concha de shulker",
+      "order": 28,
+      "item": "minecraft:shulker_shell",
+      "own": false,
+      "chest": false,
+      "rarity": 3,
+      "min_depth": 100,
+      "biomes": [
+        "vacio"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 0
+    },
+    {
+      "id": "aliento_de_dragon",
+      "name": "Aliento de dragón",
+      "order": 29,
+      "item": "minecraft:dragon_breath",
+      "own": false,
+      "chest": false,
+      "rarity": 3,
+      "min_depth": 200,
+      "biomes": [
+        "vacio"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 0
+    },
+    {
+      "id": "cabeza_de_dragon",
+      "name": "Cabeza de dragón",
+      "order": 30,
+      "item": "minecraft:dragon_head",
+      "own": false,
+      "chest": false,
+      "rarity": 4,
+      "min_depth": 500,
+      "biomes": [
+        "vacio"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 0
+    },
+    {
+      "id": "elitros",
+      "name": "Élitros",
+      "order": 31,
+      "item": "minecraft:elytra",
+      "own": false,
+      "chest": false,
+      "rarity": 4,
+      "min_depth": 800,
+      "biomes": [
+        "vacio"
+      ],
+      "weather": [],
+      "kind": "material",
+      "effects": [],
+      "leftover": null,
+      "xp": 0,
+      "stack": 64,
+      "lines": 0
+    },
+    {
+      "id": "trofeo_leviatan_del_vacio",
+      "name": "Trofeo «Leviatán del vacío»",
+      "order": 32,
+      "item": "toodeepseas:trofeo_leviatan_del_vacio",
+      "own": true,
+      "chest": false,
+      "rarity": 4,
+      "min_depth": 1000,
+      "biomes": [
+        "vacio"
+      ],
+      "weather": [],
+      "kind": "mano",
+      "effects": [
+        [
+          "minecraft:slow_falling",
+          0
+        ],
+        [
+          "minecraft:luck",
+          1
+        ]
+      ],
+      "leftover": null,
+      "xp": 0,
+      "stack": 1,
+      "lines": 1
+    }
+  ],
+  "comidas": [
+    {
+      "id": "pescado_asado",
+      "nutrition": 5,
+      "saturation": 0.6,
+      "effects": [],
+      "container": null,
+      "lines": 0
+    },
+    {
+      "id": "filete_a_la_brasa",
+      "nutrition": 8,
+      "saturation": 0.8,
+      "effects": [],
+      "container": null,
+      "lines": 0
+    },
+    {
+      "id": "anillas_de_calamar",
+      "nutrition": 6,
+      "saturation": 0.6,
+      "effects": [],
+      "container": null,
+      "lines": 0
+    },
+    {
+      "id": "sopa_abisal",
+      "nutrition": 8,
+      "saturation": 0.7,
+      "effects": [
+        [
+          "minecraft:night_vision",
+          180,
+          0,
+          1.0
+        ],
+        [
+          "minecraft:water_breathing",
+          180,
+          0,
+          1.0
+        ]
+      ],
+      "container": "minecraft:bowl",
+      "lines": 0
+    },
+    {
+      "id": "caldo_de_magma",
+      "nutrition": 8,
+      "saturation": 0.7,
+      "effects": [
+        [
+          "minecraft:fire_resistance",
+          300,
+          0,
+          1.0
+        ]
+      ],
+      "container": "minecraft:bowl",
+      "lines": 0
+    },
+    {
+      "id": "estofado_artico",
+      "nutrition": 9,
+      "saturation": 0.8,
+      "effects": [
+        [
+          "minecraft:absorption",
+          120,
+          1,
+          1.0
+        ],
+        [
+          "minecraft:resistance",
+          120,
+          0,
+          1.0
+        ]
+      ],
+      "container": "minecraft:bowl",
+      "lines": 0
+    },
+    {
+      "id": "ceviche_tropical",
+      "nutrition": 7,
+      "saturation": 0.7,
+      "effects": [
+        [
+          "minecraft:speed",
+          180,
+          0,
+          1.0
+        ],
+        [
+          "toodeepseas:aletas",
+          180,
+          0,
+          1.0
+        ]
+      ],
+      "container": "minecraft:bowl",
+      "lines": 0
+    },
+    {
+      "id": "guiso_del_pantano",
+      "nutrition": 8,
+      "saturation": 0.7,
+      "effects": [
+        [
+          "minecraft:regeneration",
+          20,
+          0,
+          1.0
+        ],
+        [
+          "minecraft:luck",
+          300,
+          0,
+          1.0
+        ]
+      ],
+      "container": "minecraft:bowl",
+      "lines": 0
+    },
+    {
+      "id": "anguila_de_tormenta",
+      "nutrition": 8,
+      "saturation": 0.8,
+      "effects": [
+        [
+          "minecraft:haste",
+          180,
+          1,
+          1.0
+        ],
+        [
+          "minecraft:speed",
+          180,
+          0,
+          1.0
+        ]
+      ],
+      "container": "minecraft:bowl",
+      "lines": 0
+    },
+    {
+      "id": "brocheta_del_vacio",
+      "nutrition": 6,
+      "saturation": 0.6,
+      "effects": [
+        [
+          "minecraft:slow_falling",
+          180,
+          0,
+          1.0
+        ],
+        [
+          "minecraft:night_vision",
+          180,
+          0,
+          1.0
+        ]
+      ],
+      "container": "minecraft:stick",
+      "lines": 0
+    },
+    {
+      "id": "festin_del_leviatan",
+      "nutrition": 14,
+      "saturation": 1.0,
+      "effects": [
+        [
+          "minecraft:absorption",
+          120,
+          3,
+          1.0
+        ],
+        [
+          "minecraft:regeneration",
+          30,
+          1,
+          1.0
+        ],
+        [
+          "minecraft:resistance",
+          300,
+          0,
+          1.0
+        ],
+        [
+          "toodeepseas:coraza",
+          300,
+          0,
+          1.0
+        ]
+      ],
+      "container": "minecraft:bowl",
+      "lines": 0
+    }
+  ],
+  "mezclas": [
+    {
+      "to": "toodeepseas:prisa",
+      "with": [
+        "toodeepseas:anguila_electrica",
+        "toodeepseas:pez_relampago",
+        "toodeepseas:raya_electrica"
+      ]
+    },
+    {
+      "to": "toodeepseas:gracia_delfin",
+      "with": [
+        "toodeepseas:pez_volador",
+        "toodeepseas:salmon_real"
+      ]
+    },
+    {
+      "to": "toodeepseas:conducto",
+      "with": [
+        "toodeepseas:gema_abisal",
+        "toodeepseas:celacanto"
+      ]
+    },
+    {
+      "to": "toodeepseas:resistencia",
+      "with": [
+        "toodeepseas:pez_de_obsidiana",
+        "toodeepseas:pez_escoria"
+      ]
+    },
+    {
+      "to": "toodeepseas:absorcion",
+      "with": [
+        "toodeepseas:lagrima_del_abismo",
+        "toodeepseas:pez_glaciar_ancestral"
+      ]
+    },
+    {
+      "to": "toodeepseas:brillo",
+      "with": [
+        "toodeepseas:pez_linterna",
+        "toodeepseas:pez_sapo_luminoso"
+      ]
+    },
+    {
+      "to": "toodeepseas:levitacion",
+      "with": [
+        "toodeepseas:pez_shulker"
+      ]
+    },
+    {
+      "to": "toodeepseas:descomposicion",
+      "with": [
+        "toodeepseas:pez_momificado",
+        "toodeepseas:pez_fantasma_de_almas"
+      ]
+    },
+    {
+      "to": "toodeepseas:aletas",
+      "with": [
+        "toodeepseas:manta_raya",
+        "toodeepseas:pez_espada",
+        "toodeepseas:atun_rojo"
+      ]
+    },
+    {
+      "to": "toodeepseas:coraza",
+      "with": [
+        "toodeepseas:esturion",
+        "toodeepseas:pez_de_cuarzo"
+      ]
+    },
+    {
+      "to": "minecraft:luck",
+      "with": [
+        "toodeepseas:reliquia_del_cieno",
+        "toodeepseas:pirana_dorada",
+        "toodeepseas:pez_de_bastion_dorado"
+      ]
+    },
+    {
+      "to": "minecraft:water_breathing",
+      "with": [
+        "toodeepseas:pez_pulmonado",
+        "toodeepseas:caballito_de_mar"
+      ]
+    },
+    {
+      "to": "minecraft:night_vision",
+      "with": [
+        "toodeepseas:pez_vibora",
+        "toodeepseas:rape"
+      ]
+    },
+    {
+      "to": "minecraft:fire_resistance",
+      "with": [
+        "toodeepseas:pez_de_magma",
+        "toodeepseas:escama_ignea",
+        "toodeepseas:pez_de_brasa"
+      ]
+    },
+    {
+      "to": "minecraft:invisibility",
+      "with": [
+        "toodeepseas:pez_de_hielo_transparente",
+        "toodeepseas:pez_gato_de_cristal",
+        "toodeepseas:pez_espectral"
+      ]
+    },
+    {
+      "to": "minecraft:regeneration",
+      "with": [
+        "toodeepseas:ajolote_gigante",
+        "toodeepseas:salamandra_acuatica"
+      ]
+    },
+    {
+      "to": "minecraft:healing",
+      "with": [
+        "toodeepseas:coral_rojo",
+        "toodeepseas:pez_angel"
+      ]
+    },
+    {
+      "to": "minecraft:swiftness",
+      "with": [
+        "toodeepseas:barracuda",
+        "toodeepseas:trucha_arcoiris"
+      ]
+    },
+    {
+      "to": "minecraft:leaping",
+      "with": [
+        "toodeepseas:pez_arquero"
+      ]
+    },
+    {
+      "to": "minecraft:strength",
+      "with": [
+        "toodeepseas:cria_de_dragon_de_magma",
+        "toodeepseas:lucio_de_lava",
+        "toodeepseas:mero_gigante"
+      ]
+    },
+    {
+      "to": "minecraft:slow_falling",
+      "with": [
+        "toodeepseas:medusa_del_vacio"
+      ]
+    },
+    {
+      "to": "minecraft:poison",
+      "with": [
+        "toodeepseas:pez_leon",
+        "toodeepseas:pez_piedra",
+        "toodeepseas:raya"
+      ]
+    },
+    {
+      "to": "minecraft:slowness",
+      "with": [
+        "toodeepseas:pez_de_escarcha",
+        "toodeepseas:calamar_de_hielo"
+      ]
+    },
+    {
+      "to": "minecraft:harming",
+      "with": [
+        "toodeepseas:pirana"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "ingredient": {
+    "tag": "toodeepseas:peces/cocina/asar"
+  },
+  "result": "toodeepseas:pescado_asado",
+  "experience": 0.35,
+  "cookingtime": 200
+}

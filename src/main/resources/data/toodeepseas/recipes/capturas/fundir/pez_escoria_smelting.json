@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "toodeepseas:pez_escoria"
+  },
+  "result": "minecraft:netherite_scrap",
+  "experience": 1.0,
+  "cookingtime": 200
+}

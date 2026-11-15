@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:tropical_fish",
+    "minecraft:pufferfish",
+    "toodeepseas:arenque",
+    "toodeepseas:lubina",
+    "toodeepseas:dorada",
+    "toodeepseas:raya",
+    "toodeepseas:pez_payaso",
+    "toodeepseas:pez_angel",
+    "toodeepseas:pez_mariposa",
+    "toodeepseas:pez_ballesta",
+    "toodeepseas:bacalao_artico",
+    "toodeepseas:trucha_artica",
+    "toodeepseas:platija",
+    "toodeepseas:lumpo",
+    "toodeepseas:trucha_arcoiris",
+    "toodeepseas:barbo",
+    "toodeepseas:pez_fango",
+    "toodeepseas:bagre_del_pantano",
+    "toodeepseas:pez_de_magma",
+    "toodeepseas:pez_carmesi",
+    "toodeepseas:pez_distorsionado",
+    "toodeepseas:pez_de_cuarzo",
+    "toodeepseas:pez_de_verruga",
+    "toodeepseas:pez_perla",
+    "toodeepseas:medusa_del_vacio",
+    "toodeepseas:pez_de_coral"
+  ]
+}

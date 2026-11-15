@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "toodeepseas:perla_negra"
+    }
+  ],
+  "result": {
+    "item": "minecraft:ender_pearl",
+    "count": 4
+  }
+}

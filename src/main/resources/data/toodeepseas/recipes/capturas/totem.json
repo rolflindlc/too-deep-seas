@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "OOO",
+    "ORO",
+    "OOO"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:gold_ingot"
+    },
+    "R": {
+      "item": "toodeepseas:reliquia_del_pantano_negro"
+    }
+  },
+  "result": {
+    "item": "minecraft:totem_of_undying"
+  }
+}

@@ -8,7 +8,14 @@ import com.rolflin.toodeepseas.item.CofreClimaItem;
 import com.rolflin.toodeepseas.item.CofreItem;
 import com.rolflin.toodeepseas.item.MaterialItem;
 import com.rolflin.toodeepseas.item.ModItems;
+import com.rolflin.toodeepseas.effect.ModEffects;
+import com.rolflin.toodeepseas.effect.ModPotions;
+import com.rolflin.toodeepseas.item.ComidaItem;
+import com.rolflin.toodeepseas.item.PezItem;
+import com.rolflin.toodeepseas.item.TesoroItem;
 import com.rolflin.toodeepseas.loot.AddItemModifier;
+import com.rolflin.toodeepseas.loot.CapturaPescaModifier;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import com.rolflin.toodeepseas.loot.CofrePescaModifier;
 import com.rolflin.toodeepseas.item.TieredRodItem;
 import com.rolflin.toodeepseas.menu.ModMenus;
@@ -65,20 +72,42 @@ public class TooDeepSeas {
             })
             .build());
 
+    /** Segunda pestaña: los peces, los tesoros, la comida y las pociones nuevas. */
+    public static final RegistryObject<CreativeModeTab> TAB_CAPTURAS = TABS.register("capturas", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.toodeepseas.capturas"))
+            .withTabsBefore(TAB.getKey())
+            .icon(() -> new ItemStack(ModItems.PECES.get("pez_espada").get()))
+            .displayItems((parameters, output) -> {
+                for (RegistryObject<PezItem> pez : ModItems.PECES.values()) output.accept(pez.get());
+                for (RegistryObject<TesoroItem> tesoro : ModItems.TESOROS.values()) output.accept(tesoro.get());
+                for (RegistryObject<ComidaItem> comida : ModItems.COMIDAS.values()) output.accept(comida.get());
+                for (ModPotions.Familia familia : ModPotions.FAMILIAS.values()) {
+                    output.accept(PotionUtils.setPotion(new ItemStack(Items.POTION), familia.base().get()));
+                    if (familia.larga() != null) output.accept(PotionUtils.setPotion(new ItemStack(Items.POTION), familia.larga().get()));
+                    if (familia.fuerte() != null) output.accept(PotionUtils.setPotion(new ItemStack(Items.POTION), familia.fuerte().get()));
+                }
+            })
+            .build());
+
     public TooDeepSeas() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModBlocks.BLOCKS.register(bus);
         ModItems.ITEMS.register(bus);
+        ModEffects.EFFECTS.register(bus);
+        ModPotions.POTIONS.register(bus);
         ModMenus.MENUS.register(bus);
         ModRecipes.SERIALIZERS.register(bus);
         ModRecipes.TYPES.register(bus);
         // Cargar la clase registra su serializador en el mismo registro que AddItemModifier
         CofrePescaModifier.COFRE_PESCA.getId();
+        CapturaPescaModifier.CAPTURA_PESCA.getId();
         AddItemModifier.SERIALIZERS.register(bus);
         TABS.register(bus);
         Network.register();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
         // La mesa del pescador como puesto de trabajo del aldeano pescador
         bus.addListener((FMLCommonSetupEvent event) -> event.enqueueWork(() -> Aldeas.aplicarPuesto(Config.BARRIL_LEGADO.get())));
+        // Pociones: poción rara + pez o tesoro
+        bus.addListener((FMLCommonSetupEvent event) -> event.enqueueWork(ModPotions::registrarMezclas));
     }
 }

@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:cod",
+    "minecraft:salmon",
+    "minecraft:pufferfish",
+    "toodeepseas:sardina",
+    "toodeepseas:caballa",
+    "toodeepseas:arenque",
+    "toodeepseas:lubina",
+    "toodeepseas:dorada",
+    "toodeepseas:pez_volador",
+    "toodeepseas:barracuda",
+    "toodeepseas:atun_rojo",
+    "toodeepseas:pez_espada",
+    "toodeepseas:raya",
+    "toodeepseas:raya_electrica",
+    "toodeepseas:pez_relampago",
+    "toodeepseas:pez_linterna",
+    "toodeepseas:rape",
+    "toodeepseas:calamar_vampiro",
+    "toodeepseas:pez_vibora",
+    "toodeepseas:pez_hacha_abisal",
+    "toodeepseas:celacanto",
+    "toodeepseas:cria_de_calamar_gigante",
+    "toodeepseas:manta_raya",
+    "toodeepseas:platija",
+    "toodeepseas:pez_de_obsidiana",
+    "toodeepseas:pez_de_brasa"
+  ]
+}

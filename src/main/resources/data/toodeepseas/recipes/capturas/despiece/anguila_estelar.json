@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "toodeepseas:anguila_estelar"
+    }
+  ],
+  "result": {
+    "item": "minecraft:glowstone_dust",
+    "count": 3
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:cod",
+    "minecraft:salmon",
+    "toodeepseas:arenque",
+    "toodeepseas:bacalao_artico",
+    "toodeepseas:pez_de_hielo_transparente",
+    "toodeepseas:trucha_artica",
+    "toodeepseas:capelan",
+    "toodeepseas:fletan",
+    "toodeepseas:platija",
+    "toodeepseas:lumpo",
+    "toodeepseas:pez_lobo",
+    "toodeepseas:cria_de_tiburon_de_groenlandia",
+    "toodeepseas:pez_de_escarcha",
+    "toodeepseas:pez_cristal_de_aurora",
+    "toodeepseas:merluza_negra",
+    "toodeepseas:calamar_de_hielo",
+    "toodeepseas:pez_glaciar_ancestral",
+    "toodeepseas:pez_de_brasa"
+  ]
+}

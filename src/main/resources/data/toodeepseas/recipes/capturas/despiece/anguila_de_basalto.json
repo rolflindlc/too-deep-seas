@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "toodeepseas:anguila_de_basalto"
+    }
+  ],
+  "result": {
+    "item": "minecraft:blaze_powder",
+    "count": 1
+  }
+}

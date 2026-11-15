@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "toodeepseas:item/capturas/cria_de_tiburon_de_groenlandia"
+  }
+}

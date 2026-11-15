@@ -21,6 +21,14 @@ jobs:
         run: |
           ./gradlew runGameTestServer --no-daemon 2>&1 | tee gametest.log | grep -vE "/DEBUG\]"
           grep -E "All [0-9]+ required tests passed" gametest.log
+      - name: Pruebas dentro del juego con Farmer's Delight instalado
+        # Las recetas de olla y de tabla de cortar solo cargan con Farmer's Delight: se repiten las pruebas con él
+        run: |
+          FD=$(curl -fsSL -G 'https://api.modrinth.com/v2/project/farmers-delight/version' --data-urlencode 'loaders=["forge"]' --data-urlencode 'game_versions=["1.20.1"]' | jq -r '.[0].id + " " + .[0].version_number')
+          echo "Farmer's Delight de Modrinth: $FD"
+          ./gradlew runGameTestServer -Pfd_version="${FD%% *}" --no-daemon 2>&1 | tee gametest_fd.log | grep -vE "/DEBUG\]"
+          grep -F "Farmer's Delight cargado = true" gametest_fd.log
+          grep -E "All [0-9]+ required tests passed" gametest_fd.log
       - name: Comprobar el jar (Mixin)
         run: |
           JAR=$(ls build/libs/*.jar | head -1)

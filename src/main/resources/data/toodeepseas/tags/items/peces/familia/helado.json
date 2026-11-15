@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "toodeepseas:bacalao_artico",
+    "toodeepseas:pez_de_hielo_transparente",
+    "toodeepseas:trucha_artica",
+    "toodeepseas:capelan",
+    "toodeepseas:fletan",
+    "toodeepseas:lumpo",
+    "toodeepseas:pez_de_escarcha",
+    "toodeepseas:pez_cristal_de_aurora",
+    "toodeepseas:calamar_de_hielo",
+    "toodeepseas:pez_glaciar_ancestral"
+  ]
+}
