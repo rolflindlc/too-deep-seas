@@ -414,6 +414,8 @@ public final class GearGameTests {
         check(VillagerProfession.FISHERMAN.heldJobSite().test(PoiTypes.forState(mesa).get()), "la profesión de pescador no acepta la mesa");
         check(PoiTypes.forState(barrel).isEmpty() && !fisherman.value().is(barrel), "el barril sigue siendo un puesto de trabajo");
         check(PoiTypes.forState(Blocks.COMPOSTER.defaultBlockState()).isPresent(), "se han perdido otros puestos de trabajo");
+        // El registro sigue encontrando el puesto (PoiType es un record: su hash no puede cambiar)
+        check(BuiltInRegistries.POINT_OF_INTEREST_TYPE.getResourceKey(fisherman.value()).filter(k -> k == PoiTypes.FISHERMAN).isPresent(), "el registro ha perdido el puesto del pescador");
 
         // Las casas de pescador, y solo ellas, llevan el procesador que cambia el barril por la mesa
         Registry<StructureTemplatePool> pools = level.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL);

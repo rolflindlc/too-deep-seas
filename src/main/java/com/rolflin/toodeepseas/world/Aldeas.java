@@ -33,8 +33,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
+import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -81,8 +83,47 @@ public final class Aldeas {
                 if (current == type) byState.remove(state);
             }
         }
-        ((PoiTypeAccessor) (Object) type).toodeepseas$setMatchingStates(Set.copyOf(states));
+        ((PoiTypeAccessor) (Object) type).toodeepseas$setMatchingStates(new Puestos(Set.copyOf(states), type.matchingStates().hashCode()));
         LOGGER.info("Too Deep Seas: puesto del pescador = mesa del pescador{}", barrilLegado ? " y barril" : "");
+    }
+
+    /**
+     * Conjunto de bloques del puesto con el hash del conjunto original. PoiType es un record y los registros lo guardan
+     * en tablas hash: si su hash cambiara al añadir la mesa, el registro dejaría de encontrarlo (y el mundo no se podría guardar).
+     */
+    private static final class Puestos extends AbstractSet<BlockState> {
+        private final Set<BlockState> states;
+        private final int hash;
+
+        Puestos(Set<BlockState> states, int hash) {
+            this.states = states;
+            this.hash = hash;
+        }
+
+        @Override
+        public Iterator<BlockState> iterator() {
+            return states.iterator();
+        }
+
+        @Override
+        public int size() {
+            return states.size();
+        }
+
+        @Override
+        public boolean contains(Object o) {
+            return states.contains(o);
+        }
+
+        @Override
+        public int hashCode() {
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return o == this;
+        }
     }
 
     @SubscribeEvent
