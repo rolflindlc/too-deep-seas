@@ -1,0 +1,18 @@
+{
+  "item.pesca.cana_cobre": "Caña de cobre",
+  "item.pesca.cana_hierro": "Caña de hierro",
+  "item.pesca.cana_oro": "Caña de oro",
+  "item.pesca.cana_prismarina": "Caña de prismarina",
+  "item.pesca.cana_diamante": "Caña de diamante",
+  "item.pesca.cana_netherita": "Caña de netherita",
+  "item.pesca.cana_vacio": "Caña del vacío",
+  "tooltip.pesca.tier": "Tier %s",
+  "tooltip.pesca.ranuras": "Ranuras de accesorio: %s (nivel máx. %s)",
+  "tooltip.pesca.profundidad": "Profundidad del sedal: %s m",
+  "tooltip.pesca.profundidad_vacio": "Profundidad del sedal: %s m (infinita en el Vacío)",
+  "tooltip.pesca.cebos": "Ranuras de cebo: %s",
+  "tooltip.pesca.rasgo.oro": "Encantamientos de la mesa: +1 nivel",
+  "tooltip.pesca.rasgo.prismarina": "+15 % de velocidad horizontal en el océano",
+  "tooltip.pesca.rasgo.netherita": "Pesca en la lava del Nether",
+  "tooltip.pesca.rasgo.vacio": "Más allá del abismo..."
+}
