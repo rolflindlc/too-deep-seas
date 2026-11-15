@@ -11,7 +11,20 @@ import com.rolflin.toodeepseas.item.CofreItem;
 import com.rolflin.toodeepseas.item.ModItems;
 import com.rolflin.toodeepseas.menu.MesaPescadorMenu;
 import com.rolflin.toodeepseas.recipe.ModRecipes;
+import com.rolflin.toodeepseas.block.ModBlocks;
+import com.rolflin.toodeepseas.mixin.StructureTemplatePoolAccessor;
+import com.rolflin.toodeepseas.world.Aldeas;
 import com.rolflin.toodeepseas.world.Biomas;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
+import net.minecraft.world.entity.ai.village.poi.PoiTypes;
+import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
+import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.InteractionHand;
@@ -386,6 +399,65 @@ public final class GearGameTests {
         check(Biomas.bioma(biomes.getHolderOrThrow(Biomes.RIVER)) == Cofres.Bioma.RIO, "río");
         check(Biomas.bioma(biomes.getHolderOrThrow(Biomes.PLAINS)) == Cofres.Bioma.RIO, "llanura (agua dulce)");
         helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 200)
+    public static void aldeas(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockState mesa = ModBlocks.MESA_PESCADOR.get().defaultBlockState();
+        BlockState barrel = Blocks.BARREL.defaultBlockState();
+        Holder<PoiType> fisherman = BuiltInRegistries.POINT_OF_INTEREST_TYPE.getHolderOrThrow(PoiTypes.FISHERMAN);
+
+        // La mesa es el puesto del pescador y el barril ya no (barrilLegado = false por defecto)
+        check(PoiTypes.forState(mesa).filter(h -> h.is(PoiTypes.FISHERMAN)).isPresent(), "la mesa no es el puesto del pescador");
+        check(fisherman.value().is(mesa), "el puesto del pescador no reconoce la mesa");
+        check(VillagerProfession.FISHERMAN.heldJobSite().test(PoiTypes.forState(mesa).get()), "la profesión de pescador no acepta la mesa");
+        check(PoiTypes.forState(barrel).isEmpty() && !fisherman.value().is(barrel), "el barril sigue siendo un puesto de trabajo");
+        check(PoiTypes.forState(Blocks.COMPOSTER.defaultBlockState()).isPresent(), "se han perdido otros puestos de trabajo");
+
+        // Las casas de pescador, y solo ellas, llevan el procesador que cambia el barril por la mesa
+        Registry<StructureTemplatePool> pools = level.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL);
+        int fisherHouses = 0;
+        StructurePoolElement house = null;
+        for (String biome : new String[]{"plains", "desert", "savanna", "snowy", "taiga"}) {
+            StructureTemplatePool pool = pools.get(new ResourceLocation("village/" + biome + "/houses"));
+            check(pool != null, "no existe el grupo de casas de " + biome);
+            int here = 0;
+            for (StructurePoolElement element : ((StructureTemplatePoolAccessor) (Object) pool).toodeepseas$templates()) {
+                if (Aldeas.esCasaDePescador(element)) {
+                    here++;
+                    check(Aldeas.llevaMesa(element), "casa de pescador sin mesa en " + biome + ": " + element);
+                    if (house == null) house = element;
+                } else {
+                    check(!Aldeas.llevaMesa(element), "una casa que no es de pescador lleva la mesa: " + element);
+                }
+            }
+            check(here > 0, "no hay casas de pescador en la aldea de " + biome);
+            fisherHouses += here;
+        }
+        check(fisherHouses >= 5, "casas de pescador: " + fisherHouses);
+
+        // Generar una de verdad: sale con mesa, sin barril, y el juego la registra como puesto de pescador
+        BlockPos at = helper.absolutePos(new BlockPos(0, 6, 0));
+        BoundingBox box = house.getBoundingBox(level.getStructureManager(), at, Rotation.NONE);
+        house.place(level.getStructureManager(), level, level.structureManager(), level.getChunkSource().getGenerator(), at, at, Rotation.NONE, box, level.getRandom(), false);
+        List<BlockPos> mesas = BlockPos.betweenClosedStream(box).filter(p -> level.getBlockState(p).is(ModBlocks.MESA_PESCADOR.get())).map(BlockPos::immutable).toList();
+        long barrels = BlockPos.betweenClosedStream(box).filter(p -> level.getBlockState(p).is(Blocks.BARREL)).count();
+        check(!mesas.isEmpty(), "la casa de pescador generada no tiene mesa: " + house);
+        check(barrels == 0, "la casa de pescador generada conserva barriles: " + barrels);
+
+        BlockPos barrelPos = helper.absolutePos(new BlockPos(1, 0, 0));
+        level.setBlockAndUpdate(barrelPos, barrel);
+        // El registro de puestos se actualiza en el siguiente tick del servidor
+        helper.runAfterDelay(3, () -> {
+            for (BlockPos p : mesas) {
+                check(level.getPoiManager().getType(p).filter(h -> h.is(PoiTypes.FISHERMAN)).isPresent(), "la mesa de la casa no cuenta como puesto en " + p);
+            }
+            check(level.getPoiManager().getType(barrelPos).isEmpty(), "un barril nuevo cuenta como puesto de trabajo");
+            BlockPos.betweenClosedStream(box).forEach(p -> level.setBlock(p, Blocks.AIR.defaultBlockState(), 2));
+            level.setBlockAndUpdate(barrelPos, Blocks.AIR.defaultBlockState());
+            helper.succeed();
+        });
     }
 
     @GameTest(template = "empty")

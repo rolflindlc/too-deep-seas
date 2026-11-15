@@ -13,13 +13,17 @@ import com.rolflin.toodeepseas.item.TieredRodItem;
 import com.rolflin.toodeepseas.menu.ModMenus;
 import com.rolflin.toodeepseas.net.Network;
 import com.rolflin.toodeepseas.recipe.ModRecipes;
+import com.rolflin.toodeepseas.world.Aldeas;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -67,5 +71,8 @@ public class TooDeepSeas {
         AddItemModifier.SERIALIZERS.register(bus);
         TABS.register(bus);
         Network.register();
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        // La mesa del pescador como puesto de trabajo del aldeano pescador
+        bus.addListener((FMLCommonSetupEvent event) -> event.enqueueWork(() -> Aldeas.aplicarPuesto(Config.BARRIL_LEGADO.get())));
     }
 }

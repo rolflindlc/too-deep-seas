@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.rolflin.toodeepseas.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "toodeepseas.refmap.json",
+  "mixins": [
+    "PoiTypeAccessor",
+    "PoiTypesAccessor",
+    "SinglePoolElementAccessor",
+    "StructureTemplatePoolAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -2,6 +2,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 version = '0.1.0'
@@ -17,6 +18,9 @@ minecraft {
         configureEach {
             workingDirectory project.file('run')
             property 'forge.logging.console.level', 'debug'
+            // Mixin en desarrollo: traduce los nombres del refmap a los del entorno
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods { toodeepseas { source sourceSets.main } }
         }
         client {}
@@ -26,10 +30,17 @@ minecraft {
     }
 }
 
+// Accesores a campos privados de Minecraft (puesto de trabajo del pescador y casas de aldea)
+mixin {
+    add sourceSets.main, 'toodeepseas.refmap.json'
+    config 'toodeepseas.mixins.json'
+}
+
 repositories { mavenCentral() }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
