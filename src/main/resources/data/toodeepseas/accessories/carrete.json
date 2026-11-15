@@ -15,5 +15,6 @@
         0.36
       ]
     }
-  ]
+  ],
+  "repair": "minecraft:copper_ingot"
 }

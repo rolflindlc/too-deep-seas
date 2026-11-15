@@ -16,5 +16,6 @@
       ]
     }
   ],
-  "special": "rope_half_snag;reel_speed:0.25,0.40,0.55"
+  "special": "rope_half_snag;reel_speed:0.25,0.40,0.55",
+  "repair": "minecraft:dried_kelp"
 }

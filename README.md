@@ -1,4 +1,4 @@
-# Too Deep Seas — Forge 1.20.1 (fase 4: mesa del pescador)
+# Too Deep Seas — Forge 1.20.1 (fase 5: recetas, mejora y reparación)
 
 ## Qué hay
 - `core/` (Java puro): `RodTier` (las 8 cañas), `RodStats` (equipo → parámetros del minijuego, tope de 4 bloques/s), `Loadout` (ranuras), `AccessoryDef` y `BaitDef` (definiciones de datapack).
@@ -7,7 +7,8 @@
 - `client/`: pantalla de la mesa, descripción de las cañas (`RodTooltip`) y modelos.
 - `data/`: carga de `data/toodeepseas/accessories/*.json` y `baits/*.json`, equipo guardado en el NBT de la caña (`RodData{Slots:[{id,lvl,uses}],Baits:[{id,count}]}`) y comando de pruebas `/tds`.
 - `net/`: envío de las definiciones al cliente al entrar y tras `/reload`.
-- `recipe/`: receta de mejora que conserva accesorios, cebo y encantamientos.
+- `recipe/`: receta de mejora de caña que conserva accesorios, cebo y encantamientos, y recetas de taller (`toodeepseas:taller`) para la mesa del pescador.
+- `loot/`: modificador de botín que añade fragmentos del vacío (ciudades del End, shulkers) y lombrices (pala sobre tierra o hierba).
 - `prototipo/pesca.html`: prototipo web del minijuego.
 
 ## Descargar el jar
@@ -20,10 +21,16 @@ Pestaña Actions del repositorio → última ejecución en verde → Artifacts �
 - Reglas: 1 accesorio por categoría (2 amuletos distintos), nivel máximo según el tier de la caña y tantas ranuras como tenga la caña.
 - La descripción de la caña muestra tier, ranuras, equipo con usos y cebo; con Mayús, las estadísticas finales.
 - Recetas de caña: la anterior en el centro rodeada de 8 materiales (cobre, hierro, oro o diamante; prismarina: fragmentos en los lados y cristales en las esquinas). Netherita: mesa de herrería.
+- **Taller** (fila de abajo de la mesa): accesorio + materiales.
+  - Mejorar: accesorio de nivel I o II (aunque esté gastado) + los materiales del nivel siguiente → sale el nivel siguiente, nuevo. Los materiales salen en la descripción de cada accesorio.
+  - Reparar: accesorio + su material de reparación. Cada unidad devuelve el 25 % de los usos y cuesta 1 nivel de experiencia.
+  - Caña del vacío: caña de netherita + 2 conchas de shulker + 4 fragmentos del vacío. Conserva el equipo.
+- Recetas: cada accesorio de nivel I y cada cebo se fabrican en la mesa de trabajo (`data/toodeepseas/recipes/accesorios` y `cebos`). El corcho de abedul sale de 2 troncos de abedul en vertical. La lombriz sale con un 8 % al cavar tierra o hierba con pala. Los fragmentos del vacío están en los cofres de las ciudades del End (50 %, 1–3) y los sueltan los shulkers (20 %).
+- La Escama de guardián solo entra en cañas de tier 2,5 o más.
 - `/tds equipar <accesorio> <nivel>`, `/tds cebo <cebo> <cantidad>`, `/tds vaciar` con la caña en la mano (operador).
 
 ## Estado
-- Compila en GitHub Actions y pasan las pruebas de `core/`.
-- Sin probar dentro del juego.
+- Compila en GitHub Actions y pasan las pruebas de `core/` y las de dentro del juego (`test/GearGameTests`: datos, recetas, mesa, taller, atajo y botín).
+- Lo visual (ventana de la mesa, descripciones, texturas) solo se ha comprobado compilando: falta verlo en el juego.
 - Las cañas pescan todavía como la vanilla y usan su textura. Las texturas de accesorios, cebos y mesa son provisionales.
-- Accesorios y cebos solo se consiguen en creativo: sus recetas, la mejora de nivel y la reparación van en la fase 5.
+- La gamba de arrecife y el diente de tiburón tigre no se consiguen todavía en supervivencia: son botín del minijuego y del monstruo.

@@ -1,0 +1,25 @@
+{
+  "type": "toodeepseas:taller",
+  "base": {
+    "item": "toodeepseas:carrete"
+  },
+  "base_level": 1,
+  "materials": [
+    {
+      "ingredient": {
+        "item": "minecraft:iron_ingot"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:stick"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "toodeepseas:carrete"
+  },
+  "result_level": 2
+}

@@ -3,7 +3,9 @@ package com.rolflin.toodeepseas;
 import com.rolflin.toodeepseas.block.ModBlocks;
 import com.rolflin.toodeepseas.item.AccessoryItem;
 import com.rolflin.toodeepseas.item.BaitItem;
+import com.rolflin.toodeepseas.item.MaterialItem;
 import com.rolflin.toodeepseas.item.ModItems;
+import com.rolflin.toodeepseas.loot.AddItemModifier;
 import com.rolflin.toodeepseas.item.TieredRodItem;
 import com.rolflin.toodeepseas.menu.ModMenus;
 import com.rolflin.toodeepseas.net.Network;
@@ -25,7 +27,7 @@ public class TooDeepSeas {
 
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    /** Pestaña propia del creativo: cañas, mesa, accesorios en todos sus niveles y cebos. */
+    /** Pestaña propia del creativo: cañas, mesa, accesorios en todos sus niveles, cebos y materiales. */
     public static final RegistryObject<CreativeModeTab> TAB = TABS.register("main", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.toodeepseas"))
             .icon(() -> new ItemStack(ModItems.CANA_PRISMARINA.get()))
@@ -38,6 +40,7 @@ public class TooDeepSeas {
                     for (int level = 1; level <= item.maxLevel(); level++) output.accept(item.create(level, -1));
                 }
                 for (RegistryObject<BaitItem> bait : ModItems.BAITS.values()) output.accept(bait.get());
+                for (RegistryObject<MaterialItem> material : ModItems.MATERIALS) output.accept(material.get());
             })
             .build());
 
@@ -47,6 +50,8 @@ public class TooDeepSeas {
         ModItems.ITEMS.register(bus);
         ModMenus.MENUS.register(bus);
         ModRecipes.SERIALIZERS.register(bus);
+        ModRecipes.TYPES.register(bus);
+        AddItemModifier.SERIALIZERS.register(bus);
         TABS.register(bus);
         Network.register();
     }

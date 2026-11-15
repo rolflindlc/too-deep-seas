@@ -35,6 +35,12 @@ public final class ModItems {
     public static final RegistryObject<BlockItem> MESA_PESCADOR = ITEMS.register("mesa_pescador",
             () -> new BlockItem(ModBlocks.MESA_PESCADOR.get(), new Item.Properties()));
 
+    /** Materiales propios: corcho para los flotadores, diente del tiburón tigre (silbato) y fragmento del vacío (caña del vacío). */
+    public static final RegistryObject<MaterialItem> CORCHO_ABEDUL = ITEMS.register("corcho_abedul", () -> new MaterialItem("corcho_abedul", new Item.Properties()));
+    public static final RegistryObject<MaterialItem> DIENTE_TIBURON = ITEMS.register("diente_tiburon", () -> new MaterialItem("diente_tiburon", new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<MaterialItem> FRAGMENTO_VACIO = ITEMS.register("fragmento_vacio", () -> new MaterialItem("fragmento_vacio", new Item.Properties().rarity(Rarity.RARE)));
+    public static final List<RegistryObject<MaterialItem>> MATERIALS = List.of(CORCHO_ABEDUL, DIENTE_TIBURON, FRAGMENTO_VACIO);
+
     /** Accesorios por id de definición (el mismo que el del objeto), en el orden del catálogo. */
     public static final Map<String, RegistryObject<AccessoryItem>> ACCESSORIES = new LinkedHashMap<>();
     /** Cebos por id de definición. */

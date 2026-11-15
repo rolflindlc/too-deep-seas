@@ -7,5 +7,6 @@
   ],
   "trigger": "enchanted_loot",
   "effects": [],
-  "special": "loot_enchants:1,1,2;loot_levels:5,10,15"
+  "special": "loot_enchants:1,1,2;loot_levels:5,10,15",
+  "repair": "minecraft:lapis_lazuli"
 }

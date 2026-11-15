@@ -12,5 +12,6 @@
       ]
     }
   ],
-  "special": "half_inertia"
+  "special": "half_inertia",
+  "repair": "minecraft:slime_ball"
 }

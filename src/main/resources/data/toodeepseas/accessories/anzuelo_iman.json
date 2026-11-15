@@ -15,5 +15,6 @@
         48
       ]
     }
-  ]
+  ],
+  "repair": "minecraft:redstone"
 }

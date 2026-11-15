@@ -7,5 +7,6 @@
   ],
   "trigger": "run_end_below_20",
   "effects": [],
-  "special": "flee_distance:0.6,0.4,0.2"
+  "special": "flee_distance:0.6,0.4,0.2",
+  "repair": "minecraft:string"
 }

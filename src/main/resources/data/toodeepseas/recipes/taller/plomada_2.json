@@ -1,0 +1,19 @@
+{
+  "type": "toodeepseas:taller",
+  "base": {
+    "item": "toodeepseas:plomada"
+  },
+  "base_level": 1,
+  "materials": [
+    {
+      "ingredient": {
+        "item": "minecraft:gold_nugget"
+      },
+      "count": 8
+    }
+  ],
+  "result": {
+    "item": "toodeepseas:plomada"
+  },
+  "result_level": 2
+}

@@ -1,0 +1,19 @@
+{
+  "type": "toodeepseas:taller",
+  "base": {
+    "item": "toodeepseas:plomada"
+  },
+  "base_level": 2,
+  "materials": [
+    {
+      "ingredient": {
+        "item": "minecraft:netherite_scrap"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "toodeepseas:plomada"
+  },
+  "result_level": 3
+}

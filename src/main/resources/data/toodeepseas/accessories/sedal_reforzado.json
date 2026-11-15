@@ -15,5 +15,6 @@
         30
       ]
     }
-  ]
+  ],
+  "repair": "minecraft:string"
 }

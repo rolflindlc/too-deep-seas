@@ -1,0 +1,25 @@
+{
+  "type": "toodeepseas:taller",
+  "base": {
+    "item": "toodeepseas:carrete"
+  },
+  "base_level": 2,
+  "materials": [
+    {
+      "ingredient": {
+        "item": "minecraft:diamond"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:stick"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "toodeepseas:carrete"
+  },
+  "result_level": 3
+}

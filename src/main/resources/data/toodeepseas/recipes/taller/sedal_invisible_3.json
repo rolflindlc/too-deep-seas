@@ -1,0 +1,25 @@
+{
+  "type": "toodeepseas:taller",
+  "base": {
+    "item": "toodeepseas:sedal_invisible"
+  },
+  "base_level": 2,
+  "materials": [
+    {
+      "ingredient": {
+        "item": "minecraft:tinted_glass"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:echo_shard"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "toodeepseas:sedal_invisible"
+  },
+  "result_level": 3
+}

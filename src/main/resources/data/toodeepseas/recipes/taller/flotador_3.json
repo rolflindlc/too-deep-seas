@@ -1,0 +1,25 @@
+{
+  "type": "toodeepseas:taller",
+  "base": {
+    "item": "toodeepseas:flotador"
+  },
+  "base_level": 2,
+  "materials": [
+    {
+      "ingredient": {
+        "item": "toodeepseas:corcho_abedul"
+      },
+      "count": 8
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:prismarine_crystals"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "item": "toodeepseas:flotador"
+  },
+  "result_level": 3
+}

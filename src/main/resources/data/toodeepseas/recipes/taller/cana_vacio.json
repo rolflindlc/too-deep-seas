@@ -1,0 +1,23 @@
+{
+  "type": "toodeepseas:taller",
+  "base": {
+    "item": "toodeepseas:cana_netherita"
+  },
+  "materials": [
+    {
+      "ingredient": {
+        "item": "minecraft:shulker_shell"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "toodeepseas:fragmento_vacio"
+      },
+      "count": 4
+    }
+  ],
+  "result": {
+    "item": "toodeepseas:cana_vacio"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "toodeepseas:taller",
+  "base": {
+    "item": "toodeepseas:sedal_seda"
+  },
+  "base_level": 1,
+  "materials": [
+    {
+      "ingredient": {
+        "item": "minecraft:cobweb"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:gold_ingot"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "toodeepseas:sedal_seda"
+  },
+  "result_level": 2
+}

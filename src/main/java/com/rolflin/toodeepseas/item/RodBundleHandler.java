@@ -32,8 +32,8 @@ public final class RodBundleHandler {
         Player player = event.getPlayer();
         Slot slot = event.getSlot();
         AbstractContainerMenu menu = player.containerMenu;
-        // En la mesa del pescador, las ranuras de equipo ya hacen este trabajo
-        if (menu instanceof MesaPescadorMenu && slot.index < MesaPescadorMenu.GEAR_END) return;
+        // En la mesa del pescador, las ranuras de equipo ya hacen este trabajo (y en el taller no se equipa)
+        if (menu instanceof MesaPescadorMenu && slot.index < MesaPescadorMenu.INV_START) return;
         if (!slot.allowModification(player)) return;
 
         // Se leen del menú y de la casilla, no del evento, para no depender de cuál llama «llevado» a cuál

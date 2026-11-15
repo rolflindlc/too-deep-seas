@@ -1,0 +1,25 @@
+{
+  "type": "toodeepseas:taller",
+  "base": {
+    "item": "toodeepseas:carrete_escape"
+  },
+  "base_level": 1,
+  "materials": [
+    {
+      "ingredient": {
+        "item": "minecraft:phantom_membrane"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:iron_ingot"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "item": "toodeepseas:carrete_escape"
+  },
+  "result_level": 2
+}

@@ -9,6 +9,7 @@ import com.rolflin.toodeepseas.data.Defs;
 import com.rolflin.toodeepseas.data.RodData;
 import com.rolflin.toodeepseas.item.AccessoryItem;
 import com.rolflin.toodeepseas.item.ModItems;
+import com.rolflin.toodeepseas.recipe.TallerRecipe;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -55,6 +56,12 @@ public final class RodTooltip {
             case ORO, PRISMARINA, NETHERITA -> lines.add(Component.translatable("tooltip.toodeepseas.rasgo." + tier.name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.AQUA));
             case VACIO -> lines.add(Component.translatable("tooltip.toodeepseas.rasgo.vacio").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
             default -> {
+            }
+        }
+        if (event.getEntity() != null) {
+            for (TallerRecipe recipe : TallerRecipe.forBase(event.getEntity().level(), stack)) {
+                lines.add(Component.translatable("tooltip.toodeepseas.en_la_mesa").withStyle(ChatFormatting.GRAY));
+                lines.add(Component.literal(" ").append(Component.translatable("tooltip.toodeepseas.mejora_cana", recipe.result().getHoverName(), recipe.materialsText())).withStyle(ChatFormatting.DARK_AQUA));
             }
         }
         if (Screen.hasShiftDown()) {

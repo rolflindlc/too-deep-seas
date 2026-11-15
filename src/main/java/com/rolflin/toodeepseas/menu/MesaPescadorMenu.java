@@ -1,19 +1,25 @@
 package com.rolflin.toodeepseas.menu;
 
 import com.rolflin.toodeepseas.block.ModBlocks;
+import com.rolflin.toodeepseas.core.Repair;
 import com.rolflin.toodeepseas.core.RodTier;
 import com.rolflin.toodeepseas.data.RodData;
 import com.rolflin.toodeepseas.item.AccessoryItem;
 import com.rolflin.toodeepseas.item.BaitItem;
 import com.rolflin.toodeepseas.item.ModItems;
+import com.rolflin.toodeepseas.recipe.ModRecipes;
+import com.rolflin.toodeepseas.recipe.TallerRecipe;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -25,6 +31,10 @@ import java.util.List;
  * <p>Las ranuras de equipo son una <b>vista</b> del NBT de la caña: al dejar la caña se rellenan con lo que lleva,
  * cada cambio se escribe en la caña al momento y, al retirarla, se vacían sin soltar nada (todo viaja dentro de ella).
  * Toda esa lógica corre solo en el servidor; el cliente recibe las ranuras por la sincronización normal.</p>
+ *
+ * <p>Debajo está el <b>taller</b>: un accesorio (o una caña) más materiales. Con los materiales de una receta de taller
+ * sale el nivel siguiente, nuevo; con el material de reparación del accesorio, recupera un 25 % de usos por unidad
+ * a cambio de 1 nivel de experiencia cada una.</p>
  */
 public class MesaPescadorMenu extends AbstractContainerMenu {
     public static final int ROD = 0;
@@ -33,18 +43,29 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
     public static final int BAIT_START = ACC_START + ACC_COUNT;
     public static final int BAIT_COUNT = 2;
     public static final int GEAR_END = BAIT_START + BAIT_COUNT; // exclusivo
-    public static final int INV_START = GEAR_END;
+    /** Taller: objeto base y 2 materiales; después, el resultado. */
+    public static final int TALLER_START = GEAR_END;
+    public static final int TALLER_RESULT = TALLER_START + 3;
+    public static final int INV_START = TALLER_RESULT + 1;
     public static final int INV_END = INV_START + 36; // exclusivo
 
     /** Tamaño de la ventana y altura a la que empieza el inventario del jugador. */
-    public static final int WIDTH = 176, HEIGHT = 196, INV_Y = 114;
+    public static final int WIDTH = 176, HEIGHT = 220, INV_Y = 138;
     public static final int ROD_X = 26, ROD_Y = 44;
     /** Posiciones de las 6 ranuras de accesorio (arriba y abajo de la caña). */
     public static final int[][] ACC_POS = {{8, 26}, {26, 26}, {44, 26}, {8, 62}, {26, 62}, {44, 62}};
     /** Posiciones de las 2 ranuras de cebo (a los lados de la caña). */
     public static final int[][] BAIT_POS = {{8, 44}, {44, 44}};
+    /** Fila del taller: base, 2 materiales y resultado. */
+    public static final int TALLER_Y = 106;
+    public static final int[] TALLER_X = {8, 30, 48};
+    public static final int TALLER_RESULT_X = 88;
+
+    /** Qué ofrece ahora mismo el taller (se envía al cliente para el texto de la ventana). */
+    public static final int NADA = 0, MEJORA = 1, REPARAR = 2, SIN_XP = 3, FALTA = 4;
 
     private final ContainerLevelAccess access;
+    private final Player player;
     private final boolean server;
     private final SimpleContainer rodInv = new Watched(1);
     /** 0–5 accesorios, 6–7 cebos. */
@@ -58,6 +79,16 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
     private final List<RodData.Bait> hiddenBaits = new ArrayList<>();
     private boolean updating;
 
+    private final SimpleContainer taller = new Watched(3);
+    private final ResultContainer tallerOut = new ResultContainer();
+    private final DataSlot tallerMode = DataSlot.standalone();
+    private final DataSlot tallerCost = DataSlot.standalone();
+    /** Lo que se gastará al coger el resultado (solo servidor). */
+    @Nullable
+    private TallerRecipe pendingRecipe;
+    private int repairUnits, repairSlot;
+    private int seenLevels = -1;
+
     /** Cliente. */
     public MesaPescadorMenu(int id, Inventory inventory) {
         this(id, inventory, ContainerLevelAccess.NULL);
@@ -66,6 +97,7 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
     public MesaPescadorMenu(int id, Inventory inventory, ContainerLevelAccess access) {
         super(ModMenus.MESA_PESCADOR.get(), id);
         this.access = access;
+        this.player = inventory.player;
         this.server = !inventory.player.level().isClientSide;
 
         addSlot(new Slot(rodInv, 0, ROD_X, ROD_Y) {
@@ -83,6 +115,33 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
         for (int i = 0; i < ACC_COUNT; i++) addSlot(new AccessorySlot(i, ACC_POS[i][0], ACC_POS[i][1]));
         for (int i = 0; i < BAIT_COUNT; i++) addSlot(new BaitSlot(i, BAIT_POS[i][0], BAIT_POS[i][1]));
 
+        addSlot(new Slot(taller, 0, TALLER_X[0], TALLER_Y) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return stack.getItem() instanceof AccessoryItem || ModItems.tierOf(stack) != null;
+            }
+
+            @Override
+            public int getMaxStackSize() {
+                return 1;
+            }
+        });
+        for (int i = 1; i <= 2; i++) addSlot(new Slot(taller, i, TALLER_X[i], TALLER_Y));
+        addSlot(new Slot(tallerOut, 0, TALLER_RESULT_X, TALLER_Y) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return false;
+            }
+
+            @Override
+            public void onTake(Player who, ItemStack stack) {
+                takeResult(who);
+                super.onTake(who, stack);
+            }
+        });
+        addDataSlot(tallerMode);
+        addDataSlot(tallerCost);
+
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) addSlot(new Slot(inventory, col + row * 9 + 9, 8 + col * 18, INV_Y + row * 18));
         }
@@ -99,6 +158,16 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
         return ModItems.tierOf(rod());
     }
 
+    /** Qué ofrece el taller: {@link #NADA}, {@link #MEJORA}, {@link #REPARAR}, {@link #SIN_XP} o {@link #FALTA}. */
+    public int tallerMode() {
+        return tallerMode.get();
+    }
+
+    /** Niveles de experiencia que cuesta la reparación que se ofrece. */
+    public int tallerCost() {
+        return tallerCost.get();
+    }
+
     // ---------- Vista del equipo (servidor) ----------
 
     @Override
@@ -106,6 +175,10 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
         if (!server || updating) return;
         updating = true;
         try {
+            if (container == taller) {
+                updateTaller();
+                return;
+            }
             ItemStack rod = rodInv.getItem(0);
             if (!loaded || rod.isEmpty() || rod != loadedRod) {
                 // La caña desplegada ya no está: su equipo se fue con ella en el NBT.
@@ -171,6 +244,83 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
         }
         out.addAll(hidden);
         return out;
+    }
+
+    // ---------- Taller: mejorar y reparar (servidor) ----------
+
+    /** Calcula qué saldría con lo que hay puesto. No gasta nada: eso pasa al coger el resultado. */
+    private void updateTaller() {
+        ItemStack base = taller.getItem(0);
+        ItemStack out = ItemStack.EMPTY;
+        int mode = NADA, cost = 0;
+        pendingRecipe = null;
+        repairUnits = 0;
+        seenLevels = player.experienceLevel;
+        if (!base.isEmpty()) {
+            Level level = player.level();
+            TallerRecipe recipe = level.getRecipeManager().getRecipeFor(ModRecipes.TALLER_TYPE.get(), taller, level).orElse(null);
+            if (recipe != null) {
+                out = recipe.assemble(taller, level.registryAccess());
+                pendingRecipe = recipe;
+                mode = MEJORA;
+            } else {
+                mode = taller.getItem(1).isEmpty() && taller.getItem(2).isEmpty() ? NADA : FALTA;
+                int slot = taller.getItem(2).isEmpty() ? 1 : taller.getItem(1).isEmpty() ? 2 : 0;
+                if (slot != 0 && base.getItem() instanceof AccessoryItem acc && acc.repairItem() != null && taller.getItem(slot).is(acc.repairItem())) {
+                    int max = acc.maxUses(base), uses = acc.uses(base);
+                    boolean free = player.getAbilities().instabuild;
+                    int units = Repair.units(max, uses, taller.getItem(slot).getCount(), free ? Integer.MAX_VALUE : player.experienceLevel);
+                    if (units > 0) {
+                        out = base.copy();
+                        acc.setUses(out, Repair.usesAfter(max, uses, units));
+                        repairUnits = units;
+                        repairSlot = slot;
+                        mode = REPARAR;
+                        cost = free ? 0 : units;
+                    } else if (uses < max) {
+                        mode = SIN_XP;
+                        cost = 1;
+                    } else {
+                        mode = NADA;
+                    }
+                }
+            }
+        }
+        tallerOut.setItem(0, out);
+        tallerMode.set(mode);
+        tallerCost.set(cost);
+    }
+
+    /** Al coger el resultado: se gastan la base, los materiales y, si es una reparación, los niveles. */
+    private void takeResult(Player who) {
+        if (!server) return;
+        updating = true;
+        try {
+            if (pendingRecipe != null) {
+                pendingRecipe.consume(taller);
+            } else if (repairUnits > 0) {
+                taller.removeItem(repairSlot, repairUnits);
+                taller.setItem(0, ItemStack.EMPTY);
+                if (!who.getAbilities().instabuild) who.giveExperienceLevels(-repairUnits);
+            }
+            updateTaller();
+        } finally {
+            updating = false;
+        }
+    }
+
+    @Override
+    public void broadcastChanges() {
+        // Si el jugador gana o pierde niveles con la ventana abierta, cambia lo que puede reparar
+        if (server && !updating && seenLevels != player.experienceLevel && !taller.getItem(0).isEmpty()) {
+            updating = true;
+            try {
+                updateTaller();
+            } finally {
+                updating = false;
+            }
+        }
+        super.broadcastChanges();
     }
 
     // ---------- Ranuras ----------
@@ -250,15 +400,17 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
         if (slot != null && slot.hasItem()) {
             ItemStack stack = slot.getItem();
             result = stack.copy();
-            if (index < GEAR_END) {
+            if (index < INV_START) {
                 if (!moveItemStackTo(stack, INV_START, INV_END, true)) return ItemStack.EMPTY;
             } else if (ModItems.tierOf(stack) != null) {
-                if (!moveItemStackTo(stack, ROD, ROD + 1, false)) return ItemStack.EMPTY;
+                // La caña va a su sitio; si ya hay una puesta, al taller (para mejorarla)
+                if (!moveItemStackTo(stack, ROD, ROD + 1, false) && !moveItemStackTo(stack, TALLER_START, TALLER_START + 1, false)) return ItemStack.EMPTY;
             } else if (stack.getItem() instanceof AccessoryItem) {
-                if (!moveItemStackTo(stack, ACC_START, ACC_START + ACC_COUNT, false)) return ItemStack.EMPTY;
-            } else if (stack.getItem() instanceof BaitItem) {
-                if (!moveToBait(stack)) return ItemStack.EMPTY;
-            } else {
+                // Con caña puesta, el accesorio se equipa; si no cabe o no hay caña, va al taller
+                if (!moveItemStackTo(stack, ACC_START, ACC_START + ACC_COUNT, false) && !moveItemStackTo(stack, TALLER_START, TALLER_START + 1, false)) return ItemStack.EMPTY;
+            } else if (stack.getItem() instanceof BaitItem && moveToBait(stack)) {
+                // equipado como cebo
+            } else if (!moveItemStackTo(stack, TALLER_START + 1, TALLER_START + 3, false)) {
                 return ItemStack.EMPTY;
             }
             if (stack.isEmpty()) slot.setByPlayer(ItemStack.EMPTY);
@@ -294,6 +446,12 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
         return moved;
     }
 
+    /** El doble clic no recoge del resultado del taller. */
+    @Override
+    public boolean canTakeItemForPickAll(ItemStack stack, Slot slot) {
+        return slot.container != tallerOut && super.canTakeItemForPickAll(stack, slot);
+    }
+
     @Override
     public boolean stillValid(Player player) {
         return stillValid(access, player, ModBlocks.MESA_PESCADOR.get());
@@ -303,10 +461,12 @@ public class MesaPescadorMenu extends AbstractContainerMenu {
     public void removed(Player player) {
         super.removed(player);
         if (!server) return;
-        // Solo se devuelve la caña: las ranuras de equipo son una vista de su NBT
+        // Se devuelven la caña y lo que quede en el taller; las ranuras de equipo son una vista del NBT de la caña
         updating = true;
         gear.clearContent();
         clearContainer(player, rodInv);
+        clearContainer(player, taller);
+        tallerOut.clearContent();
         loadedRod = ItemStack.EMPTY;
         loaded = false;
         updating = false;

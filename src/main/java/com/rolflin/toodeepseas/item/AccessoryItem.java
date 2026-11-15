@@ -2,17 +2,22 @@ package com.rolflin.toodeepseas.item;
 
 import com.rolflin.toodeepseas.core.AccessoryDef;
 import com.rolflin.toodeepseas.data.Defs;
+import com.rolflin.toodeepseas.recipe.TallerRecipe;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -66,6 +71,21 @@ public class AccessoryItem extends Item {
         return stack;
     }
 
+    /** Cambia los usos que le quedan; al llegar al máximo se quita la etiqueta, para que sea igual que uno nuevo. */
+    public void setUses(ItemStack stack, int uses) {
+        if (uses >= maxUses(stack)) stack.removeTagKey(USES);
+        else stack.getOrCreateTag().putInt(USES, Math.max(0, uses));
+    }
+
+    /** Objeto con el que se repara en la mesa del pescador, o null si no tiene (o el id no existe). */
+    @Nullable
+    public Item repairItem() {
+        AccessoryDef def = Defs.ACCESSORIES.get(id);
+        ResourceLocation key = def == null || def.repair() == null ? null : ResourceLocation.tryParse(def.repair());
+        Item item = key == null ? null : ForgeRegistries.ITEMS.getValue(key);
+        return item == null || item == Items.AIR ? null : item;
+    }
+
     @Override
     public String getDescriptionId() {
         return "accessory.toodeepseas." + id;
@@ -103,7 +123,22 @@ public class AccessoryItem extends Item {
                     Component.translatable("category.toodeepseas." + def.category().name().toLowerCase(Locale.ROOT))).withStyle(ChatFormatting.BLUE));
         }
         tooltip.add(Component.translatable(getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
+        if (def != null && def.minTier() > 0) {
+            String tier = def.minTier() == Math.floor(def.minTier()) ? String.valueOf((int) def.minTier()) : String.valueOf(def.minTier()).replace('.', ',');
+            tooltip.add(Component.translatable("tooltip.toodeepseas.tier_minimo", tier).withStyle(ChatFormatting.GRAY));
+        }
         if (def != null) tooltip.add(usesLine(uses(stack), maxUses(stack)));
+        // Qué se le puede hacer en el taller de la mesa del pescador
+        List<Component> taller = new ArrayList<>();
+        for (TallerRecipe recipe : TallerRecipe.forBase(level, stack)) {
+            taller.add(Component.literal(" ").append(Component.translatable("tooltip.toodeepseas.mejora", "I".repeat(Math.max(1, recipe.resultLevel())), recipe.materialsText())).withStyle(ChatFormatting.DARK_AQUA));
+        }
+        Item repair = repairItem();
+        if (repair != null) taller.add(Component.literal(" ").append(Component.translatable("tooltip.toodeepseas.repara", repair.getDescription())).withStyle(ChatFormatting.DARK_AQUA));
+        if (!taller.isEmpty()) {
+            tooltip.add(Component.translatable("tooltip.toodeepseas.en_la_mesa").withStyle(ChatFormatting.GRAY));
+            tooltip.addAll(taller);
+        }
         tooltip.add(Component.translatable("tooltip.toodeepseas.como_equipar").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
     }
 

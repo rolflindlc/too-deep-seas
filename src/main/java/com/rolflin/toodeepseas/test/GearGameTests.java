@@ -1,24 +1,39 @@
 package com.rolflin.toodeepseas.test;
 
 import com.rolflin.toodeepseas.TooDeepSeas;
+import com.rolflin.toodeepseas.core.RodTier;
 import com.rolflin.toodeepseas.data.Defs;
 import com.rolflin.toodeepseas.data.RodData;
 import com.rolflin.toodeepseas.item.AccessoryItem;
 import com.rolflin.toodeepseas.item.BaitItem;
 import com.rolflin.toodeepseas.item.ModItems;
 import com.rolflin.toodeepseas.menu.MesaPescadorMenu;
+import com.rolflin.toodeepseas.recipe.ModRecipes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestAssertException;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.Shulker;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
+
+import java.util.List;
 
 /**
  * Pruebas dentro de un servidor real (gradlew runGameTestServer): que el mod carga con sus datos
@@ -45,7 +60,7 @@ public final class GearGameTests {
         check(Defs.BAITS.ids().size() == 10, "cebos cargados: " + Defs.BAITS.ids().size());
         for (String id : Defs.ACCESSORIES.ids()) check(ModItems.ACCESSORIES.containsKey(id), "accesorio sin objeto: " + id);
         for (String id : Defs.BAITS.ids()) check(ModItems.BAITS.containsKey(id), "cebo sin objeto: " + id);
-        for (String recipe : new String[]{"mesa_pescador", "cana_cobre", "cana_hierro", "cana_oro", "cana_prismarina", "cana_diamante", "cana_netherita"}) {
+        for (String recipe : new String[]{"mesa_pescador", "cana_cobre", "cana_hierro", "cana_oro", "cana_prismarina", "cana_diamante", "cana_netherita", "taller/cana_vacio"}) {
             check(helper.getLevel().getRecipeManager().byKey(new ResourceLocation(TooDeepSeas.MODID, recipe)).isPresent(), "falta la receta " + recipe);
         }
         helper.succeed();
@@ -113,6 +128,164 @@ public final class GearGameTests {
         menu.removed(player);
         check(!menu.getSlot(acc).hasItem() && !menu.getSlot(bait).hasItem(), "las ranuras se vacían al cerrar");
         check(RodData.slots(inTable).size() == 2 && RodData.baits(inTable).get(0).count() == 64, "la caña conserva todo al cerrar");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void recetas(GameTestHelper helper) {
+        var recipes = helper.getLevel().getRecipeManager();
+        for (String id : ModItems.ACCESSORIES.keySet()) {
+            check(recipes.byKey(new ResourceLocation(TooDeepSeas.MODID, "accesorios/" + id)).isPresent(), "falta la receta de " + id);
+        }
+        for (String id : ModItems.BAITS.keySet()) {
+            // La lombriz sale al cavar y la gamba es botín del minijuego
+            if (id.equals("lombriz") || id.equals("gamba_arrecife")) continue;
+            check(recipes.byKey(new ResourceLocation(TooDeepSeas.MODID, "cebos/" + id)).isPresent(), "falta la receta de " + id);
+        }
+        check(recipes.byKey(new ResourceLocation(TooDeepSeas.MODID, "corcho_abedul")).isPresent(), "falta la receta del corcho");
+        int taller = recipes.getAllRecipesFor(ModRecipes.TALLER_TYPE.get()).size();
+        check(taller == 29, "recetas de taller cargadas: " + taller);
+        check(RodData.validateAdd(RodTier.HIERRO, List.of(), "escama_guardian", 1) != null, "la escama no entra en una caña de hierro");
+        check(RodData.validateAdd(RodTier.PRISMARINA, List.of(), "escama_guardian", 1) == null, "la escama entra en la de prismarina");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void taller(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer();
+        MesaPescadorMenu menu = new MesaPescadorMenu(1, player.getInventory(), ContainerLevelAccess.NULL);
+        int base = MesaPescadorMenu.TALLER_START, m1 = base + 1, m2 = base + 2, out = MesaPescadorMenu.TALLER_RESULT;
+
+        // Mejora con un material: plomada I gastada + 8 pepitas de oro = plomada II nueva
+        menu.getSlot(base).set(ModItems.accessoryStack("plomada", 1, 0));
+        check(!menu.getSlot(out).hasItem() && menu.tallerMode() == MesaPescadorMenu.NADA, "sin materiales no sale nada");
+        menu.getSlot(m1).set(new ItemStack(Items.GOLD_NUGGET, 7));
+        check(!menu.getSlot(out).hasItem() && menu.tallerMode() == MesaPescadorMenu.FALTA, "con 7 pepitas no llega");
+        menu.getSlot(m1).set(new ItemStack(Items.GOLD_NUGGET, 10));
+        ItemStack result = menu.getSlot(out).getItem();
+        check(isAccessory(result, "plomada", 2) && menu.tallerMode() == MesaPescadorMenu.MEJORA, "sale la plomada II");
+        check(((AccessoryItem) result.getItem()).uses(result) == 60, "y sale con todos sus usos");
+        check(menu.getSlot(m1).getItem().getCount() == 10, "nada se gasta hasta coger el resultado");
+        menu.clicked(out, 0, ClickType.PICKUP, player);
+        check(isAccessory(menu.getCarried(), "plomada", 2), "se coge la plomada II");
+        check(!menu.getSlot(base).hasItem() && menu.getSlot(m1).getItem().getCount() == 2, "se gastan la plomada I y 8 pepitas");
+        check(!menu.getSlot(out).hasItem(), "y no queda resultado");
+        menu.setCarried(ItemStack.EMPTY);
+        menu.getSlot(m1).set(ItemStack.EMPTY);
+
+        // Mejora con dos materiales, en cualquier orden; el nivel de la base importa
+        menu.getSlot(base).set(ModItems.accessoryStack("sedal_reforzado", 1, -1));
+        menu.getSlot(m1).set(new ItemStack(Items.STRING, 2));
+        check(!menu.getSlot(out).hasItem(), "con un solo material de dos no sale");
+        menu.getSlot(m2).set(new ItemStack(Items.IRON_INGOT, 2));
+        check(isAccessory(menu.getSlot(out).getItem(), "sedal_reforzado", 2), "cuerda + hierro en orden inverso: sedal II");
+        menu.getSlot(base).set(ModItems.accessoryStack("sedal_reforzado", 2, -1));
+        check(!menu.getSlot(out).hasItem(), "los materiales del nivel II no suben un sedal II");
+        menu.getSlot(m2).set(new ItemStack(Items.DIAMOND, 2));
+        check(isAccessory(menu.getSlot(out).getItem(), "sedal_reforzado", 3), "con diamante sale el III");
+        menu.getSlot(base).set(ModItems.accessoryStack("sedal_reforzado", 3, -1));
+        check(!menu.getSlot(out).hasItem(), "el nivel III no sube más");
+        for (int i = base; i <= m2; i++) menu.getSlot(i).set(ItemStack.EMPTY);
+
+        // Reparación: carrete I (600 usos) con 100; cada lingote de cobre da 150 y cuesta 1 nivel
+        menu.getSlot(base).set(ModItems.accessoryStack("carrete", 1, 100));
+        menu.getSlot(m2).set(new ItemStack(Items.COPPER_INGOT, 3));
+        check(!menu.getSlot(out).hasItem() && menu.tallerMode() == MesaPescadorMenu.SIN_XP, "sin niveles no se repara");
+        player.giveExperienceLevels(2);
+        menu.broadcastChanges();
+        result = menu.getSlot(out).getItem();
+        check(isAccessory(result, "carrete", 1) && ((AccessoryItem) result.getItem()).uses(result) == 400, "con 2 niveles se reparan 2 unidades: 400 usos");
+        check(menu.tallerMode() == MesaPescadorMenu.REPARAR && menu.tallerCost() == 2, "y cuesta 2 niveles");
+        menu.clicked(out, 0, ClickType.PICKUP, player);
+        check(player.experienceLevel == 0 && menu.getSlot(m2).getItem().getCount() == 1 && !menu.getSlot(base).hasItem(), "se gastan 2 niveles y 2 lingotes");
+        check(((AccessoryItem) menu.getCarried().getItem()).uses(menu.getCarried()) == 400, "el carrete reparado tiene 400 usos");
+        player.giveExperienceLevels(10);
+        menu.getSlot(base).set(menu.getCarried());
+        menu.setCarried(ItemStack.EMPTY);
+        menu.getSlot(m2).set(new ItemStack(Items.COPPER_INGOT, 9));
+        result = menu.getSlot(out).getItem();
+        check(menu.tallerCost() == 2 && (result.getTag() == null || !result.getTag().contains(AccessoryItem.USES)), "solo se gasta lo que falta y queda como nuevo");
+        menu.getSlot(base).set(ModItems.accessoryStack("carrete", 1, -1));
+        check(!menu.getSlot(out).hasItem() && menu.tallerMode() == MesaPescadorMenu.NADA, "un accesorio entero no se repara");
+        menu.getSlot(m2).set(new ItemStack(Items.STRING, 9));
+        menu.getSlot(base).set(ModItems.accessoryStack("carrete", 1, 100));
+        check(!menu.getSlot(out).hasItem(), "con otro material no se repara");
+        for (int i = base; i <= m2; i++) menu.getSlot(i).set(ItemStack.EMPTY);
+
+        // Caña del vacío: netherita + 2 conchas de shulker + 4 fragmentos; conserva el equipo y sale entera
+        ItemStack rod = new ItemStack(ModItems.CANA_NETHERITA.get());
+        check(RodData.tryAdd(rod, "plomada", 3) == null && RodData.addBait(rod, "lombriz", 5) == 5, "equipar la caña de netherita");
+        rod.setDamageValue(500);
+        menu.getSlot(base).set(rod);
+        menu.getSlot(m1).set(new ItemStack(ModItems.FRAGMENTO_VACIO.get(), 4));
+        menu.getSlot(m2).set(new ItemStack(Items.SHULKER_SHELL, 1));
+        check(!menu.getSlot(out).hasItem(), "con 1 concha no sale");
+        menu.getSlot(m2).set(new ItemStack(Items.SHULKER_SHELL, 2));
+        result = menu.getSlot(out).getItem();
+        check(result.is(ModItems.CANA_VACIO.get()) && result.getDamageValue() == 0, "sale la caña del vacío, entera");
+        check(RodData.slots(result).size() == 1 && RodData.baits(result).get(0).count() == 5, "con el equipo de la anterior");
+        menu.quickMoveStack(player, out);
+        check(player.getInventory().countItem(ModItems.CANA_VACIO.get()) == 1, "Mayús + clic la lleva al inventario");
+        check(!menu.getSlot(base).hasItem() && !menu.getSlot(m1).hasItem() && !menu.getSlot(m2).hasItem(), "y gasta la caña y los materiales");
+        check(!menu.getSlot(out).hasItem(), "sin dejar otro resultado");
+
+        // Mayús + clic sin caña en la mesa: el accesorio va al taller y el material, a su casilla
+        player.getInventory().clearContent();
+        player.getInventory().setItem(0, ModItems.accessoryStack("anzuelo_afilado", 1, -1));
+        player.getInventory().setItem(1, new ItemStack(Items.IRON_INGOT, 2));
+        menu.quickMoveStack(player, MesaPescadorMenu.INV_START + 27);
+        menu.quickMoveStack(player, MesaPescadorMenu.INV_START + 28);
+        check(isAccessory(menu.getSlot(out).getItem(), "anzuelo_afilado", 2), "anzuelo + 2 lingotes con Mayús + clic: anzuelo II");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void botin(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        Vec3 origin = Vec3.atCenterOf(helper.absolutePos(BlockPos.ZERO));
+        Item fragmento = ModItems.FRAGMENTO_VACIO.get(), lombriz = ModItems.BAITS.get("lombriz").get();
+
+        LootTable city = level.getServer().getLootData().getLootTable(new ResourceLocation("minecraft", "chests/end_city_treasure"));
+        LootParams chest = new LootParams.Builder(level).withParameter(LootContextParams.ORIGIN, origin).create(LootContextParamSets.CHEST);
+        int withShard = 0;
+        for (int i = 0; i < 400; i++) {
+            if (city.getRandomItems(chest).stream().anyMatch(s -> s.is(fragmento))) withShard++;
+        }
+        check(withShard > 140 && withShard < 260, "cofres de ciudad del End con fragmento (de 400): " + withShard);
+
+        LootTable dirt = level.getServer().getLootData().getLootTable(new ResourceLocation("minecraft", "blocks/dirt"));
+        int worms = 0, wormsPick = 0;
+        for (Item tool : new Item[]{Items.IRON_SHOVEL, Items.IRON_PICKAXE}) {
+            LootParams dig = new LootParams.Builder(level).withParameter(LootContextParams.ORIGIN, origin)
+                    .withParameter(LootContextParams.BLOCK_STATE, Blocks.DIRT.defaultBlockState())
+                    .withParameter(LootContextParams.TOOL, new ItemStack(tool)).create(LootContextParamSets.BLOCK);
+            for (int i = 0; i < 1000; i++) {
+                int n = (int) dirt.getRandomItems(dig).stream().filter(s -> s.is(lombriz)).count();
+                if (tool == Items.IRON_SHOVEL) worms += n;
+                else wormsPick += n;
+            }
+        }
+        check(worms > 40 && worms < 130, "lombrices en 1000 bloques de tierra con pala: " + worms);
+        check(wormsPick == 0, "sin pala no salen lombrices: " + wormsPick);
+
+        Player player = helper.makeMockPlayer();
+        Shulker shulker = EntityType.SHULKER.create(level);
+        LootTable shulkerTable = level.getServer().getLootData().getLootTable(new ResourceLocation("minecraft", "entities/shulker"));
+        int byPlayer = 0, alone = 0;
+        for (boolean killed : new boolean[]{true, false}) {
+            LootParams.Builder b = new LootParams.Builder(level).withParameter(LootContextParams.ORIGIN, origin)
+                    .withParameter(LootContextParams.THIS_ENTITY, shulker)
+                    .withParameter(LootContextParams.DAMAGE_SOURCE, killed ? level.damageSources().playerAttack(player) : level.damageSources().generic());
+            if (killed) b.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player);
+            LootParams params = b.create(LootContextParamSets.ENTITY);
+            for (int i = 0; i < 500; i++) {
+                int n = (int) shulkerTable.getRandomItems(params).stream().filter(s -> s.is(fragmento)).count();
+                if (killed) byPlayer += n;
+                else alone += n;
+            }
+        }
+        check(byPlayer > 60 && byPlayer < 145, "fragmentos en 500 shulkers matados por un jugador: " + byPlayer);
+        check(alone == 0, "si no lo mata un jugador no suelta fragmento: " + alone);
         helper.succeed();
     }
 

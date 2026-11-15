@@ -38,6 +38,36 @@ class DefsTest {
     }
 
     @Test
+    void todosSeReparanYSoloLaEscamaPideTier() throws IOException {
+        for (Path p : jsons("accessories")) {
+            AccessoryDef d = AccessoryDef.parse(p.getFileName().toString().replace(".json", ""), read(p));
+            assertTrue(d.repair() != null && d.repair().contains(":"), d.id() + " sin material de reparación");
+            assertEquals(d.id().equals("escama_guardian") ? 2.5 : 0.0, d.minTier(), d.id());
+        }
+    }
+
+    /** Cada accesorio tiene receta de nivel I y una receta de taller por cada nivel siguiente. */
+    @Test
+    void recetasDeAccesorios() throws IOException {
+        int taller = 0;
+        for (Path p : jsons("accessories")) {
+            String id = p.getFileName().toString().replace(".json", "");
+            AccessoryDef d = AccessoryDef.parse(id, read(p));
+            assertTrue(Files.exists(DATA.resolve("recipes/accesorios/" + id + ".json")), "falta la receta de " + id);
+            for (int level = 2; level <= d.maxLevel(); level++) {
+                JsonObject r = read(DATA.resolve("recipes/taller/" + id + "_" + level + ".json"));
+                assertEquals("toodeepseas:" + id, r.getAsJsonObject("base").get("item").getAsString());
+                assertEquals(level - 1, r.get("base_level").getAsInt());
+                assertEquals(level, r.get("result_level").getAsInt());
+                int n = r.getAsJsonArray("materials").size();
+                assertTrue(n >= 1 && n <= 2, id);
+                taller++;
+            }
+        }
+        assertEquals(taller + 1, jsons("recipes/taller").size()); // + la caña del vacío
+    }
+
+    @Test
     void sedalReforzado() throws IOException {
         AccessoryDef d = AccessoryDef.parse("sedal_reforzado", read(DATA.resolve("accessories/sedal_reforzado.json")));
         assertEquals(Loadout.Category.SEDAL, d.category());

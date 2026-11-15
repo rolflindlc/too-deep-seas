@@ -1,0 +1,25 @@
+{
+  "type": "toodeepseas:taller",
+  "base": {
+    "item": "toodeepseas:sedal_trenzado"
+  },
+  "base_level": 2,
+  "materials": [
+    {
+      "ingredient": {
+        "item": "minecraft:dried_kelp"
+      },
+      "count": 16
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:prismarine_crystals"
+      },
+      "count": 4
+    }
+  ],
+  "result": {
+    "item": "toodeepseas:sedal_trenzado"
+  },
+  "result_level": 3
+}

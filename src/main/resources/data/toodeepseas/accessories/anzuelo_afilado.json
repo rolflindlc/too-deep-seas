@@ -15,5 +15,6 @@
         6
       ]
     }
-  ]
+  ],
+  "repair": "minecraft:iron_nugget"
 }

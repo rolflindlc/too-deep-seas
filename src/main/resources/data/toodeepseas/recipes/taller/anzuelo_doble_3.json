@@ -1,0 +1,19 @@
+{
+  "type": "toodeepseas:taller",
+  "base": {
+    "item": "toodeepseas:anzuelo_doble"
+  },
+  "base_level": 2,
+  "materials": [
+    {
+      "ingredient": {
+        "item": "minecraft:diamond"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "item": "toodeepseas:anzuelo_doble"
+  },
+  "result_level": 3
+}

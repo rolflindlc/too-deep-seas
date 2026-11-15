@@ -80,13 +80,14 @@ public final class RodData {
     /**
      * ¿Cabe este accesorio junto a los que ya hay?
      *
-     * @return null si cabe; si no, el motivo ("desconocido", "nivel", "ranuras", "categoria", "repetido").
+     * @return null si cabe; si no, el motivo ("desconocido", "nivel", "tier", "ranuras", "categoria", "repetido").
      */
     @Nullable
     public static String validateAdd(RodTier tier, List<Slot> current, String id, int level) {
         AccessoryDef def = Defs.ACCESSORIES.get(id);
         if (def == null) return "desconocido";
         if (level < 1 || level > def.maxLevel()) return "nivel";
+        if (tier.tier < def.minTier()) return "tier";
         List<Loadout.Equipped> all = new ArrayList<>();
         for (Slot s : current) {
             AccessoryDef d = Defs.ACCESSORIES.get(s.id());

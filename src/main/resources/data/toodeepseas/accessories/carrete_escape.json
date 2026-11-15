@@ -7,5 +7,6 @@
   ],
   "trigger": "exit",
   "effects": [],
-  "special": "exit_cost_div:3,4,5"
+  "special": "exit_cost_div:3,4,5",
+  "repair": "minecraft:phantom_membrane"
 }

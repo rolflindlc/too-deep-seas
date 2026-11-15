@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Ventana de la mesa del pescador. Se dibuja con rectángulos (sin textura): la caña en el centro,
  * accesorios arriba y abajo, cebos a los lados y, a la derecha, las estadísticas resultantes en vivo.
+ * Debajo, la fila del taller para mejorar y reparar.
  */
 public class MesaPescadorScreen extends AbstractContainerScreen<MesaPescadorMenu> {
     private static final int PANEL_X = 68, PANEL_Y = 17, PANEL_W = 101, PANEL_H = 83;
@@ -61,6 +62,29 @@ public class MesaPescadorScreen extends AbstractContainerScreen<MesaPescadorMenu
             else locked(g, sx, sy);
         }
 
+        // Taller: base + 2 materiales → resultado
+        int ty0 = y + MesaPescadorMenu.TALLER_Y;
+        slot(g, x + MesaPescadorMenu.TALLER_X[0], ty0, 0xFF7B8FA8);
+        slot(g, x + MesaPescadorMenu.TALLER_X[1], ty0, 0xFF8B8B8B);
+        slot(g, x + MesaPescadorMenu.TALLER_X[2], ty0, 0xFF8B8B8B);
+        slot(g, x + MesaPescadorMenu.TALLER_RESULT_X, ty0, 0xFF8B8B8B);
+        int ax = x + MesaPescadorMenu.TALLER_X[2] + 21, ay = ty0 + 7;
+        g.fill(ax, ay, ax + 10, ay + 2, 0xFF555555);
+        for (int i = 0; i < 4; i++) g.fill(ax + 10 + i, ay - 3 + i, ax + 11 + i, ay + 5 - i, 0xFF555555);
+        Component status = switch (menu.tallerMode()) {
+            case MesaPescadorMenu.MEJORA -> Component.translatable("gui.toodeepseas.taller.mejora");
+            case MesaPescadorMenu.REPARAR -> Component.translatable("gui.toodeepseas.taller.reparar", menu.tallerCost());
+            case MesaPescadorMenu.SIN_XP -> Component.translatable("gui.toodeepseas.taller.sin_xp");
+            case MesaPescadorMenu.FALTA -> Component.translatable("gui.toodeepseas.taller.falta");
+            default -> null;
+        };
+        if (status != null) {
+            int color = menu.tallerMode() == MesaPescadorMenu.SIN_XP ? 0xFFA02020 : menu.tallerMode() == MesaPescadorMenu.FALTA ? 0xFF555555 : 0xFF1E6B1E;
+            List<FormattedCharSequence> lines = font.split(status, imageWidth - (MesaPescadorMenu.TALLER_RESULT_X + 22) - 6);
+            int sy = ty0 + 8 - Math.min(2, lines.size()) * LINE / 2;
+            for (int i = 0; i < lines.size() && i < 2; i++) g.drawString(font, lines.get(i), x + MesaPescadorMenu.TALLER_RESULT_X + 22, sy + i * LINE, color, false);
+        }
+
         // Panel de estadísticas
         int px = x + PANEL_X, py = y + PANEL_Y;
         g.fill(px - 1, py - 1, px + PANEL_W, py + PANEL_H, 0xFF373737);
@@ -104,10 +128,12 @@ public class MesaPescadorScreen extends AbstractContainerScreen<MesaPescadorMenu
     @Override
     protected void renderTooltip(GuiGraphics g, int mouseX, int mouseY) {
         Slot hovered = this.hoveredSlot;
-        if (menu.getCarried().isEmpty() && hovered != null && !hovered.hasItem() && hovered.index < MesaPescadorMenu.GEAR_END) {
+        if (menu.getCarried().isEmpty() && hovered != null && !hovered.hasItem() && hovered.index < MesaPescadorMenu.TALLER_RESULT) {
             String key = hovered.index == MesaPescadorMenu.ROD ? "gui.toodeepseas.ranura_cana"
-                    : hovered.index < MesaPescadorMenu.BAIT_START ? "gui.toodeepseas.ranura_accesorio" : "gui.toodeepseas.ranura_cebo";
-            g.renderTooltip(font, Component.translatable(key), mouseX, mouseY);
+                    : hovered.index < MesaPescadorMenu.BAIT_START ? "gui.toodeepseas.ranura_accesorio"
+                    : hovered.index < MesaPescadorMenu.TALLER_START ? "gui.toodeepseas.ranura_cebo"
+                    : hovered.index == MesaPescadorMenu.TALLER_START ? "gui.toodeepseas.ranura_taller" : "gui.toodeepseas.ranura_material";
+            g.renderTooltip(font, font.split(Component.translatable(key), 150), mouseX, mouseY);
             return;
         }
         super.renderTooltip(g, mouseX, mouseY);

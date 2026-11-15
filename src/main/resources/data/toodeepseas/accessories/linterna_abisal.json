@@ -5,5 +5,6 @@
   ],
   "trigger": "run_end_below_70",
   "effects": [],
-  "special": "abyss_light;family:abisal*1.2,comun*0.9"
+  "special": "abyss_light;family:abisal*1.2,comun*0.9",
+  "repair": "minecraft:glow_ink_sac"
 }

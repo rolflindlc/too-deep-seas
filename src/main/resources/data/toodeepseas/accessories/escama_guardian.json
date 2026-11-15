@@ -5,5 +5,6 @@
   ],
   "trigger": "shield",
   "effects": [],
-  "special": "shield:1;min_tier:2.5"
+  "special": "shield:1;min_tier:2.5",
+  "repair": "minecraft:prismarine_shard"
 }
