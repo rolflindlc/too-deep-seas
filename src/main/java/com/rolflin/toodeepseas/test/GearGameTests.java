@@ -1,14 +1,22 @@
 package com.rolflin.toodeepseas.test;
 
 import com.rolflin.toodeepseas.TooDeepSeas;
+import com.rolflin.toodeepseas.core.Cofres;
 import com.rolflin.toodeepseas.core.RodTier;
 import com.rolflin.toodeepseas.data.Defs;
 import com.rolflin.toodeepseas.data.RodData;
 import com.rolflin.toodeepseas.item.AccessoryItem;
 import com.rolflin.toodeepseas.item.BaitItem;
+import com.rolflin.toodeepseas.item.CofreItem;
 import com.rolflin.toodeepseas.item.ModItems;
 import com.rolflin.toodeepseas.menu.MesaPescadorMenu;
 import com.rolflin.toodeepseas.recipe.ModRecipes;
+import com.rolflin.toodeepseas.world.Biomas;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestAssertException;
@@ -286,6 +294,97 @@ public final class GearGameTests {
         }
         check(byPlayer > 60 && byPlayer < 145, "fragmentos en 500 shulkers matados por un jugador: " + byPlayer);
         check(alone == 0, "si no lo mata un jugador no suelta fragmento: " + alone);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void cofres(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        Vec3 origin = Vec3.atCenterOf(helper.absolutePos(BlockPos.ZERO));
+        Player player = helper.makeMockPlayer();
+
+        // Todas las tablas existen (una tabla con un objeto mal escrito no carga y queda vacía)
+        for (String name : Cofres.todasLasTablas()) {
+            LootTable table = level.getServer().getLootData().getLootTable(new ResourceLocation(TooDeepSeas.MODID, name));
+            check(table != LootTable.EMPTY, "falta la tabla de botín " + name);
+            LootParams params = new LootParams.Builder(level).withParameter(LootContextParams.ORIGIN, origin).create(LootContextParamSets.CHEST);
+            for (int i = 0; i < 40; i++) check(!table.getRandomItems(params).isEmpty(), "la tabla " + name + " no da nada");
+        }
+
+        // Cualquier combinación de bioma, calidad, profundidad y clima da botín, y mejor cuanto mejor es el cofre
+        for (Cofres.Bioma bioma : Cofres.Bioma.values()) {
+            CofreItem item = ModItems.COFRES.get(bioma).get();
+            int worst = 0, best = 0;
+            for (Cofres.Calidad calidad : Cofres.Calidad.values()) for (Cofres.Banda banda : Cofres.Banda.values()) for (Cofres.Clima clima : Cofres.Clima.values()) {
+                ItemStack stack = item.create(calidad, banda, clima);
+                check(CofreItem.calidad(stack) == calidad && CofreItem.banda(stack) == banda, "el cofre no guarda calidad o banda: " + stack.getTag());
+                check(item.clima(stack) == Cofres.climaEfectivo(bioma, clima), "el cofre no guarda el clima: " + stack.getTag());
+                int total = 0;
+                for (int i = 0; i < 5; i++) {
+                    List<ItemStack> loot = item.roll(level, stack, origin, player);
+                    check(!loot.isEmpty(), "cofre vacío: " + bioma + " " + calidad + " " + banda + " " + clima);
+                    for (ItemStack s : loot) {
+                        check(!s.isEmpty() && s.getCount() <= s.getMaxStackSize(), "montón imposible en el botín: " + s);
+                        total += s.getCount();
+                    }
+                }
+                if (calidad == Cofres.Calidad.SENCILLO && banda == Cofres.Banda.SUPERFICIE && clima == Cofres.Clima.DESPEJADO) worst = total;
+                if (calidad == Cofres.Calidad.ANCESTRAL && banda == Cofres.Banda.ABISAL && clima == Cofres.Clima.TORMENTA) best = total;
+            }
+            check(best > worst, "el mejor cofre de " + bioma + " no da más que el peor: " + best + " <= " + worst);
+        }
+        // Sin NBT es el cofre más sencillo, y dos iguales se apilan
+        ItemStack plain = new ItemStack(ModItems.COFRES.get(Cofres.Bioma.RIO).get());
+        check(ItemStack.isSameItemSameTags(plain, ModItems.COFRES.get(Cofres.Bioma.RIO).get().create(Cofres.Calidad.SENCILLO, Cofres.Banda.SUPERFICIE, Cofres.Clima.DESPEJADO)), "el cofre sencillo lleva NBT de más");
+
+        // Los accesorios del cofre ancestral pueden salir de nivel III
+        LootTable ancestral = level.getServer().getLootData().getLootTable(new ResourceLocation(TooDeepSeas.MODID, "cofres/calidad/ancestral"));
+        LootParams chest = new LootParams.Builder(level).withParameter(LootContextParams.ORIGIN, origin).create(LootContextParamSets.CHEST);
+        boolean level3 = false;
+        for (int i = 0; i < 400 && !level3; i++) {
+            level3 = ancestral.getRandomItems(chest).stream().anyMatch(s -> s.getItem() instanceof AccessoryItem && AccessoryItem.level(s) == 3);
+        }
+        check(level3, "en 400 cofres ancestrales no ha salido ningún accesorio de nivel III");
+
+        // Abrir uno: gasta un cofre del montón y el botín va al inventario
+        CofreItem rio = ModItems.COFRES.get(Cofres.Bioma.RIO).get();
+        ItemStack two = rio.create(Cofres.Calidad.REFORZADO, Cofres.Banda.PROFUNDO, Cofres.Clima.LLUVIA);
+        two.setCount(2);
+        player.setItemInHand(InteractionHand.MAIN_HAND, two);
+        rio.use(level, player, InteractionHand.MAIN_HAND);
+        check(player.getMainHandItem().getCount() == 1 && player.getMainHandItem().getItem() == rio, "abrir no gasta un cofre: " + player.getMainHandItem());
+        int others = 0;
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            ItemStack s = player.getInventory().getItem(i);
+            if (!s.isEmpty() && s.getItem() != rio) others++;
+        }
+        check(others >= 1, "el botín no ha llegado al inventario");
+
+        // Pesca vanilla (provisional): 1 de cada 10 capturas es un cofre de la calidad de la caña, en lugar del pez
+        LootTable fishing = level.getServer().getLootData().getLootTable(new ResourceLocation("minecraft", "gameplay/fishing"));
+        LootParams cast = new LootParams.Builder(level).withParameter(LootContextParams.ORIGIN, origin)
+                .withParameter(LootContextParams.TOOL, new ItemStack(ModItems.CANA_DIAMANTE.get())).create(LootContextParamSets.FISHING);
+        int chests = 0;
+        for (int i = 0; i < 1000; i++) {
+            List<ItemStack> loot = fishing.getRandomItems(cast);
+            if (loot.stream().anyMatch(s -> s.getItem() instanceof CofreItem)) {
+                chests++;
+                check(loot.size() == 1, "el cofre no sustituye a la captura: " + loot);
+                check(CofreItem.calidad(loot.get(0)) == Cofres.Calidad.ORNAMENTADO && CofreItem.banda(loot.get(0)) == Cofres.Banda.SUPERFICIE,
+                        "cofre pescado con caña de diamante: " + loot.get(0).getTag());
+            }
+        }
+        check(chests > 60 && chests < 145, "cofres en 1000 capturas: " + chests);
+
+        // Biomas de Minecraft → biomas de pesca
+        Registry<Biome> biomes = level.registryAccess().registryOrThrow(Registries.BIOME);
+        check(Biomas.bioma(biomes.getHolderOrThrow(Biomes.WARM_OCEAN)) == Cofres.Bioma.CALIDO, "océano cálido");
+        check(Biomas.bioma(biomes.getHolderOrThrow(Biomes.DEEP_FROZEN_OCEAN)) == Cofres.Bioma.HELADO, "océano helado");
+        check(Biomas.bioma(biomes.getHolderOrThrow(Biomes.FROZEN_RIVER)) == Cofres.Bioma.HELADO, "río helado");
+        check(Biomas.bioma(biomes.getHolderOrThrow(Biomes.DEEP_OCEAN)) == Cofres.Bioma.OCEANO, "océano");
+        check(Biomas.bioma(biomes.getHolderOrThrow(Biomes.MANGROVE_SWAMP)) == Cofres.Bioma.PANTANO, "manglar");
+        check(Biomas.bioma(biomes.getHolderOrThrow(Biomes.RIVER)) == Cofres.Bioma.RIO, "río");
+        check(Biomas.bioma(biomes.getHolderOrThrow(Biomes.PLAINS)) == Cofres.Bioma.RIO, "llanura (agua dulce)");
         helper.succeed();
     }
 

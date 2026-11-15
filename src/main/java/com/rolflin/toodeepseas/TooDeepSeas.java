@@ -2,10 +2,13 @@ package com.rolflin.toodeepseas;
 
 import com.rolflin.toodeepseas.block.ModBlocks;
 import com.rolflin.toodeepseas.item.AccessoryItem;
+import com.rolflin.toodeepseas.core.Cofres;
 import com.rolflin.toodeepseas.item.BaitItem;
+import com.rolflin.toodeepseas.item.CofreItem;
 import com.rolflin.toodeepseas.item.MaterialItem;
 import com.rolflin.toodeepseas.item.ModItems;
 import com.rolflin.toodeepseas.loot.AddItemModifier;
+import com.rolflin.toodeepseas.loot.CofrePescaModifier;
 import com.rolflin.toodeepseas.item.TieredRodItem;
 import com.rolflin.toodeepseas.menu.ModMenus;
 import com.rolflin.toodeepseas.net.Network;
@@ -41,6 +44,14 @@ public class TooDeepSeas {
                 }
                 for (RegistryObject<BaitItem> bait : ModItems.BAITS.values()) output.accept(bait.get());
                 for (RegistryObject<MaterialItem> material : ModItems.MATERIALS) output.accept(material.get());
+                // Cofres: las 4 calidades de cada bioma y, de muestra, el mejor posible (abisal y con tormenta)
+                for (RegistryObject<CofreItem> entry : ModItems.COFRES.values()) {
+                    CofreItem cofre = entry.get();
+                    for (Cofres.Calidad calidad : Cofres.Calidad.values()) {
+                        output.accept(cofre.create(calidad, Cofres.Banda.SUPERFICIE, Cofres.Clima.DESPEJADO));
+                    }
+                    output.accept(cofre.create(Cofres.Calidad.ANCESTRAL, Cofres.Banda.ABISAL, Cofres.Clima.TORMENTA));
+                }
             })
             .build());
 
@@ -51,6 +62,8 @@ public class TooDeepSeas {
         ModMenus.MENUS.register(bus);
         ModRecipes.SERIALIZERS.register(bus);
         ModRecipes.TYPES.register(bus);
+        // Cargar la clase registra su serializador en el mismo registro que AddItemModifier
+        CofrePescaModifier.COFRE_PESCA.getId();
         AddItemModifier.SERIALIZERS.register(bus);
         TABS.register(bus);
         Network.register();

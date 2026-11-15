@@ -2,6 +2,7 @@ package com.rolflin.toodeepseas.item;
 
 import com.rolflin.toodeepseas.TooDeepSeas;
 import com.rolflin.toodeepseas.block.ModBlocks;
+import com.rolflin.toodeepseas.core.Cofres;
 import com.rolflin.toodeepseas.core.RodTier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.FishingRodItem;
@@ -13,6 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nullable;
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +48,14 @@ public final class ModItems {
     /** Cebos por id de definición. */
     public static final Map<String, RegistryObject<BaitItem>> BAITS = new LinkedHashMap<>();
 
+    /** Cofres del tesoro: un objeto por bioma de pesca (cofre_oceano, cofre_lava...). */
+    public static final Map<Cofres.Bioma, RegistryObject<CofreItem>> COFRES = new EnumMap<>(Cofres.Bioma.class);
+
     static {
+        for (Cofres.Bioma bioma : Cofres.Bioma.values()) {
+            Item.Properties properties = bioma == Cofres.Bioma.LAVA ? new Item.Properties().fireResistant() : new Item.Properties();
+            COFRES.put(bioma, ITEMS.register("cofre_" + bioma.id(), () -> new CofreItem(bioma, properties)));
+        }
         // id y número de niveles, igual que en data/toodeepseas/accessories
         accessory("sedal_reforzado", 3);
         accessory("sedal_seda", 3);

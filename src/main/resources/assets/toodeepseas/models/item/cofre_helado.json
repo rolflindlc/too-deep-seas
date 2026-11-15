@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "toodeepseas:item/cofre_helado_sencillo"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "toodeepseas:calidad": 0.3
+      },
+      "model": "toodeepseas:item/cofre_helado_reforzado"
+    },
+    {
+      "predicate": {
+        "toodeepseas:calidad": 0.6
+      },
+      "model": "toodeepseas:item/cofre_helado_ornamentado"
+    },
+    {
+      "predicate": {
+        "toodeepseas:calidad": 0.9
+      },
+      "model": "toodeepseas:item/cofre_helado_ancestral"
+    }
+  ]
+}

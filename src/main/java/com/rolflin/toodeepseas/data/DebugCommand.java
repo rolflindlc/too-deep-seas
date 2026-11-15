@@ -4,6 +4,10 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.rolflin.toodeepseas.TooDeepSeas;
+import com.rolflin.toodeepseas.core.Cofres;
+import com.rolflin.toodeepseas.item.ModItems;
+import net.minecraft.server.level.ServerPlayer;
+import java.util.Arrays;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -18,6 +22,7 @@ import java.util.List;
 /**
  * Comando provisional para probar el equipo hasta que exista la mesa del pescador (fase 4):
  * /tds equipar <accesorio> <nivel> · /tds cebo <cebo> <cantidad> · /tds vaciar
+ * /tds cofre <bioma> [calidad 1-4] [banda 1-3] [clima 1-3]: da un cofre del tesoro con esas características
  */
 @Mod.EventBusSubscriber(modid = TooDeepSeas.MODID)
 public final class DebugCommand {
@@ -41,12 +46,28 @@ public final class DebugCommand {
                             RodData.setBait(rod(c), id, IntegerArgumentType.getInteger(c, "cantidad"));
                             return reply(c, "Cebo puesto", true);
                         }))))
+                .then(Commands.literal("cofre").then(Commands.argument("bioma", StringArgumentType.word())
+                        .suggests((c, b) -> SharedSuggestionProvider.suggest(Arrays.stream(Cofres.Bioma.values()).map(Cofres.Bioma::id), b))
+                        .executes(c -> cofre(c, 1, 1, 1))
+                        .then(Commands.argument("calidad", IntegerArgumentType.integer(1, 4)).executes(c -> cofre(c, IntegerArgumentType.getInteger(c, "calidad"), 1, 1))
+                                .then(Commands.argument("banda", IntegerArgumentType.integer(1, 3)).executes(c -> cofre(c, IntegerArgumentType.getInteger(c, "calidad"), IntegerArgumentType.getInteger(c, "banda"), 1))
+                                        .then(Commands.argument("clima", IntegerArgumentType.integer(1, 3)).executes(c -> cofre(c, IntegerArgumentType.getInteger(c, "calidad"),
+                                                IntegerArgumentType.getInteger(c, "banda"), IntegerArgumentType.getInteger(c, "clima"))))))))
                 .then(Commands.literal("vaciar").executes(c -> {
                     ItemStack rod = rod(c);
                     RodData.setSlots(rod, List.of());
                     RodData.setBait(rod, "", 0);
                     return reply(c, "Caña vaciada", true);
                 })));
+    }
+
+    private static int cofre(CommandContext<CommandSourceStack> c, int calidad, int banda, int clima) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        Cofres.Bioma bioma = Cofres.Bioma.byId(StringArgumentType.getString(c, "bioma"));
+        if (bioma == null) return reply(c, "Bioma desconocido", false);
+        ServerPlayer player = c.getSource().getPlayerOrException();
+        ItemStack stack = ModItems.COFRES.get(bioma).get().create(Cofres.Calidad.byIndex(calidad - 1), Cofres.Banda.byIndex(banda - 1), Cofres.Clima.byIndex(clima - 1));
+        if (!player.getInventory().add(stack)) player.drop(stack, false);
+        return reply(c, "Cofre entregado", true);
     }
 
     private static ItemStack rod(CommandContext<CommandSourceStack> c) throws com.mojang.brigadier.exceptions.CommandSyntaxException {

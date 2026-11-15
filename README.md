@@ -1,4 +1,4 @@
-# Too Deep Seas — Forge 1.20.1 (fase 5: recetas, mejora y reparación)
+# Too Deep Seas — Forge 1.20.1 (fase 5 + cofres del tesoro)
 
 ## Qué hay
 - `core/` (Java puro): `RodTier` (las 8 cañas), `RodStats` (equipo → parámetros del minijuego, tope de 4 bloques/s), `Loadout` (ranuras), `AccessoryDef` y `BaitDef` (definiciones de datapack).
@@ -9,6 +9,7 @@
 - `net/`: envío de las definiciones al cliente al entrar y tras `/reload`.
 - `recipe/`: receta de mejora de caña que conserva accesorios, cebo y encantamientos, y recetas de taller (`toodeepseas:taller`) para la mesa del pescador.
 - `loot/`: modificador de botín que añade fragmentos del vacío (ciudades del End, shulkers) y lombrices (pala sobre tierra o hierba).
+- Cofres del tesoro (`core/Cofres`, `item/CofreItem`, `world/Biomas`, `loot/CofrePescaModifier`): un cofre por bioma de pesca, con calidad, profundidad y clima; sus tablas de botín están en `data/toodeepseas/loot_tables/cofres` y se generan con `tools/gen_cofres.py`.
 - `prototipo/pesca.html`: prototipo web del minijuego.
 
 ## Descargar el jar
@@ -27,6 +28,11 @@ Pestaña Actions del repositorio → última ejecución en verde → Artifacts �
   - Caña del vacío: caña de netherita + 2 conchas de shulker + 4 fragmentos del vacío. Conserva el equipo.
 - Recetas: cada accesorio de nivel I y cada cebo se fabrican en la mesa de trabajo (`data/toodeepseas/recipes/accesorios` y `cebos`). El corcho de abedul sale de 2 troncos de abedul en vertical. La lombriz sale con un 8 % al cavar tierra o hierba con pala. Los fragmentos del vacío están en los cofres de las ciudades del End (50 %, 1–3) y los sueltan los shulkers (20 %).
 - La Escama de guardián solo entra en cañas de tier 2,5 o más.
+- **Cofres del tesoro** (como las cajas de pesca de Terraria): clic derecho para abrirlos.
+  - Hay uno por bioma (océano, océano cálido, océano helado, río, pantano, lava, Vacío). Cada cofre recuerda la calidad (sencillo, reforzado, ornamentado, ancestral: la da el tier de la caña), la profundidad (superficie, aguas profundas, abisal) y el clima (despejado, lluvia, tormenta).
+  - Botín: 2–5 tiradas del bioma según la calidad, más las de profundidad, las del clima y una de equipo de pesca según la calidad.
+  - De momento salen al pescar a la manera vanilla (10 % de las capturas, siempre de superficie) y en el creativo. El resto, con `/tds cofre <bioma> [calidad 1-4] [banda 1-3] [clima 1-3]`.
+  - Qué bioma de Minecraft cuenta como cada uno: etiquetas `data/toodeepseas/tags/worldgen/biome/pesca/`. Lo que no esté en ninguna es «río».
 - `/tds equipar <accesorio> <nivel>`, `/tds cebo <cebo> <cantidad>`, `/tds vaciar` con la caña en la mano (operador).
 
 ## Estado

@@ -1,6 +1,7 @@
 package com.rolflin.toodeepseas.client;
 
 import com.rolflin.toodeepseas.TooDeepSeas;
+import com.rolflin.toodeepseas.item.CofreItem;
 import com.rolflin.toodeepseas.item.ModItems;
 import com.rolflin.toodeepseas.item.TieredRodItem;
 import com.rolflin.toodeepseas.menu.ModMenus;
@@ -25,6 +26,11 @@ public final class ClientSetup {
         event.enqueueWork(() -> {
             MenuScreens.register(ModMenus.MESA_PESCADOR.get(), MesaPescadorScreen::new);
             // Igual que la caña vanilla: el modelo cambia a «lanzada» mientras el anzuelo está fuera
+            // El modelo del cofre cambia con su calidad: 0, 1/3, 2/3 y 1 (las propiedades de objeto se recortan a 0–1)
+            for (RegistryObject<CofreItem> cofre : ModItems.COFRES.values()) {
+                ItemProperties.register(cofre.get(), new ResourceLocation(TooDeepSeas.MODID, "calidad"),
+                        (stack, level, entity, seed) -> CofreItem.calidad(stack).ordinal() / 3.0F);
+            }
             for (RegistryObject<TieredRodItem> rod : ModItems.RODS) {
                 ItemProperties.register(rod.get(), new ResourceLocation("cast"), (stack, level, entity, seed) -> {
                     if (entity == null) return 0.0F;

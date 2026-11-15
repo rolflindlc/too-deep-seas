@@ -1,0 +1,170 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:diamond",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gold_ingot",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 2,
+                "max": 4
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "toodeepseas:pepita_cebo",
+          "weight": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "toodeepseas:cebo_tinta_brillante",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 2,
+                "max": 4
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:book",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:fishing_rod",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "min": 20,
+                "max": 30
+              },
+              "treasure": true
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "toodeepseas:sedal_invisible",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "toodeepseas:anzuelo_doble",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "toodeepseas:ojo_nautilo",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "toodeepseas:perla_encantada",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "toodeepseas:carrete_freno",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "toodeepseas:geoda_resonante",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "toodeepseas:sedal_seda",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Lvl:2}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "toodeepseas:anzuelo_iman",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Lvl:2}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "toodeepseas:lastre_buceo",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Lvl:2}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "toodeepseas:carrete",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Lvl:2}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

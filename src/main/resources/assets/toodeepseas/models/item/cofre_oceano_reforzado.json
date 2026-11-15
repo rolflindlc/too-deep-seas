@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "toodeepseas:item/cofre_oceano_reforzado"
+  }
+}
