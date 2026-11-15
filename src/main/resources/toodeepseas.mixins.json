@@ -6,7 +6,6 @@
   "refmap": "toodeepseas.refmap.json",
   "mixins": [
     "PoiTypeAccessor",
-    "PoiTypesAccessor",
     "SinglePoolElementAccessor",
     "StructureTemplatePoolAccessor"
   ],

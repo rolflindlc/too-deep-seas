@@ -17,7 +17,16 @@ jobs:
       - name: Compilar y pasar las pruebas
         run: ./gradlew build --no-daemon
       - name: Pruebas dentro del juego (servidor de GameTest)
-        run: ./gradlew runGameTestServer --no-daemon
+        # Si el servidor no llega a arrancar, Gradle termina bien igualmente: se exige la línea de «todas pasan»
+        run: |
+          ./gradlew runGameTestServer --no-daemon 2>&1 | tee gametest.log | grep -vE "/DEBUG\]"
+          grep -E "All [0-9]+ required tests passed" gametest.log
+      - name: Comprobar el jar (Mixin)
+        run: |
+          JAR=$(ls build/libs/*.jar | head -1)
+          unzip -p "$JAR" META-INF/MANIFEST.MF | grep "MixinConfigs: toodeepseas.mixins.json"
+          unzip -p "$JAR" toodeepseas.refmap.json
+          unzip -p "$JAR" toodeepseas.refmap.json | grep -c "f_" 
       - name: Subir el jar
         uses: actions/upload-artifact@v4
         with:

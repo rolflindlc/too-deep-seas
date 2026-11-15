@@ -4,7 +4,6 @@ import com.rolflin.toodeepseas.Config;
 import com.rolflin.toodeepseas.TooDeepSeas;
 import com.rolflin.toodeepseas.block.ModBlocks;
 import com.rolflin.toodeepseas.mixin.PoiTypeAccessor;
-import com.rolflin.toodeepseas.mixin.PoiTypesAccessor;
 import com.rolflin.toodeepseas.mixin.SinglePoolElementAccessor;
 import com.rolflin.toodeepseas.mixin.StructureTemplatePoolAccessor;
 import net.minecraft.core.Holder;
@@ -29,6 +28,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.GameData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -60,26 +60,28 @@ public final class Aldeas {
     /** Se llama una vez al arrancar (FMLCommonSetupEvent), con los bloques ya registrados y la configuración leída. */
     public static void aplicarPuesto(boolean barrilLegado) {
         Holder<PoiType> fisherman = BuiltInRegistries.POINT_OF_INTEREST_TYPE.getHolderOrThrow(PoiTypes.FISHERMAN);
-        Map<BlockState, Holder<PoiType>> byState = PoiTypesAccessor.toodeepseas$typeByState();
-        Set<BlockState> states = new HashSet<>(fisherman.value().matchingStates());
+        PoiType type = fisherman.value();
+        // Mapa bloque → puesto que consulta el juego al poner o quitar un bloque (en Forge lo guarda GameData)
+        Map<BlockState, PoiType> byState = GameData.getBlockStatePointOfInterestTypeMap();
+        Set<BlockState> states = new HashSet<>(type.matchingStates());
         for (BlockState state : ModBlocks.MESA_PESCADOR.get().getStateDefinition().getPossibleStates()) {
             states.add(state);
-            byState.put(state, fisherman);
+            byState.put(state, type);
         }
         for (BlockState state : Blocks.BARREL.getStateDefinition().getPossibleStates()) {
-            Holder<PoiType> current = byState.get(state);
+            PoiType current = byState.get(state);
             if (barrilLegado) {
                 // Solo si nadie más (otro mod) se ha quedado con el barril
-                if (current == null || current.is(PoiTypes.FISHERMAN)) {
+                if (current == null || current == type) {
                     states.add(state);
-                    byState.put(state, fisherman);
+                    byState.put(state, type);
                 }
             } else {
                 states.remove(state);
-                if (current != null && current.is(PoiTypes.FISHERMAN)) byState.remove(state);
+                if (current == type) byState.remove(state);
             }
         }
-        ((PoiTypeAccessor) (Object) fisherman.value()).toodeepseas$setMatchingStates(Set.copyOf(states));
+        ((PoiTypeAccessor) (Object) type).toodeepseas$setMatchingStates(Set.copyOf(states));
         LOGGER.info("Too Deep Seas: puesto del pescador = mesa del pescador{}", barrilLegado ? " y barril" : "");
     }
 
